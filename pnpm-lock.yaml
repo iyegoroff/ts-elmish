@@ -66,7 +66,10 @@ importers:
     specifiers:
       '@types/mithril': ^2.0.3
   packages/react:
-    specifiers: {}
+    devDependencies:
+      '@types/react': 16.9.43
+    specifiers:
+      '@types/react': ^16.9.43
 lockfileVersion: 5.1
 packages:
   /@babel/code-frame/7.10.4:
@@ -1313,6 +1316,17 @@ packages:
     dev: true
     resolution:
       integrity: sha512-IkVfat549ggtkZUthUzEX49562eGikhSYeVGX97SkMFn+sTZrgRewXjQ4tPKFPCykZHkX1Zfd9OoELGqKU2jJA==
+  /@types/prop-types/15.7.3:
+    dev: true
+    resolution:
+      integrity: sha512-KfRL3PuHmqQLOG+2tGpRO26Ctg+Cq1E01D2DMriKEATHgWLfeNDmq9e29Q9WIky0dQ3NPkd1mzYH8Lm936Z9qw==
+  /@types/react/16.9.43:
+    dependencies:
+      '@types/prop-types': 15.7.3
+      csstype: 2.6.11
+    dev: true
+    resolution:
+      integrity: sha512-PxshAFcnJqIWYpJbLPriClH53Z2WlJcVZE+NP2etUtWQs2s7yIMj3/LDKZT/5CHJ/F62iyjVCDu2H3jHEXIxSg==
   /@types/stack-utils/1.0.1:
     resolution:
       integrity: sha512-l42BggppR6zLmpfU6fq9HEa2oGPEI8yrSPL3GITjfRInppYFahObbIQOQK3UGxEnyQpltZLaPe75046NOZQikw==
@@ -2374,6 +2388,10 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-AZL67abkUzIuvcHqk7c09cezpGNcxUxU4Ioi/05xHk4DQeTkWmGYftIE6ctU6AEt+Gn4n1lDStOtj7FKycP71A==
+  /csstype/2.6.11:
+    dev: true
+    resolution:
+      integrity: sha512-l8YyEC9NBkSm783PFTvh0FmJy7s5pFKrDp49ZL7zBGX3fWkO+N4EEyan1qqp8cwPLDcD0OSdyY6hAMoxp34JFw==
   /dashdash/1.14.1:
     dependencies:
       assert-plus: 1.0.0
