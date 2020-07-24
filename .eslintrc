@@ -3,9 +3,10 @@
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "project": [
-      "./core/src/tsconfig.json",
-      "./mithril/src/tsconfig.json",
-      "./react/src/tsconfig.json"
+      "./packages/core/src/tsconfig.json",
+      "./packages/mithril/src/tsconfig.json",
+      "./packages/react/src/tsconfig.json",
+      "./packages/example/src/tsconfig.json"
     ]
   },
   "plugins": ["@typescript-eslint", "prettier", "no-null", "functional"],

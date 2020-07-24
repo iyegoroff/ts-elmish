@@ -42,6 +42,8 @@ importers:
       typescript: ^3.9.7
   example:
     dependencies:
+      '@ts-elmish/core': 'link:../packages/core'
+      '@ts-elmish/react': 'link:../packages/react'
       react: 16.13.0
       react-native: 0.63.2_fe35725eb5494806a23a869caea6dcc8
     devDependencies:
@@ -51,19 +53,20 @@ importers:
     specifiers:
       '@babel/core': ^7.10.5
       '@babel/runtime': ^7.10.5
+      '@ts-elmish/core': 'workspace:*'
+      '@ts-elmish/react': 'workspace:*'
       metro-react-native-babel-preset: ^0.61.0
       react: 16.13.0
       react-native: 0.63.2
-  mithril:
+  packages/core:
+    specifiers: {}
+  packages/mithril:
     devDependencies:
       '@types/mithril': 2.0.3
     specifiers:
       '@types/mithril': ^2.0.3
-  react:
-    devDependencies:
-      '@types/react': 16.9.43
-    specifiers:
-      '@types/react': ^16.9.43
+  packages/react:
+    specifiers: {}
 lockfileVersion: 5.1
 packages:
   /@babel/code-frame/7.10.4:
@@ -1268,7 +1271,7 @@ packages:
       integrity: sha512-OCutwjDZ4aFS6PB1UZ988C4YgwlBHJd6wCeQqaLdmadZ/7e+w79+hbMUFC1QXDNCmdyoRfAFdm0RypzwR+Qpag==
   /@types/graceful-fs/4.1.3:
     dependencies:
-      '@types/node': 14.0.25
+      '@types/node': 14.0.26
     dev: true
     resolution:
       integrity: sha512-AiHRaEB50LQg0pZmm659vNBb9f4SJ0qrAnteuzhSeAUcJKxoYgEnprg/83kppCnc2zvtCKbdZry1a5pVY3lOTQ==
@@ -1298,10 +1301,10 @@ packages:
     dev: true
     resolution:
       integrity: sha512-cZHOdO2IiXYeyjeDYdbOisSdfaJRzfmRo3zVzgu33IWTMA0KEQObp9fdvqcuYdPz93iJ1yCl19GcEjo/9yv+yA==
-  /@types/node/14.0.25:
+  /@types/node/14.0.26:
     dev: true
     resolution:
-      integrity: sha512-okMqUHqrMlGOxfDZliX1yFX5MV6qcd5PpRz96XYtjkM0Ws/hwg23FMUqt6pETrVRZS+EKUB5HY19mmo54EuQbA==
+      integrity: sha512-W+fpe5s91FBGE0pEa0lnqGLL4USgpLgs4nokw16SrBBco/gQxuua7KnArSEOd5iaMqbbSHV10vUDkJYJJqpXKA==
   /@types/normalize-package-data/2.4.0:
     dev: true
     resolution:
@@ -1310,17 +1313,6 @@ packages:
     dev: true
     resolution:
       integrity: sha512-IkVfat549ggtkZUthUzEX49562eGikhSYeVGX97SkMFn+sTZrgRewXjQ4tPKFPCykZHkX1Zfd9OoELGqKU2jJA==
-  /@types/prop-types/15.7.3:
-    dev: true
-    resolution:
-      integrity: sha512-KfRL3PuHmqQLOG+2tGpRO26Ctg+Cq1E01D2DMriKEATHgWLfeNDmq9e29Q9WIky0dQ3NPkd1mzYH8Lm936Z9qw==
-  /@types/react/16.9.43:
-    dependencies:
-      '@types/prop-types': 15.7.3
-      csstype: 2.6.11
-    dev: true
-    resolution:
-      integrity: sha512-PxshAFcnJqIWYpJbLPriClH53Z2WlJcVZE+NP2etUtWQs2s7yIMj3/LDKZT/5CHJ/F62iyjVCDu2H3jHEXIxSg==
   /@types/stack-utils/1.0.1:
     resolution:
       integrity: sha512-l42BggppR6zLmpfU6fq9HEa2oGPEI8yrSPL3GITjfRInppYFahObbIQOQK3UGxEnyQpltZLaPe75046NOZQikw==
@@ -2382,10 +2374,6 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-AZL67abkUzIuvcHqk7c09cezpGNcxUxU4Ioi/05xHk4DQeTkWmGYftIE6ctU6AEt+Gn4n1lDStOtj7FKycP71A==
-  /csstype/2.6.11:
-    dev: true
-    resolution:
-      integrity: sha512-l8YyEC9NBkSm783PFTvh0FmJy7s5pFKrDp49ZL7zBGX3fWkO+N4EEyan1qqp8cwPLDcD0OSdyY6hAMoxp34JFw==
   /dashdash/1.14.1:
     dependencies:
       assert-plus: 1.0.0

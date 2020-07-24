@@ -9,7 +9,9 @@
   },
   "dependencies": {
     "react": "16.13.0",
-    "react-native": "0.63.2"
+    "react-native": "0.63.2",
+    "@ts-elmish/core": "workspace:*",
+    "@ts-elmish/react": "workspace:*"
   },
   "devDependencies": {
     "@babel/core": "^7.10.5",
