@@ -1,0 +1,19 @@
+{
+  "name": "@ts-elmish/mithril",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "iyegoroff <iegoroff@gmail.com>",
+  "license": "MIT",
+  "peerDependencies": {
+    "mithril": "^2",
+    "@ts-elmish/core": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/mithril": "^2.0.3",
+    "@ts-elmish/core": "workspace:*"
+  }
+}
