@@ -1,12 +1,19 @@
 {
-  "name": "example",
-  "version": "0.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "ElmishTodos",
+  "version": "0.0.1",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "start:native": "react-native start"
   },
-  "keywords": [],
-  "author": "iyegoroff <iegoroff@gmail.com>",
-  "license": "MIT"
+  "dependencies": {
+    "react": "16.13.0",
+    "react-native": "0.63.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.10.5",
+    "@babel/runtime": "^7.10.5",
+    "metro-react-native-babel-preset": "^0.61.0"
+  }
 }

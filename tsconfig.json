@@ -3,8 +3,6 @@
     "sourceMap": true,
     "target": "es6",
     "strict": true,
-    "jsx": "react",
-    "lib": ["es2016", "dom"],
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,

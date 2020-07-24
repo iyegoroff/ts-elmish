@@ -3,7 +3,7 @@
 import m, { Component } from 'mithril'
 import { runProgram, Dispatch, Effect } from '@ts-elmish/core'
 
-export type AssertDispatch<T> = T extends { readonly dispatch: unknown } ? never : T
+type AssertDispatch<T> = T extends { readonly dispatch: unknown } ? never : T
 export type ElmishAttrs<State, Action> = Readonly<AssertDispatch<State>> & {
   readonly dispatch: Dispatch<Action>
 }

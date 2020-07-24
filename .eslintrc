@@ -4,20 +4,20 @@
   "parserOptions": {
     "project": [
       "./core/src/tsconfig.json",
-      "./mithril/src/tsconfig.json"
+      "./mithril/src/tsconfig.json",
+      "./react/src/tsconfig.json"
     ]
   },
-  "plugins": [
-    "@typescript-eslint",
-    "prettier",
-    "no-null",
-    "functional"
-  ],
+  "plugins": ["@typescript-eslint", "prettier", "no-null", "functional"],
   "extends": [
+    "@react-native-community",
     "standard-with-typescript",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
     "prettier",
     "prettier/@typescript-eslint",
     "prettier/standard",
+    "prettier/react",
     "plugin:functional/external-recommended",
     "plugin:functional/recommended"
   ],
@@ -26,11 +26,14 @@
     "no-shadow": "error",
     "prettier/prettier": "warn",
     "no-null/no-null": "error",
-    "@typescript-eslint/ban-types": ["error", {
-      "types": {
-        "null": null
+    "@typescript-eslint/ban-types": [
+      "error",
+      {
+        "types": {
+          "null": null
+        }
       }
-    }],
+    ],
     "@typescript-eslint/no-explicit-any": "error",
     "@typescript-eslint/no-non-null-assertion": "error",
     "@typescript-eslint/ban-ts-comment": "error",
@@ -46,5 +49,10 @@
         "ignorePattern": "^(assert|(describe|test|expect|console)[^\\w])"
       }
     ]
+  },
+  "settings": {
+    "react": {
+      "version": "16.11.0"
+    }
   }
 }
