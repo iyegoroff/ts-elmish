@@ -1,0 +1,10 @@
+{
+  "extends": "../../../tsconfig.json",
+  "compilerOptions": {
+    "jsx": "react",
+    "lib": ["es2016", "dom"]
+  },
+  "exclude": [
+    "**/state.spec.ts"
+  ]
+}

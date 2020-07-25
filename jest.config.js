@@ -1,3 +1,5 @@
+const projects = ['packages/core', 'examples/todos']
+
 const config = {
   moduleFileExtensions: ['js', 'ts'],
   testPathIgnorePatterns: ['blueprint-templates'],
@@ -5,9 +7,6 @@ const config = {
   transform: {
     '^.+\\.(js|tsx?)$': 'ts-jest'
   },
-  coverageDirectory: '<rootDir>/coverage',
-  collectCoverage: true,
-  testEnvironment: 'node',
   globals: {
     'ts-jest': {
       tsConfig: '<rootDir>/src/tsconfig.test.json',
@@ -17,11 +16,12 @@ const config = {
 }
 
 module.exports = {
-  projects: [
-    {
-      displayName: 'example',
-      rootDir: './example',
-      ...config
-    }
-  ]
+  coverageDirectory: 'coverage',
+  collectCoverage: true,
+  testEnvironment: 'node',
+  projects: projects.map((dir) => ({
+    displayName: dir,
+    rootDir: dir,
+    ...config
+  }))
 }

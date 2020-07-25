@@ -4,10 +4,11 @@
   "parserOptions": {
     "project": [
       "./packages/core/src/tsconfig.json",
+      "./packages/core/src/tsconfig.test.json",
       "./packages/mithril/src/tsconfig.json",
       "./packages/react/src/tsconfig.json",
-      "./example/src/tsconfig.json",
-      "./example/src/tsconfig.test.json"
+      "./examples/todos/src/tsconfig.json",
+      "./examples/todos/src/tsconfig.test.json"
     ]
   },
   "plugins": ["@typescript-eslint", "prettier", "no-null"],

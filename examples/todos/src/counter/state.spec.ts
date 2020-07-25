@@ -1,3 +1,4 @@
+import 'ts-jest'
 import { Effects } from '@ts-elmish/core'
 import { initCounter, updateCounter, CounterStateEffect } from './state'
 
