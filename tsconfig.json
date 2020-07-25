@@ -9,6 +9,10 @@
     "noEmitOnError": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "removeComments": true
-  }
+    "removeComments": true,
+    "types": []
+  },
+  "exclude": [
+    "**/state.spec.ts"
+  ]
 }

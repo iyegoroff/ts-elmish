@@ -1,6 +1,3 @@
-/* eslint-disable functional/no-expression-statement */
-/* eslint-disable functional/no-this-expression */
-/* eslint-disable functional/no-class */
 import React from 'react'
 import { runProgram, Dispatch, Effect } from '@ts-elmish/core'
 import shallowEqual from './shallowEqual'

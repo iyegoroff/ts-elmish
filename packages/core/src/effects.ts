@@ -1,5 +1,3 @@
-/* eslint-disable functional/no-try-statement */
-/* eslint-disable @typescript-eslint/promise-function-async */
 import { Effect } from './program'
 
 const empty: Effect<never> = []

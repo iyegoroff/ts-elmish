@@ -1,5 +1,3 @@
-/* eslint-disable functional/no-let */
-/* eslint-disable functional/no-expression-statement */
 import m, { Component } from 'mithril'
 import { runProgram, Dispatch, Effect } from '@ts-elmish/core'
 

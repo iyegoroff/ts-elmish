@@ -6,10 +6,11 @@
       "./packages/core/src/tsconfig.json",
       "./packages/mithril/src/tsconfig.json",
       "./packages/react/src/tsconfig.json",
-      "./example/src/tsconfig.json"
+      "./example/src/tsconfig.json",
+      "./example/src/tsconfig.test.json"
     ]
   },
-  "plugins": ["@typescript-eslint", "prettier", "no-null", "functional"],
+  "plugins": ["@typescript-eslint", "prettier", "no-null"],
   "extends": [
     "@react-native-community",
     "standard-with-typescript",
@@ -18,9 +19,7 @@
     "prettier",
     "prettier/@typescript-eslint",
     "prettier/standard",
-    "prettier/react",
-    "plugin:functional/external-recommended",
-    "plugin:functional/recommended"
+    "prettier/react"
   ],
   "rules": {
     "no-param-reassign": "error",
@@ -35,21 +34,14 @@
         }
       }
     ],
+    "@typescript-eslint/promise-function-async": "off",
     "@typescript-eslint/no-explicit-any": "error",
     "@typescript-eslint/no-non-null-assertion": "error",
     "@typescript-eslint/ban-ts-comment": "error",
     "@typescript-eslint/switch-exhaustiveness-check": "error",
     "@typescript-eslint/consistent-type-definitions": ["error", "type"],
     "@typescript-eslint/explicit-function-return-type": "off",
-    "@typescript-eslint/space-before-function-paren": ["warn", "never"],
-    "functional/functional-parameters": "off",
-    "functional/no-conditional-statement": "off",
-    "functional/no-expression-statement": [
-      "error",
-      {
-        "ignorePattern": "^(assert|(describe|test|expect|console)[^\\w])"
-      }
-    ]
+    "@typescript-eslint/space-before-function-paren": ["warn", "never"]
   },
   "settings": {
     "react": {

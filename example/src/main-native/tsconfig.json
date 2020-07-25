@@ -10,8 +10,5 @@
     "../**/*.native.ts*",
     "../**/*.android.ts*",
     "../**/*.ios.ts*"
-  ],
-  "exclude": [
-    "**/state.spec.ts"
   ]
 }

@@ -1,8 +1,3 @@
-/* eslint-disable functional/prefer-readonly-type */
-/* eslint-disable functional/no-expression-statement */
-/* eslint-disable functional/immutable-data */
-/* eslint-disable functional/no-let */
-/* eslint-disable functional/no-return-void */
 export type Dispatch<Action> = (action: Action) => void
 export type Effect<Action> = Array<(dispatch: Dispatch<Action>) => void>
 

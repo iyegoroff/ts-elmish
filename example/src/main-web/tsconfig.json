@@ -6,8 +6,5 @@
   "include": [
     "index.tsx",
     "../**/*.web.ts"
-  ],
-  "exclude": [
-    "**/state.spec.ts"
   ]
 }
