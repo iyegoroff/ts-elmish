@@ -6,7 +6,7 @@
       "./packages/core/src/tsconfig.json",
       "./packages/mithril/src/tsconfig.json",
       "./packages/react/src/tsconfig.json",
-      "./packages/example/src/tsconfig.json"
+      "./example/src/tsconfig.json"
     ]
   },
   "plugins": ["@typescript-eslint", "prettier", "no-null", "functional"],

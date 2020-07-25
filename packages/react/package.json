@@ -13,6 +13,7 @@
     "@ts-elmish/core": "workspace:*"
   },
   "devDependencies": {
-    "@types/react": "^16.9.43"
+    "@types/react": "^16.9.43",
+    "@ts-elmish/core": "workspace:*"
   }
 }
