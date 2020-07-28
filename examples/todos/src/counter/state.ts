@@ -1,4 +1,4 @@
-import { Effect, Effects } from '@ts-elmish/core'
+import { Effect } from '@ts-elmish/core'
 
 type State = {
   readonly count: number
@@ -17,10 +17,10 @@ export const updateCounter = (state: State, action: Action): StateEffect => {
 
   switch (action[0]) {
     case 'increment':
-      return [{ count: count + 1 }, Effects.none()]
+      return [{ count: count + 1 }, Effect.none()]
 
     case 'decrement':
-      return [{ count: count - 1 }, Effects.none()]
+      return [{ count: count - 1 }, Effect.none()]
   }
 }
 

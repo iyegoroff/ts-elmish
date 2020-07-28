@@ -11,8 +11,5 @@
     "noFallthroughCasesInSwitch": true,
     "removeComments": true,
     "types": []
-  },
-  "exclude": [
-    "**/state.spec.ts"
-  ]
+  }
 }

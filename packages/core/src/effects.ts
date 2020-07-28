@@ -4,8 +4,6 @@ const empty: Effect<never> = []
 
 const none = <Action>(): Effect<Action> => empty
 
-const fromAction = <Action>(action: Action): Effect<Action> => [(dispatch) => dispatch(action)]
-
 const map = <Action0, Action1>(
   func: (a: Action0) => Action1,
   effect: Effect<Action0>
@@ -14,58 +12,68 @@ const map = <Action0, Action1>(
 const batch = <Action>(...actions: ReadonlyArray<Effect<Action>>): Effect<Action> =>
   ([] as Effect<Action>).concat(...actions)
 
-const fromPromise = <Action, Value = unknown, Err = Error>(
-  promise: () => Promise<Value>,
-  ofSuccess: (value: Value) => Action,
-  ofError: (error: Err) => Action
-): Effect<Action> => [
-  (dispatch) =>
-    promise()
-      .then((value) => dispatch(ofSuccess(value)))
-      .catch((error) => dispatch(ofError(error)))
-]
+type ActionArgs<Action> = { readonly action: Action }
+type FunctionArgs<Action, Success, Failure> = {
+  readonly func: () => Success
+  readonly success?: (value: Success) => Action
+  readonly failure: (error: Failure) => Action
+}
+type PromiseArgs<Action, Success, Failure> = {
+  readonly promise: () => Promise<Success>
+  readonly success?: (value: Success) => Action
+  readonly failure: (error: Failure) => Action
+}
 
-const attemptPromise = <Action, Value = unknown, Err = Error>(
-  promise: () => Promise<Value>,
-  ofError: (error: Err) => Action
-): Effect<Action> => [(dispatch) => promise().catch((error) => dispatch(ofError(error)))]
+function from<Action>(args: ActionArgs<Action>): Effect<Action>
 
-const fromFunction = <Action, Value = unknown, Err = Error>(
-  func: () => Value,
-  ofSuccess: (value: Value) => Action,
-  ofError: (error: Err) => Action
-): Effect<Action> => [
-  (dispatch) => {
-    try {
-      const value = func()
+function from<Action, Success = unknown, Failure = Error>(
+  args: FunctionArgs<Action, Success, Failure>
+): Effect<Action>
 
-      return dispatch(ofSuccess(value))
-    } catch (error) {
-      return dispatch(ofError(error))
-    }
+function from<Action, Success = unknown, Failure = Error>(
+  args: PromiseArgs<Action, Success, Failure>
+): Effect<Action>
+
+function from<Action, Success = unknown, Failure = Error>(
+  args:
+    | ActionArgs<Action>
+    | FunctionArgs<Action, Success, Failure>
+    | PromiseArgs<Action, Success, Failure>
+): Effect<Action> {
+  if ('action' in args) {
+    return [(dispatch) => dispatch(args.action)]
+  } else if ('func' in args) {
+    const { func, success, failure } = args
+
+    return [
+      (dispatch) => {
+        try {
+          const value = func()
+          return typeof success === 'function' ? dispatch(success(value)) : value
+        } catch (error) {
+          return dispatch(failure(error))
+        }
+      }
+    ]
+  } else {
+    const { promise, success, failure } = args
+
+    return [
+      async (dispatch) => {
+        try {
+          const value = await promise()
+          return typeof success === 'function' ? dispatch(success(value)) : value
+        } catch (error) {
+          return dispatch(failure(error))
+        }
+      }
+    ]
   }
-]
-
-const attemptFunction = <Action, Value = unknown, Err = Error>(
-  func: () => Value,
-  ofError: (error: Err) => Action
-): Effect<Action> => [
-  (dispatch) => {
-    try {
-      return func()
-    } catch (error) {
-      return dispatch(ofError(error))
-    }
-  }
-]
+}
 
 export const Effects = {
   none,
-  fromAction,
+  from,
   map,
-  batch,
-  fromPromise,
-  attemptPromise,
-  fromFunction,
-  attemptFunction
+  batch
 }

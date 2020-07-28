@@ -1,5 +1,5 @@
 import 'ts-jest'
-import { Effects } from '@ts-elmish/core'
+import { Effect } from '@ts-elmish/core'
 import { initApp, updateApp, AppStateEffect, AppState } from './state'
 import { initCounter } from '../counter/state'
 
@@ -9,7 +9,7 @@ describe('Counter state', () => {
 
     const expected: AppStateEffect = [
       { ...initial, nextCounterId: 1, counters: { '0': initCounter() } },
-      Effects.none()
+      Effect.none()
     ]
 
     expect(updateApp(initial, ['add-counter'])).toEqual(expected)
@@ -18,10 +18,7 @@ describe('Counter state', () => {
   test('remove-counter', () => {
     const initial: AppState = { nextCounterId: 1, counters: { '0': initCounter() } }
 
-    const expected: AppStateEffect = [
-      { ...initial, nextCounterId: 1, counters: {} },
-      Effects.none()
-    ]
+    const expected: AppStateEffect = [{ ...initial, nextCounterId: 1, counters: {} }, Effect.none()]
 
     expect(updateApp(initial, ['remove-counter', '0'])).toEqual(expected)
   })
@@ -31,7 +28,7 @@ describe('Counter state', () => {
 
     const expected: AppStateEffect = [
       { ...initial, nextCounterId: 1, counters: { '0': { count: 1 } } },
-      Effects.none()
+      Effect.none()
     ]
 
     expect(updateApp(initial, ['counter-action', '0', ['increment']])).toEqual(expected)

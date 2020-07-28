@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@hot-loader/react-dom": "^16.13.0",
+    "@react-native-community/async-storage": "^1.11.0",
     "@ts-elmish/core": "workspace:*",
     "@ts-elmish/react": "workspace:*",
     "react": "^16.13.1",

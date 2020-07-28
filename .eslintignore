@@ -6,3 +6,4 @@ build-web
 coverage
 *.js
 *.css.d.ts
+blueprint-templates
