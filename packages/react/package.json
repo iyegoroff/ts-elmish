@@ -10,7 +10,7 @@
     "types": "dist/index.d.ts"
   },
   "scripts": {
-    "set-version": "npm version",
+    "update-version": "npm version",
     "build:dts": "tsc -p ./src -d true --emitDeclarationOnly true --removeComments false",
     "build:umd": "tsc -p ./src -m umd -t es5 --lib es2015 --outDir ./dist/umd",
     "build:es6": "tsc -p ./src",
