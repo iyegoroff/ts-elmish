@@ -3,7 +3,7 @@
     "preinstall": "npx only-allow pnpm",
     "preset-version": "pnpm run lint -- --fix && pnpm run build -r && pnpm t && git add -u && git commit -am lint || :",
     "set-version": "pnpm -r update-version",
-    "postset-version": "tag=v\"$(dot-json packages/core/package.json version)\" && git tag $tag && git commit -am \"$tag [skip ci]\" && git push && git push --tags",
+    "postset-version": "tag=v\"$(dot-json packages/core/package.json version)\" && git commit -am \"$tag [skip ci]\" && git tag $tag && git push && git push --tags",
     "lint": "eslint .",
     "test": "jest",
     "coverage": "codecov"
