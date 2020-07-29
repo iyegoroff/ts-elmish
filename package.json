@@ -2,6 +2,9 @@
   "private": true,
   "scripts": {
     "preinstall": "npx only-allow pnpm",
+    "preset-version": "pnpm run lint -- --fix && pnpm run build -r && pnpm t && git add -u && git commit -am lint || :",
+    "set-version": "pnpm -r set-version",
+    "postset-version": "git push && git push --tags",
     "lint": "eslint .",
     "test": "jest",
     "coverage": "codecov"
