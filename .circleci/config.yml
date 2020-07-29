@@ -28,7 +28,7 @@ jobs:
           at: .
       - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
       - run: sudo npm i -g pnpm@5.4.6
-      - run: pnpm publish -r
+      - run: pnpm -r publish --access public
 
 workflows:
   version: 2
