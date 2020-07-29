@@ -1,13 +1,35 @@
 {
   "name": "@ts-elmish/core",
   "version": "0.0.0",
-  "description": "",
+  "description": "Elmish architecture in Typescript",
   "main": "src/index.ts",
   "publishConfig": {
     "main": "dist/umd/index.js",
     "module": "dist/index.js",
     "browser": "dist/index.js",
     "types": "dist/index.d.ts"
+  },
+  "scripts": {
+    "build:dts": "tsc -p ./src -d true --emitDeclarationOnly true --removeComments false",
+    "build:umd": "tsc -p ./src -m umd -t es5 --outDir ./dist/umd",
+    "build:es6": "tsc -p ./src",
+    "build": "rm -rf dist && mkdir dist && npm run build:dts && npm run build:umd && npm run build:es6"
+  },
+  "keywords": [
+    "elmish",
+    "typescript"
+  ],
+  "files": [
+    "dist",
+    "src"
+  ],
+  "bugs": {
+    "url": "https://github.com/iyegoroff/ts-elmish/issues"
+  },
+  "homepage": "https://github.com/iyegoroff/ts-elmish#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iyegoroff/ts-elmish.git"
   },
   "author": "iyegoroff <iegoroff@gmail.com>",
   "license": "MIT"

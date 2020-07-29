@@ -5,6 +5,6 @@
     "lib": ["es2016", "dom"]
   },
   "exclude": [
-    "**/state.spec.ts"
+    "**/*.spec.ts"
   ]
 }
