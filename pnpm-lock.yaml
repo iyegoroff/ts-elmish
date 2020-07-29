@@ -7,6 +7,7 @@ importers:
       '@typescript-eslint/eslint-plugin': 3.7.0_a7d792035c43f2b80bcf395c5516fe5c
       '@typescript-eslint/parser': 3.7.0_eslint@7.5.0+typescript@3.9.7
       codecov: 3.7.2
+      dot-json: 1.2.0
       eslint: 7.5.0
       eslint-config-prettier: 6.11.0_eslint@7.5.0
       eslint-config-standard-with-typescript: 18.0.2_d06ec2881fb68691ccc685afba2235ab
@@ -30,6 +31,7 @@ importers:
       '@typescript-eslint/eslint-plugin': ^3.7.0
       '@typescript-eslint/parser': ^3.7.0
       codecov: ^3.7.2
+      dot-json: ^1.2.0
       eslint: ^7.5.0
       eslint-config-prettier: ^6.11.0
       eslint-config-standard-with-typescript: ^18.0.2
@@ -2610,6 +2612,12 @@ packages:
     dev: false
     resolution:
       integrity: sha1-l4hXRCxEdJ5CBmE+N5RiBYJqvYA=
+  /detect-indent/6.0.0:
+    dev: true
+    engines:
+      node: '>=8'
+    resolution:
+      integrity: sha512-oSyFlqaTHCItVRGK5RmrmjB+CmaMOW7IaNA/kdxqhoa6d17j/5ce9O9eWXmV/KEdRwqpQA+Vqe8a8Bsybu4YnA==
   /detect-newline/3.1.0:
     dev: true
     engines:
@@ -2628,6 +2636,12 @@ packages:
       node: '>= 10.14.2'
     resolution:
       integrity: sha512-JC/eHYEC3aSS0vZGjuoc4vHA0yAQTzhQQldXMeMF+JlxLGJlCO38Gma82NV9gk1jGFz8mDzUMeaKXvjRRdJ2dg==
+  /docopt/0.6.2:
+    dev: true
+    engines:
+      node: '>=0.10.0'
+    resolution:
+      integrity: sha1-so6eIiDaXsSffqW7JKR3h0Be6xE=
   /doctrine/1.5.0:
     dependencies:
       esutils: 2.0.3
@@ -2665,6 +2679,15 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-yxJ2mFy/sibVQlu5qHjOkf9J3K6zgmCxgJ94u2EdvDOV09H+32LtRswEcUsmUWN72pVLOEnTSRaIVVzVQgS0dg==
+  /dot-json/1.2.0:
+    dependencies:
+      detect-indent: 6.0.0
+      docopt: 0.6.2
+      underscore-keypath: 0.0.22
+    dev: true
+    hasBin: true
+    resolution:
+      integrity: sha512-4bEM7KHFl/U9gAI5nIvU0/fwVzNnE713K339vcxAMtxd2D9mZP6o65UwlcXigJL4rfk90UM0J+D7IPIFYZMQ8Q==
   /ecc-jsbn/0.1.2:
     dependencies:
       jsbn: 0.1.1
@@ -7495,6 +7518,16 @@ packages:
     dev: false
     resolution:
       integrity: sha1-rOEWq1V80Zc4ak6I9GhTeMiy5Po=
+  /underscore-keypath/0.0.22:
+    dependencies:
+      underscore: 1.10.2
+    dev: true
+    resolution:
+      integrity: sha1-SKUoOSu278QkvhyqVtpLX6zPJk0=
+  /underscore/1.10.2:
+    dev: true
+    resolution:
+      integrity: sha512-N4P+Q/BuyuEKFJ43B9gYuOj4TQUHXX+j2FqguVOpjkssLUUrnJofCcBccJSCoeturDoZU6GorDTHSvUDlSQbTg==
   /unicode-canonical-property-names-ecmascript/1.0.4:
     engines:
       node: '>=4'
