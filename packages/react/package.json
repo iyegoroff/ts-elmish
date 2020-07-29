@@ -37,11 +37,11 @@
   "author": "iyegoroff <iegoroff@gmail.com>",
   "license": "MIT",
   "peerDependencies": {
-    "react": ">=16",
-    "@ts-elmish/core": "workspace:*"
+    "@ts-elmish/core": "workspace:*",
+    "react": ">=16"
   },
   "devDependencies": {
-    "@types/react": "^16.9.43",
-    "@ts-elmish/core": "workspace:*"
+    "@ts-elmish/core": "workspace:*",
+    "@types/react": "^16.9.43"
   }
 }
