@@ -1,6 +1,6 @@
 {
   "name": "@ts-elmish/core",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "private": false,
   "description": "Elmish architecture in Typescript",
   "main": "src/index.ts",
