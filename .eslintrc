@@ -7,7 +7,6 @@
       "./packages/core/src/tsconfig.test.json",
       "./packages/mithril/src/tsconfig.json",
       "./packages/react/src/tsconfig.json",
-      "./packages/preact/src/tsconfig.json",
       "./examples/todos/src/tsconfig.json",
       "./examples/todos/src/tsconfig.test.json"
     ]
