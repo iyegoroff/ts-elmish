@@ -17,6 +17,7 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
+            - /home/circleci/.pnpm-store/v3
             - packages/*/dist/*
 
   publish:
@@ -28,7 +29,7 @@ jobs:
           at: .
       - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
       - run: sudo npm i -g pnpm@5.4.6
-      - run: pnpm i
+      - run: pnpm i --offline --frozen-lockfile
       - run: pnpm -r publish --access public --no-git-checks
 
 workflows:
