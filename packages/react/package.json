@@ -37,7 +37,7 @@
   "author": "iyegoroff <iegoroff@gmail.com>",
   "license": "MIT",
   "peerDependencies": {
-    "@ts-elmish/core": "0.0.16",
+    "@ts-elmish/core": "workspace:*",
     "react": ">=16"
   },
   "devDependencies": {

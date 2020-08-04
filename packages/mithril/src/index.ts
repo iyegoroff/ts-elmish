@@ -1,4 +1,4 @@
-import m, { Component } from 'mithril'
+import m, { Component, Vnode } from 'mithril'
 import { runProgram, Dispatch, Effect } from '@ts-elmish/core'
 
 type AssertDispatch<T> = T extends { readonly dispatch: unknown } ? never : T
@@ -6,17 +6,17 @@ export type ElmishAttrs<State, Action> = Readonly<AssertDispatch<State>> & {
   readonly dispatch: Dispatch<Action>
 }
 
-export const createElmishComponent = <State, Action>(
-  init: () => readonly [AssertDispatch<State>, Effect<Action>],
+export const createElmishComponent = <Attrs, State, Action>(
+  init: (attrs: Attrs) => readonly [AssertDispatch<State>, Effect<Action>],
   update: (
     state: AssertDispatch<State>,
     action: Action
   ) => readonly [AssertDispatch<State>, Effect<Action>],
   View: Component<ElmishAttrs<State, Action>>
 ) =>
-  function ElmishComponent() {
+  function ElmishComponent(vnode: Vnode<Attrs>) {
     let [state, dispatch] = runProgram({
-      init,
+      init: () => init(vnode.attrs),
       update,
       view: (nextState) => {
         state = nextState
