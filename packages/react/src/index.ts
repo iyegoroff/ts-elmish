@@ -9,7 +9,7 @@ export type ElmishProps<State, Action> = Readonly<AssertDispatch<State>> & {
 
 export const ElmishMemo = <P>(component: React.SFC<P>) => React.memo(component, shallowEqual)
 
-export const createElmishComponent = <Props, State, Action>(
+export const createElmishComponent = <Props extends Record<string, unknown>, State, Action>(
   init: (props: Props) => readonly [AssertDispatch<State>, Effect<Action>],
   update: (
     state: AssertDispatch<State>,

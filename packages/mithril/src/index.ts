@@ -6,7 +6,7 @@ export type ElmishAttrs<State, Action> = Readonly<AssertDispatch<State>> & {
   readonly dispatch: Dispatch<Action>
 }
 
-export const createElmishComponent = <Attrs, State, Action>(
+export const createElmishComponent = <Attrs extends Record<string, unknown>, State, Action>(
   init: (attrs: Attrs) => readonly [AssertDispatch<State>, Effect<Action>],
   update: (
     state: AssertDispatch<State>,
