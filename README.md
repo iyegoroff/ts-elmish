@@ -8,20 +8,20 @@ Elmish architecture in Typescript
 ## core
 
 [![npm version](https://badge.fury.io/js/%40ts-elmish%2Fcore.svg?t=1495378566925)](https://badge.fury.io/js/%40ts-elmish%2Fcore)
-[![Dependency Status](https://david-dm.org/ts-elmish/core.svg?t=1495378566925)](https://david-dm.org/ts-elmish/core)
-[![devDependencies Status](https://david-dm.org/ts-elmish/core/dev-status.svg)](https://david-dm.org/ts-elmish/core?type=dev)
+[![Dependency Status](https://img.shields.io/david/iyegoroff/ts-elmish?path=packages%2Fcore)](https://david-dm.org/iyegoroff/ts-elmish?path=packages%2Fcore)
+[![devDependencies Status](https://img.shields.io/david/dev/iyegoroff/ts-elmish?path=packages%2Fcore)](https://david-dm.org/iyegoroff/ts-elmish?path=packages%2Fcore&type=dev)
 [![npm](https://img.shields.io/npm/l/@ts-elmish/core.svg?t=1495378566925)](https://www.npmjs.com/package/@ts-elmish/core)
 
 ## react
 
 [![npm version](https://badge.fury.io/js/%40ts-elmish%2Freact.svg?t=1495378566925)](https://badge.fury.io/js/%40ts-elmish%2Freact)
-[![Dependency Status](https://david-dm.org/ts-elmish/react.svg?t=1495378566925)](https://david-dm.org/ts-elmish/react)
-[![devDependencies Status](https://david-dm.org/ts-elmish/react/dev-status.svg)](https://david-dm.org/ts-elmish/react?type=dev)
+[![Dependency Status](https://img.shields.io/david/iyegoroff/ts-elmish?path=packages%2Freact)](https://david-dm.org/iyegoroff/ts-elmish?path=packages%2Freact)
+[![devDependencies Status](https://img.shields.io/david/dev/iyegoroff/ts-elmish?path=packages%2Freact)](https://david-dm.org/iyegoroff/ts-elmish?path=packages%2Freact&type=dev)
 [![npm](https://img.shields.io/npm/l/@ts-elmish/react.svg?t=1495378566925)](https://www.npmjs.com/package/@ts-elmish/react)
 
 ## mithril
 
 [![npm version](https://badge.fury.io/js/%40ts-elmish%2Fmithril.svg?t=1495378566925)](https://badge.fury.io/js/%40ts-elmish%2Fmithril)
-[![Dependency Status](https://david-dm.org/ts-elmish/mithril.svg?t=1495378566925)](https://david-dm.org/ts-elmish/mithril)
-[![devDependencies Status](https://david-dm.org/ts-elmish/mithril/dev-status.svg)](https://david-dm.org/ts-elmish/mithril?type=dev)
+[![Dependency Status](https://img.shields.io/david/iyegoroff/ts-elmish?path=packages%2Fmithril)](https://david-dm.org/iyegoroff/ts-elmish?path=packages%2Fmithril)
+[![devDependencies Status](https://img.shields.io/david/dev/iyegoroff/ts-elmish?path=packages%2Fmithril)](https://david-dm.org/iyegoroff/ts-elmish?path=packages%2Fmithril&type=dev)
 [![npm](https://img.shields.io/npm/l/@ts-elmish/mithril.svg?t=1495378566925)](https://www.npmjs.com/package/@ts-elmish/mithril)
