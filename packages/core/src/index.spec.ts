@@ -54,7 +54,7 @@ describe('effects', () => {
       failure: (error) => error?.message
     })
 
-    const fromFunctionSuccess = Effect.from<string, number>({
+    const fromFunctionSuccess = Effect.from({
       func: () => 1,
       success: (value) => `${value}`,
       failure: (error) => error?.message
@@ -70,7 +70,7 @@ describe('effects', () => {
       failure: (error) => error?.message
     })
 
-    const fromPromiseSuccess = Effect.from<string, number>({
+    const fromPromiseSuccess = Effect.from({
       promise: () => Promise.resolve(1),
       success: (value) => `${value}`,
       failure: (error) => error?.message
