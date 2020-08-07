@@ -1,6 +1,6 @@
 {
   "name": "@ts-elmish/react",
-  "version": "0.0.22",
+  "version": "0.0.23",
   "private": false,
   "description": "React renderer for ts-elmish",
   "main": "src/index.ts",
