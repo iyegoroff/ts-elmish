@@ -9,4 +9,4 @@ const mapArg = <T, U, Arg>(name: U, arg: Arg) => (action: T): readonly [U, Arg, 
 export const Actions = {
   map,
   mapArg
-}
+} as const

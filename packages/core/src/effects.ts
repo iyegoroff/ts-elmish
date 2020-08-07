@@ -76,4 +76,4 @@ export const Effects = {
   from,
   map,
   batch
-}
+} as const
