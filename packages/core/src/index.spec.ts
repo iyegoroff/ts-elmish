@@ -46,34 +46,34 @@ describe('effects', () => {
       func: () => {
         throw new Error('message')
       },
-      failure: (error) => error.message
+      failure: (error) => error?.message
     })
 
     const fromFunctionNoFailure = Effect.from({
       func: () => 1,
-      failure: (error) => error.message
+      failure: (error) => error?.message
     })
 
     const fromFunctionSuccess = Effect.from<string, number>({
       func: () => 1,
       success: (value) => `${value}`,
-      failure: (error) => error.message
+      failure: (error) => error?.message
     })
 
     const fromPromiseFailure = Effect.from({
       promise: () => Promise.reject(new Error('message')),
-      failure: (error) => error.message
+      failure: (error) => error?.message
     })
 
     const fromPromiseNoFailure = Effect.from({
       promise: () => Promise.resolve(1),
-      failure: (error) => error.message
+      failure: (error) => error?.message
     })
 
     const fromPromiseSuccess = Effect.from<string, number>({
       promise: () => Promise.resolve(1),
       success: (value) => `${value}`,
-      failure: (error) => error.message
+      failure: (error) => error?.message
     })
 
     expect(fromAction[0]((x) => x)).toEqual('action')
