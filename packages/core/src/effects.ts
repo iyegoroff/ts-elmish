@@ -26,15 +26,15 @@ type PromiseArgs<Action, Success, Failure> = {
 
 function from<Action>(args: ActionArgs<Action>): Effect<Action>
 
-function from<Action, Success = unknown, Failure = Partial<Error>>(
+function from<Action, Success = unknown, Failure = Partial<Error> | undefined>(
   args: FunctionArgs<Action, Success, Failure>
 ): Effect<Action>
 
-function from<Action, Success = unknown, Failure = Partial<Error>>(
+function from<Action, Success = unknown, Failure = Partial<Error> | undefined>(
   args: PromiseArgs<Action, Success, Failure>
 ): Effect<Action>
 
-function from<Action, Success = unknown, Failure = Partial<Error>>(
+function from<Action, Success = unknown, Failure = Partial<Error> | undefined>(
   args:
     | ActionArgs<Action>
     | FunctionArgs<Action, Success, Failure>
