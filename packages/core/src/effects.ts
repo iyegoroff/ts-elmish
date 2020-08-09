@@ -13,32 +13,25 @@ const batch = <Action>(...actions: ReadonlyArray<Effect<Action>>): Effect<Action
   ([] as Effect<Action>).concat(...actions)
 
 type ActionArgs<Action> = { readonly action: Action }
-type FunctionArgs<Action, Success, Failure> = {
+type FunctionArgs<Action, Success> = {
   readonly func: () => Success
   readonly success?: (value: Success) => Action
-  readonly failure: (error: Failure) => Action
+  readonly failure: (error: unknown) => Action
 }
-type PromiseArgs<Action, Success, Failure> = {
+type PromiseArgs<Action, Success> = {
   readonly promise: () => Promise<Success>
   readonly success?: (value: Success) => Action
-  readonly failure: (error: Failure) => Action
+  readonly failure: (error: unknown) => Action
 }
 
 function from<Action>(args: ActionArgs<Action>): Effect<Action>
 
-function from<Action, Success = unknown, Failure = Partial<Error> | undefined>(
-  args: FunctionArgs<Action, Success, Failure>
-): Effect<Action>
+function from<Action, Success = unknown>(args: FunctionArgs<Action, Success>): Effect<Action>
 
-function from<Action, Success = unknown, Failure = Partial<Error> | undefined>(
-  args: PromiseArgs<Action, Success, Failure>
-): Effect<Action>
+function from<Action, Success = unknown>(args: PromiseArgs<Action, Success>): Effect<Action>
 
-function from<Action, Success = unknown, Failure = Partial<Error> | undefined>(
-  args:
-    | ActionArgs<Action>
-    | FunctionArgs<Action, Success, Failure>
-    | PromiseArgs<Action, Success, Failure>
+function from<Action, Success = unknown>(
+  args: ActionArgs<Action> | FunctionArgs<Action, Success> | PromiseArgs<Action, Success>
 ): Effect<Action> {
   if ('action' in args) {
     return [(dispatch) => dispatch(args.action)]
