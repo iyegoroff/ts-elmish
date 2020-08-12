@@ -17,6 +17,6 @@ function is(x, y) {
   )
 }
 
-const objectIs = (x, y) => (typeof Object.is === 'function' ? Object.is : is)(x, y)
+const objectIs = (x, y) => (typeof Object.is === 'function' ? Object.is(x, y) : is(x, y))
 
 export default objectIs
