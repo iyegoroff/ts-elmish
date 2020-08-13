@@ -20,7 +20,7 @@ describe('runProgram', () => {
     dispatch('inc')
 
     expect(initial).toEqual(4)
-    expect(states).toEqual([5])
+    expect(states).toEqual([4, 4, 4, 5])
   })
 })
 
