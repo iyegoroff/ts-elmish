@@ -18,7 +18,9 @@ export const runProgram = <State, Action>({
 
     if (effect !== undefined) {
       effect(dispatch)
-    } else if (canRender) {
+    }
+
+    if (canRender) {
       view(state)
     } else {
       canRender = true
