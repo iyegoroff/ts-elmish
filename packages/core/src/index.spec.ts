@@ -1,5 +1,8 @@
 import 'ts-jest'
 import { Action, Effect, runProgram } from './index'
+import { Record, String } from 'runtypes'
+
+const ErrorSchema = Record({ message: String })
 
 describe('runProgram', () => {
   test('run', () => {
@@ -46,7 +49,7 @@ describe('effects', () => {
       func: () => {
         throw new Error('message')
       },
-      failure: (error: Partial<Error> | undefined) => error?.message
+      failure: (error) => (ErrorSchema.guard(error) ? error.message : error)
     })
 
     const fromFunctionNoFailure = Effect.from({
@@ -56,13 +59,13 @@ describe('effects', () => {
 
     const fromFunctionSuccess = Effect.from({
       func: () => 1,
-      success: (value) => String(value),
+      success: (value: number) => `${value}`,
       failure: (error) => error
     })
 
     const fromPromiseFailure = Effect.from({
       promise: () => Promise.reject(new Error('message')),
-      failure: (error: Partial<Error> | undefined) => error?.message
+      failure: (error) => (ErrorSchema.guard(error) ? error.message : error)
     })
 
     const fromPromiseNoFailure = Effect.from({
@@ -72,8 +75,8 @@ describe('effects', () => {
 
     const fromPromiseSuccess = Effect.from({
       promise: () => Promise.resolve(1),
-      success: (value: number) => String(value),
-      failure: (error: Partial<Error> | undefined) => error?.message
+      success: (value: number) => `${value}`,
+      failure: (error) => (ErrorSchema.guard(error) ? error.message : error)
     })
 
     expect(fromAction[0]((x) => x)).toEqual('action')
