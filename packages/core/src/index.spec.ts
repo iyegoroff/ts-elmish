@@ -46,7 +46,7 @@ describe('effects', () => {
       func: () => {
         throw new Error('message')
       },
-      failure: (error) => (error as Partial<Error> | undefined)?.message
+      failure: (error: Partial<Error> | undefined) => error?.message
     })
 
     const fromFunctionNoFailure = Effect.from({
@@ -62,7 +62,7 @@ describe('effects', () => {
 
     const fromPromiseFailure = Effect.from({
       promise: () => Promise.reject(new Error('message')),
-      failure: (error) => (error as Partial<Error> | undefined)?.message
+      failure: (error: Partial<Error> | undefined) => error?.message
     })
 
     const fromPromiseNoFailure = Effect.from({
@@ -72,8 +72,8 @@ describe('effects', () => {
 
     const fromPromiseSuccess = Effect.from({
       promise: () => Promise.resolve(1),
-      success: (value) => String(value),
-      failure: (error) => (error as Partial<Error> | undefined)?.message
+      success: (value: number) => String(value),
+      failure: (error: Partial<Error> | undefined) => error?.message
     })
 
     expect(fromAction[0]((x) => x)).toEqual('action')

@@ -1,12 +1,13 @@
 {
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "preset-version": "pnpm run lint -- --fix && pnpm run build -r && pnpm t && git add -u && git commit -am lint || :",
+    "preset-version": "pnpm run lint -- --fix && pnpm run build -r && pnpm t && pnpm run type-coverage && git add -u && git commit -am lint || :",
     "set-version": "pnpm -r update-version",
     "postset-version": "tag=v\"$(dot-json packages/core/package.json version)\" && git commit -am \"$tag [skip ci]\" && git tag $tag && git push && git push --tags",
     "lint": "eslint .",
     "test": "jest",
-    "coverage": "codecov"
+    "coverage": "codecov",
+    "type-coverage": "type-coverage --strict --detail --ignore-files **/dist/* --ignore-files **/blueprint-templates/**/* --ignore-catch"
   },
   "devDependencies": {
     "@react-native-community/eslint-config": "^2.0.0",
@@ -31,6 +32,10 @@
     "jest": "^26.1.0",
     "prettier": "^2.0.5",
     "ts-jest": "^26.1.3",
+    "type-coverage": "^2.9.0",
     "typescript": "^3.9.7"
+  },
+  "typeCoverage": {
+    "atLeast": 100
   }
 }
