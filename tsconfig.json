@@ -9,6 +9,9 @@
     "noEmitOnError": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "allowUnreachableCode": false,
     "removeComments": true,
     "types": []
   }

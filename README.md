@@ -13,6 +13,13 @@ Elmish architecture in Typescript
 [![devDependencies Status](https://img.shields.io/david/dev/iyegoroff/ts-elmish)](https://david-dm.org/iyegoroff/ts-elmish?type=dev)
 [![npm](https://img.shields.io/npm/l/@ts-elmish/core.svg?t=1495378566925)](https://www.npmjs.com/package/@ts-elmish/core)
 
+## eslint-plugin
+
+[![npm version](https://badge.fury.io/js/%40ts-elmish%2Feslint-plugin.svg?t=1495378566925)](https://badge.fury.io/js/%40ts-elmish%2Feslint-plugin)
+[![Dependency Status](https://img.shields.io/david/iyegoroff/ts-elmish?path=packages%2Feslint-plugin)](https://david-dm.org/iyegoroff/ts-elmish?path=packages%2Feslint-plugin)
+[![devDependencies Status](https://img.shields.io/david/dev/iyegoroff/ts-elmish?path=packages%2Feslint-plugin)](https://david-dm.org/iyegoroff/ts-elmish?path=packages%2Feslint-plugin&type=dev)
+[![npm](https://img.shields.io/npm/l/@ts-elmish/eslint-plugin.svg?t=1495378566925)](https://www.npmjs.com/package/@ts-elmish/eslint-plugin)
+
 ## react
 
 [![npm version](https://badge.fury.io/js/%40ts-elmish%2Freact.svg?t=1495378566925)](https://badge.fury.io/js/%40ts-elmish%2Freact)
