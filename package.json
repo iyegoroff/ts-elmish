@@ -1,9 +1,6 @@
 {
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "prex": "echo prex",
-    "x": "echo x",
-    "postx": "echo postx",
     "preset-version": "pnpm run lint -- --fix && pnpm run build -r && pnpm t && pnpm run type-coverage && git add -u && git commit -am lint || :",
     "set-version": "pnpm -r update-version",
     "postset-version": "tag=v\"$(dot-json packages/core/package.json version)\" && git commit -am \"$tag [skip ci]\" && git tag $tag && git push && git push --tags",
