@@ -5,7 +5,7 @@ import { isDefined } from 'ts-is-defined'
 import { ruleCreator } from '../utils'
 import { RuleListener } from '@typescript-eslint/experimental-utils/dist/ts-eslint'
 
-const rule: any = ruleCreator({
+const rule = ruleCreator({
   defaultOptions: [],
   meta: {
     docs: {
