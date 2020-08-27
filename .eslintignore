@@ -7,3 +7,4 @@ coverage
 *.js
 *.css.d.ts
 blueprint-templates
+packages/eslint-plugin/tests
