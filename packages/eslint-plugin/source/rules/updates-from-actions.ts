@@ -2,7 +2,6 @@ import { TSESTree as es } from '@typescript-eslint/experimental-utils'
 import { camelCase } from 'change-case'
 import { getLoc, getParserServices } from 'eslint-etc'
 import { isDefined } from 'ts-is-defined'
-// import * as ts from 'typescript'
 import { ruleCreator } from '../utils'
 import { RuleListener } from '@typescript-eslint/experimental-utils/dist/ts-eslint'
 
@@ -11,7 +10,7 @@ const rule = ruleCreator({
   meta: {
     docs: {
       category: 'Best Practices',
-      description: 'Forbids the use of `enum`.',
+      description: 'Eslint codegen',
       recommended: false
     },
     fixable: undefined,

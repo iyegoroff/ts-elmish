@@ -1,7 +1,7 @@
 import { stripIndent } from 'common-tags'
 import { fromFixture } from 'eslint-etc'
 import { ruleTester } from '../utils'
-const rule = require('../../source/rules/updates-from-actions')
+import rule from '../../source/rules/updates-from-actions'
 
 ruleTester({ types: true }).run('updates-from-actions', rule, {
   valid: [
