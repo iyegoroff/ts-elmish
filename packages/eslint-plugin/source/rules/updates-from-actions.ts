@@ -13,7 +13,7 @@ const rule = ruleCreator({
       description: 'Eslint codegen',
       recommended: false
     },
-    fixable: undefined,
+    fixable: 'code',
     messages: {
       noAction: 'needs action creator function',
       noUpdate: 'needs update function',
@@ -30,9 +30,8 @@ const rule = ruleCreator({
     return {
       Program: (node: es.Program) => {
         let hasState = false
-        let hasAction = false
-        let hasUpdate = false
         let hasInvalidUpdate = false
+        let action: es.TSTypeAliasDeclaration | undefined
         let update: es.Expression | undefined
         const requiredActions: es.TSTypeOperator[] = []
         const exportedActions: string[] = []
@@ -67,14 +66,11 @@ const rule = ruleCreator({
             code.getText(val.id) === 'Action' &&
             val.typeAnnotation.type === 'TSUnionType'
           ) {
-            hasAction = true
+            action = val
 
-            val.typeAnnotation.types.forEach((action) => {
-              if (
-                action.type === 'TSTypeOperator' &&
-                action.typeAnnotation?.type === 'TSTupleType'
-              ) {
-                requiredActions.push(action)
+            val.typeAnnotation.types.forEach((act) => {
+              if (act.type === 'TSTypeOperator' && act.typeAnnotation?.type === 'TSTupleType') {
+                requiredActions.push(act)
               }
             })
           }
@@ -99,15 +95,16 @@ const rule = ruleCreator({
             code.getText(decl.declarations[0].id).startsWith('update') &&
             isDefined(decl.declarations[0].init)
           ) {
-            hasUpdate = true
-
             update = decl.declarations[0].init
           }
         })
 
-        if (!(hasUpdate && hasState && hasAction && isDefined(update))) {
+        if (!(isDefined(update) && hasState && isDefined(action) && isDefined(update))) {
           return
         }
+
+        const defUpdate = update
+        const defAction = action
 
         if (
           update.type === 'ArrowFunctionExpression' &&
@@ -145,15 +142,14 @@ const rule = ruleCreator({
           })
         }
 
-        requiredActions.forEach((action) => {
+        requiredActions.forEach((act) => {
           if (
-            isDefined(update) &&
-            action.typeAnnotation?.type === 'TSTupleType' &&
-            action.typeAnnotation.elementTypes.length > 0 &&
-            action.typeAnnotation.elementTypes[0].type === 'TSLiteralType' &&
-            action.typeAnnotation.elementTypes[0].literal.type === 'Literal'
+            act.typeAnnotation?.type === 'TSTupleType' &&
+            act.typeAnnotation.elementTypes.length > 0 &&
+            act.typeAnnotation.elementTypes[0].type === 'TSLiteralType' &&
+            act.typeAnnotation.elementTypes[0].literal.type === 'Literal'
           ) {
-            const { raw } = action.typeAnnotation.elementTypes[0].literal
+            const { raw } = act.typeAnnotation.elementTypes[0].literal
             const name = camelCase(raw)
             const actionName = `${name}Action`
             const updateName = `${name}Update`
@@ -164,7 +160,7 @@ const rule = ruleCreator({
             ) {
               context.report({
                 messageId: 'invalidUpdate',
-                loc: getLoc(esTreeNodeToTSNodeMap.get(update))
+                loc: getLoc(esTreeNodeToTSNodeMap.get(defUpdate))
               })
             }
 
@@ -173,16 +169,33 @@ const rule = ruleCreator({
               !declaredActions.includes(actionName) &&
               !comments.some((c) => new RegExp(`const ${actionName} =`).test(c))
             ) {
+              const { elementTypes } = act.typeAnnotation
+
               context.report({
                 messageId: 'noAction',
-                loc: getLoc(esTreeNodeToTSNodeMap.get(action))
+                loc: getLoc(esTreeNodeToTSNodeMap.get(act)),
+                fix: (fixer) => {
+                  const val =
+                    elementTypes.length === 1
+                      ? ''
+                      : elementTypes.length === 2
+                      ? `val: ${code.getText(elementTypes[1])}`
+                      : `val: readonly ${code
+                          .getText(act.typeAnnotation)
+                          .replace(`${actionName}, `, '')}`
+
+                  return fixer.insertTextAfter(
+                    defAction,
+                    `\n\n// const ${actionName} = (${val}): Action => [${raw}, val]`
+                  )
+                }
               })
             }
 
             if (!exportedUpdates.includes(updateName) && !declaredUpdates.includes(updateName)) {
               context.report({
                 messageId: 'noUpdate',
-                loc: getLoc(esTreeNodeToTSNodeMap.get(action))
+                loc: getLoc(esTreeNodeToTSNodeMap.get(act))
               })
             }
           }

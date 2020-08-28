@@ -115,7 +115,58 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
         export type XState = State
         export type XAction = Action
         export type XStateEffect = StateEffect
-      `
+      `,
+      {
+        output: stripIndent`
+          // INVALID - noAction
+          import { setErrorAction, setErrorUpdate } from './set-error'
+
+          type State = {
+            readonly x: number
+            readonly y: number
+          }
+
+          type Action =
+            | readonly ['set-x', number]
+            | readonly ['set-y', number]
+            | readonly ['set-error', string]
+
+          // const setXAction = (val: number): Action => ['set-x', val]
+
+          // const setYAction = (val: number): Action => ['set-y', val]
+
+          type StateEffect = readonly [State, Effect<Action>]
+
+          export const initX = (state: State): StateEffect => {
+            return [state, Effect.none()]
+          }
+
+          export const updateX = (state: State, action: Action): StateEffect => {
+            switch (action[0]) {
+              case 'set-x':
+                return setXUpdate(state, action)
+
+              case 'set-y':
+                return setYUpdate(state, action)
+
+              case 'set-error':
+                return setErrorUpdate(state, action)
+            }
+          }
+
+          const setXUpdate = (state: State, [, x]: readonly ['set-x', number]): StateEffect => {
+            return [{ ...state, x }, Effect.none()]
+          }
+
+          const setYUpdate = (state: State, [, y]: readonly ['set-y', number]): StateEffect => {
+            return [{ ...state, y }, Effect.none()]
+          }
+
+          export type XState = State
+          export type XAction = Action
+          export type XStateEffect = StateEffect
+        `
+      }
     ),
     fromFixture(
       stripIndent`
@@ -165,7 +216,58 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
         export type XState = State
         export type XAction = Action
         export type XStateEffect = StateEffect
-      `
+      `,
+      {
+        output: stripIndent`
+          // INVALID - noAction
+          import { setErrorAction, setErrorUpdate } from './set-error'
+
+          type State = {
+            readonly x: number
+            readonly y: number
+          }
+
+          type Action =
+            | readonly ['set-x', number]
+            | readonly ['set-y', number]
+            | readonly ['set-error', string]
+
+          // const setYAction = (val: number): Action => ['set-y', val]
+
+          const setXAction = (val: number): Action => ['set-x', val]
+
+          type StateEffect = readonly [State, Effect<Action>]
+
+          export const initX = (state: State): StateEffect => {
+            return [state, Effect.none()]
+          }
+
+          export const updateX = (state: State, action: Action): StateEffect => {
+            switch (action[0]) {
+              case 'set-x':
+                return setXUpdate(state, action)
+
+              case 'set-y':
+                return setYUpdate(state, action)
+
+              case 'set-error':
+                return setErrorUpdate(state, action)
+            }
+          }
+
+          const setXUpdate = (state: State, [, x]: readonly ['set-x', number]): StateEffect => {
+            return [{ ...state, x }, Effect.none()]
+          }
+
+          const setYUpdate = (state: State, [, y]: readonly ['set-y', number]): StateEffect => {
+            return [{ ...state, y }, Effect.none()]
+          }
+
+          export type XState = State
+          export type XAction = Action
+          export type XStateEffect = StateEffect
+        `
+      }
     ),
     fromFixture(
       stripIndent`
@@ -216,7 +318,59 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
         export type XState = State
         export type XAction = Action
         export type XStateEffect = StateEffect
-      `
+      `,
+      {
+        output: stripIndent`
+          // INVALID - noAction
+          import { setErrorUpdate } from './set-error'
+
+          type State = {
+            readonly x: number
+            readonly y: number
+          }
+
+          type Action =
+            | readonly ['set-x', number]
+            | readonly ['set-y', number]
+            | readonly ['set-error', string]
+
+          // const setErrorAction = (val: string): Action => ['set-error', val]
+
+          const setXAction = (val: number): Action => ['set-x', val]
+          // const setYAction = (val: number): Action => ['set-y', val]
+
+          type StateEffect = readonly [State, Effect<Action>]
+
+          export const initX = (state: State): StateEffect => {
+            return [state, Effect.none()]
+          }
+
+          export const updateX = (state: State, action: Action): StateEffect => {
+            switch (action[0]) {
+              case 'set-x':
+                return setXUpdate(state, action)
+
+              case 'set-y':
+                return setYUpdate(state, action)
+
+              case 'set-error':
+                return setErrorUpdate(state, action)
+            }
+          }
+
+          const setXUpdate = (state: State, [, x]: readonly ['set-x', number]): StateEffect => {
+            return [{ ...state, x }, Effect.none()]
+          }
+
+          const setYUpdate = (state: State, [, y]: readonly ['set-y', number]): StateEffect => {
+            return [{ ...state, y }, Effect.none()]
+          }
+
+          export type XState = State
+          export type XAction = Action
+          export type XStateEffect = StateEffect
+        `
+      }
     ),
     fromFixture(
       stripIndent`
@@ -368,7 +522,59 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
         export type XState = State
         export type XAction = Action
         export type XStateEffect = StateEffect
-      `
+      `,
+      {
+        output: stripIndent`
+          // INVALID - noAction, noUpdate
+          import { Effect, Action } from '@ts-elmish/core'
+
+          type State = {
+            readonly x: number
+            readonly y: number
+          }
+
+          type Action =
+            | readonly ['set-x', number]
+            | readonly ['set-y', number]
+            | readonly ['set-error', string]
+
+          // const setErrorAction = (val: string): Action => ['set-error', val]
+
+          const setXAction = (val: number): Action => ['set-x', val]
+          // const setYAction = (val: number): Action => ['set-y', val]
+
+          type StateEffect = readonly [State, Effect<Action>]
+
+          export const initX = (state: State): StateEffect => {
+            return [state, Effect.none()]
+          }
+
+          export const updateX = (state: State, action: Action): StateEffect => {
+            switch (action[0]) {
+              case 'set-x':
+                return setXUpdate(state, action)
+
+              case 'set-y':
+                return setYUpdate(state, action)
+
+              case 'set-error':
+                return setErrorUpdate(state, action)
+            }
+          }
+
+          const setXUpdate = (state: State, [, x]: readonly ['set-x', number]): StateEffect => {
+            return [{ ...state, x }, Effect.none()]
+          }
+
+          const setYUpdate = (state: State, [, y]: readonly ['set-y', number]): StateEffect => {
+            return [{ ...state, y }, Effect.none()]
+          }
+
+          export type XState = State
+          export type XAction = Action
+          export type XStateEffect = StateEffect
+        `
+      }
     ),
     fromFixture(
       stripIndent`
