@@ -33,6 +33,9 @@
   },
   "author": "iyegoroff <iegoroff@gmail.com>",
   "license": "MIT",
+  "peerDependencies": {
+    "@ts-elmish/core": "workspace:*"
+  },
   "dependencies": {
     "@typescript-eslint/experimental-utils": "^3.10.1",
     "@typescript-eslint/parser": "^3.10.1",

@@ -148,7 +148,7 @@ const rule = ruleCreator({
           if (
             isDefined(update) &&
             action.typeAnnotation?.type === 'TSTupleType' &&
-            action.typeAnnotation.elementTypes.length > 1 &&
+            action.typeAnnotation.elementTypes.length > 0 &&
             action.typeAnnotation.elementTypes[0].type === 'TSLiteralType' &&
             action.typeAnnotation.elementTypes[0].literal.type === 'Literal'
           ) {
