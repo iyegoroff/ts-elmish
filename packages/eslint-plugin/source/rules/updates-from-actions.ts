@@ -180,13 +180,13 @@ const rule = ruleCreator({
                       ? ''
                       : elementTypes.length === 2
                       ? `val: ${code.getText(elementTypes[1])}`
-                      : `val: readonly ${code
-                          .getText(act.typeAnnotation)
-                          .replace(`${actionName}, `, '')}`
+                      : `val: readonly ${code.getText(act.typeAnnotation).replace(`${raw}, `, '')}`
 
-                  return fixer.insertTextAfter(
-                    defAction,
-                    `\n\n// const ${actionName} = (${val}): Action => [${raw}, val]`
+                  return fixer.insertTextAfterRange(
+                    [defAction.range[0], defAction.range[1] + 1],
+                    `\n// const ${actionName} = (${val}): Action => [${raw}${
+                      elementTypes.length === 1 ? '' : ', val'
+                    }]`
                   )
                 }
               })

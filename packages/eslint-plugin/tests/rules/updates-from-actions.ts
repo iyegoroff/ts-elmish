@@ -132,7 +132,6 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
             | readonly ['set-error', string]
 
           // const setXAction = (val: number): Action => ['set-x', val]
-
           // const setYAction = (val: number): Action => ['set-y', val]
 
           type StateEffect = readonly [State, Effect<Action>]
@@ -233,7 +232,6 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
             | readonly ['set-error', string]
 
           // const setYAction = (val: number): Action => ['set-y', val]
-
           const setXAction = (val: number): Action => ['set-x', val]
 
           type StateEffect = readonly [State, Effect<Action>]
@@ -335,7 +333,6 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
             | readonly ['set-error', string]
 
           // const setErrorAction = (val: string): Action => ['set-error', val]
-
           const setXAction = (val: number): Action => ['set-x', val]
           // const setYAction = (val: number): Action => ['set-y', val]
 
@@ -539,7 +536,6 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
             | readonly ['set-error', string]
 
           // const setErrorAction = (val: string): Action => ['set-error', val]
-
           const setXAction = (val: number): Action => ['set-x', val]
           // const setYAction = (val: number): Action => ['set-y', val]
 
