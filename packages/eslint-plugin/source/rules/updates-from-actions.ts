@@ -142,7 +142,7 @@ const rule = ruleCreator({
           })
         }
 
-        requiredActions.forEach((act) => {
+        ;[...requiredActions].reverse().forEach((act) => {
           if (
             act.typeAnnotation?.type === 'TSTupleType' &&
             act.typeAnnotation.elementTypes.length > 0 &&
@@ -182,9 +182,9 @@ const rule = ruleCreator({
                       ? `val: ${code.getText(elementTypes[1])}`
                       : `val: readonly ${code.getText(act.typeAnnotation).replace(`${raw}, `, '')}`
 
-                  return fixer.insertTextAfterRange(
-                    [defAction.range[0], defAction.range[1] + 1],
-                    `\n// const ${actionName} = (${val}): Action => [${raw}${
+                  return fixer.insertTextAfter(
+                    defAction,
+                    `\n\n// const ${actionName} = (${val}): Action => [${raw}${
                       elementTypes.length === 1 ? '' : ', val'
                     }]`
                   )
