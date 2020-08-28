@@ -20,9 +20,11 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
           | readonly ['set-x', number]
           | readonly ['set-y', number]
           | readonly ['set-error', string]
+          | readonly ['can-navigate']
 
-        const setXAction = (val: number): Action => ['set-x', val]
+        export const setXAction = (val: number): Action => ['set-x', val]
         // const setYAction = (val: number): Action => ['set-y', val]
+        // const canNavigateAction = (): Action => ['can-navigate']
 
         type StateEffect = readonly [State, Effect<Action>]
 
@@ -40,7 +42,14 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
 
             case 'set-error':
               return setErrorUpdate(state, action)
+
+            case 'can-navigate':
+              return canNavigateUpdate(state, action)
           }
+        }
+
+        const canNavigateUpdate = (state: State, action: readonly ['can-navigate']): StateEffect => {
+          return [state, Effects.none()]
         }
 
         const setXUpdate = (state: State, [, x]: readonly ['set-x', number]): StateEffect => {

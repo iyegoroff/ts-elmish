@@ -79,8 +79,10 @@ const rule = ruleCreator({
             })
           }
 
-          if (val.type === 'VariableDeclaration' && val.declarations.length > 0) {
-            const name = code.getText(val.declarations[0].id)
+          const decl = val.type === 'ExportNamedDeclaration' ? val.declaration : val
+
+          if (decl?.type === 'VariableDeclaration' && decl.declarations.length > 0) {
+            const name = code.getText(decl.declarations[0].id)
 
             if (name.endsWith('Action')) {
               declaredActions.push(name)
@@ -92,15 +94,14 @@ const rule = ruleCreator({
           }
 
           if (
-            val.type === 'ExportNamedDeclaration' &&
-            val.declaration?.type === 'VariableDeclaration' &&
-            val.declaration?.declarations.length > 0 &&
-            code.getText(val.declaration?.declarations[0].id).startsWith('update') &&
-            isDefined(val.declaration?.declarations[0].init)
+            decl?.type === 'VariableDeclaration' &&
+            decl.declarations.length > 0 &&
+            code.getText(decl.declarations[0].id).startsWith('update') &&
+            isDefined(decl.declarations[0].init)
           ) {
             hasUpdate = true
 
-            update = val.declaration?.declarations[0].init
+            update = decl.declarations[0].init
           }
         })
 
