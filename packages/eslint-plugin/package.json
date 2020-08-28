@@ -1,6 +1,6 @@
 {
   "name": "@ts-elmish/eslint-plugin",
-  "version": "0.0.35",
+  "version": "0.0.36",
   "private": false,
   "description": "Eslint-based codegen",
   "main": "src/index.ts",
