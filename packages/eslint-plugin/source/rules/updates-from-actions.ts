@@ -33,6 +33,7 @@ const rule = ruleCreator({
         let hasInvalidUpdate = false
         let action: es.TSTypeAliasDeclaration | undefined
         let update: es.Expression | undefined
+        let stateEffect: es.TSTypeAliasDeclaration | undefined
         const requiredActions: es.TSTypeOperator[] = []
         const exportedActions: string[] = []
         const declaredActions: string[] = []
@@ -59,6 +60,10 @@ const rule = ruleCreator({
 
           if (val.type === 'TSTypeAliasDeclaration' && code.getText(val.id) === 'State') {
             hasState = true
+          }
+
+          if (val.type === 'TSTypeAliasDeclaration' && code.getText(val.id) === 'StateEffect') {
+            stateEffect = val
           }
 
           if (
@@ -99,12 +104,20 @@ const rule = ruleCreator({
           }
         })
 
-        if (!(isDefined(update) && hasState && isDefined(action) && isDefined(update))) {
+        if (
+          !(
+            hasState &&
+            isDefined(update) &&
+            isDefined(action) &&
+            isDefined(update) &&
+            isDefined(stateEffect)
+          )
+        ) {
           return
         }
 
         const defUpdate = update
-        const defAction = action
+        const defStateEffect = stateEffect
 
         if (
           update.type === 'ArrowFunctionExpression' &&
@@ -142,7 +155,7 @@ const rule = ruleCreator({
           })
         }
 
-        ;[...requiredActions].reverse().forEach((act) => {
+        requiredActions.forEach((act) => {
           if (
             act.typeAnnotation?.type === 'TSTupleType' &&
             act.typeAnnotation.elementTypes.length > 0 &&
@@ -182,11 +195,11 @@ const rule = ruleCreator({
                       ? `val: ${code.getText(elementTypes[1])}`
                       : `val: readonly ${code.getText(act.typeAnnotation).replace(`${raw}, `, '')}`
 
-                  return fixer.insertTextAfter(
-                    defAction,
-                    `\n\n// const ${actionName} = (${val}): Action => [${raw}${
+                  return fixer.insertTextBefore(
+                    defStateEffect,
+                    `// const ${actionName} = (${val}): Action => [${raw}${
                       elementTypes.length === 1 ? '' : ', val'
-                    }]`
+                    }]\n\n`
                   )
                 }
               })
