@@ -33,7 +33,7 @@ const rule = ruleCreator({
         let hasInvalidUpdate = false
         let action: es.TSTypeAliasDeclaration | undefined
         let update: es.Expression | undefined
-        let stateEffect: es.TSTypeAliasDeclaration | undefined
+        let init: es.Node | undefined
         const requiredActions: es.TSTypeOperator[] = []
         const exportedActions: string[] = []
         const declaredActions: string[] = []
@@ -60,10 +60,6 @@ const rule = ruleCreator({
 
           if (val.type === 'TSTypeAliasDeclaration' && code.getText(val.id) === 'State') {
             hasState = true
-          }
-
-          if (val.type === 'TSTypeAliasDeclaration' && code.getText(val.id) === 'StateEffect') {
-            stateEffect = val
           }
 
           if (
@@ -102,6 +98,15 @@ const rule = ruleCreator({
           ) {
             update = decl.declarations[0].init
           }
+
+          if (
+            decl?.type === 'VariableDeclaration' &&
+            decl.declarations.length > 0 &&
+            code.getText(decl.declarations[0].id).startsWith('init') &&
+            isDefined(decl.declarations[0].init)
+          ) {
+            init = decl.parent
+          }
         })
 
         if (
@@ -110,14 +115,14 @@ const rule = ruleCreator({
             isDefined(update) &&
             isDefined(action) &&
             isDefined(update) &&
-            isDefined(stateEffect)
+            isDefined(init)
           )
         ) {
           return
         }
 
         const defUpdate = update
-        const defStateEffect = stateEffect
+        const defInit = init
 
         if (
           update.type === 'ArrowFunctionExpression' &&
@@ -196,7 +201,7 @@ const rule = ruleCreator({
                       : `val: readonly ${code.getText(act.typeAnnotation).replace(`${raw}, `, '')}`
 
                   return fixer.insertTextBefore(
-                    defStateEffect,
+                    defInit,
                     `// const ${actionName} = (${val}): Action => [${raw}${
                       elementTypes.length === 1 ? '' : ', val'
                     }]\n\n`
