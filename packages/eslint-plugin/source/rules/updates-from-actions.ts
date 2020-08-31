@@ -32,6 +32,7 @@ const rule = ruleCreator({
         let hasState = false
         let hasInvalidUpdate = false
         let action: es.TSTypeAliasDeclaration | undefined
+        let updateNode: es.Node | undefined
         let update: es.Expression | undefined
         let init: es.Node | undefined
         const requiredActions: Array<{
@@ -77,17 +78,25 @@ const rule = ruleCreator({
               if (
                 act.type === 'TSTypeOperator' &&
                 act.typeAnnotation?.type === 'TSTupleType' &&
-                act.typeAnnotation.elementTypes.length > 0 &&
-                act.typeAnnotation.elementTypes[0].type === 'TSLiteralType' &&
-                act.typeAnnotation.elementTypes[0].literal.type === 'Literal'
+                act.typeAnnotation.elementTypes.length > 0
               ) {
-                const { raw } = act.typeAnnotation.elementTypes[0].literal
+                const first = act.typeAnnotation.elementTypes[0]
+                const literal =
+                  first.type === 'TSLiteralType' && first.literal.type === 'Literal'
+                    ? first.literal.raw
+                    : first.type === 'TSNamedTupleMember' &&
+                      first.elementType.type === 'TSLiteralType' &&
+                      first.elementType.literal.type === 'Literal'
+                    ? first.elementType.literal.raw
+                    : undefined
 
-                requiredActions.push({
-                  action: act,
-                  literal: raw,
-                  name: camelCase(raw)
-                })
+                if (isDefined(literal)) {
+                  requiredActions.push({
+                    action: act,
+                    literal,
+                    name: camelCase(literal)
+                  })
+                }
               }
             })
           }
@@ -112,6 +121,7 @@ const rule = ruleCreator({
             code.getText(decl.declarations[0].id).startsWith('update') &&
             isDefined(decl.declarations[0].init)
           ) {
+            updateNode = val
             update = decl.declarations[0].init
           }
 
@@ -132,6 +142,7 @@ const rule = ruleCreator({
             isDefined(action) &&
             isDefined(update) &&
             isDefined(init) &&
+            isDefined(updateNode) &&
             update.type === 'ArrowFunctionExpression'
           )
         ) {
@@ -140,6 +151,18 @@ const rule = ruleCreator({
 
         const defUpdate = update
         const defInit = init
+        const defUpdateNode = updateNode
+
+        const params = update.params.map((p, i) => (p.type === 'Identifier' ? p.name : `arg${i}`))
+        const subst =
+          '{\n  switch (action[0]) {\n' +
+          requiredActions
+            .map(
+              (val) =>
+                `    case ${val.literal}:\n      return ${val.name}Update(${params.join(', ')})\n`
+            )
+            .join('\n') +
+          '  }\n}'
 
         if (
           update.body.type === 'BlockStatement' &&
@@ -170,16 +193,6 @@ const rule = ruleCreator({
           })
         } else {
           hasInvalidUpdate = true
-          const params = update.params.map((p, i) => (p.type === 'Identifier' ? p.name : `arg${i}`))
-          const subst =
-            '{\n  switch (action[0]) {\n' +
-            requiredActions
-              .map(
-                (val) =>
-                  `    case ${val.literal}:\n      return ${val.name}Update(${params.join(', ')})\n`
-              )
-              .join('\n') +
-            '  }\n}'
 
           context.report({
             messageId: 'invalidUpdate',
@@ -198,7 +211,8 @@ const rule = ruleCreator({
           ) {
             context.report({
               messageId: 'invalidUpdate',
-              loc: getLoc(esTreeNodeToTSNodeMap.get(defUpdate))
+              loc: getLoc(esTreeNodeToTSNodeMap.get(defUpdate)),
+              fix: (fixer) => fixer.replaceTextRange(defUpdate.body.range, subst)
             })
           }
 
@@ -218,7 +232,11 @@ const rule = ruleCreator({
                   elementTypes.length === 1
                     ? ''
                     : elementTypes.length === 2
-                    ? `val: ${code.getText(elementTypes[1])}`
+                    ? `val: ${code.getText(
+                        elementTypes[1].type === 'TSNamedTupleMember'
+                          ? elementTypes[1].elementType
+                          : elementTypes[1]
+                      )}`
                     : `val: readonly ${code.getText(act.typeAnnotation).replace(`${raw}, `, '')}`
 
                 return fixer.insertTextBefore(
@@ -232,9 +250,25 @@ const rule = ruleCreator({
           }
 
           if (!exportedUpdates.includes(updateName) && !declaredUpdates.includes(updateName)) {
+            const isSetter = raw.startsWith("'set-")
+            const upd = `const ${updateName} = (\n${defUpdate.params
+              .map((p) =>
+                `  ${code.getText(p)}`.replace(
+                  /(\w+)(: Action)/,
+                  isSetter ? `[, ${raw.replace(/'set-(\w+)'/, '$1')}]$2` : '$1$2'
+                )
+              )
+              .join(',\n')
+              .replace('Action', code.getText(act))}\n)${code.getText(
+              defUpdate.returnType
+            )} => {\n  return [${
+              isSetter ? `{ ...state, ${raw.replace(/'set-(\w+)'/, '$1')} }` : 'state'
+            }, Effects.none()]\n}\n\n`
+
             context.report({
               messageId: 'noUpdate',
-              loc: getLoc(esTreeNodeToTSNodeMap.get(act))
+              loc: getLoc(esTreeNodeToTSNodeMap.get(act)),
+              fix: (fixer) => fixer.insertTextBefore(defUpdateNode, upd)
             })
           }
         })
