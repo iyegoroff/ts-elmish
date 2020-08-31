@@ -197,7 +197,7 @@ const rule = ruleCreator({
 
           context.report({
             messageId: 'invalidUpdate',
-            // @ts-expect-error
+            // @ts-expect-error version conflict
             loc: getLoc(esTreeNodeToTSNodeMap.get(update)),
             fix: (fixer) => fixer.replaceTextRange(defUpdate.body.range, subst)
           })
