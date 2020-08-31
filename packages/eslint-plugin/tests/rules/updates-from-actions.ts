@@ -3,6 +3,7 @@ import { fromFixture } from 'eslint-etc'
 import { ruleTester } from '../utils'
 import rule from '../../source/rules/updates-from-actions'
 
+// @ts-ignore
 ruleTester({ types: true }).run('updates-from-actions', rule, {
   valid: [
     fromFixture(

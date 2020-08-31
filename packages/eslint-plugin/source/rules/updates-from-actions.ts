@@ -25,6 +25,7 @@ const rule = ruleCreator({
   name: 'updates-from-actions',
   create: (context): RuleListener => {
     const code = context.getSourceCode()
+    // @ts-ignore
     const { esTreeNodeToTSNodeMap } = getParserServices(context)
 
     return {
@@ -196,6 +197,7 @@ const rule = ruleCreator({
 
           context.report({
             messageId: 'invalidUpdate',
+            // @ts-ignore
             loc: getLoc(esTreeNodeToTSNodeMap.get(update)),
             fix: (fixer) => fixer.replaceTextRange(defUpdate.body.range, subst)
           })
@@ -211,6 +213,7 @@ const rule = ruleCreator({
           ) {
             context.report({
               messageId: 'invalidUpdate',
+              // @ts-ignore
               loc: getLoc(esTreeNodeToTSNodeMap.get(defUpdate)),
               fix: (fixer) => fixer.replaceTextRange(defUpdate.body.range, subst)
             })
@@ -226,6 +229,7 @@ const rule = ruleCreator({
 
             context.report({
               messageId: 'noAction',
+              // @ts-ignore
               loc: getLoc(esTreeNodeToTSNodeMap.get(act)),
               fix: (fixer) => {
                 const val =
@@ -267,6 +271,7 @@ const rule = ruleCreator({
 
             context.report({
               messageId: 'noUpdate',
+              // @ts-ignore
               loc: getLoc(esTreeNodeToTSNodeMap.get(act)),
               fix: (fixer) => fixer.insertTextBefore(defUpdateNode, upd)
             })
