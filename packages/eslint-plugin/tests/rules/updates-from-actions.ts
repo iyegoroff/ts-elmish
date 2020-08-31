@@ -601,8 +601,8 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
           return [state, Effect.none()]
         }
 
-        export const updateX = 1
-                               ~ [invalidUpdate]
+        export const updateX = (state: State, action: Action): StateEffect => [state, Effects.none()]
+                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [invalidUpdate]
 
         const setXUpdate = (state: State, [, x]: readonly ['set-x', number]): StateEffect => {
           return [{ ...state, x }, Effect.none()]
@@ -615,7 +615,58 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
         export type XState = State
         export type XAction = Action
         export type XStateEffect = StateEffect
-      `
+      `,
+      {
+        output: stripIndent`
+          // INVALID - invalidUpdate
+          import { Effect, Action } from '@ts-elmish/core'
+          import { setErrorAction, setErrorUpdate } from './set-error'
+
+          type State = {
+            readonly x: number
+            readonly y: number
+          }
+
+          type Action =
+            | readonly ['set-x', number]
+            | readonly ['set-y', number]
+            | readonly ['set-error', string]
+
+          const setXAction = (val: number): Action => ['set-x', val]
+          // const setYAction = (val: number): Action => ['set-y', val]
+
+          type StateEffect = readonly [State, Effect<Action>]
+
+          export const initX = (state: State): StateEffect => {
+            return [state, Effect.none()]
+          }
+
+          export const updateX = (state: State, action: Action): StateEffect => {
+            switch (action[0]) {
+              case 'set-x':
+                return setXUpdate(state, action)
+
+              case 'set-y':
+                return setYUpdate(state, action)
+
+              case 'set-error':
+                return setErrorUpdate(state, action)
+            }
+          }
+
+          const setXUpdate = (state: State, [, x]: readonly ['set-x', number]): StateEffect => {
+            return [{ ...state, x }, Effect.none()]
+          }
+
+          const setYUpdate = (state: State, [, y]: readonly ['set-y', number]): StateEffect => {
+            return [{ ...state, y }, Effect.none()]
+          }
+
+          export type XState = State
+          export type XAction = Action
+          export type XStateEffect = StateEffect
+        `
+      }
     ),
     fromFixture(
       stripIndent`
@@ -656,7 +707,58 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
         export type XState = State
         export type XAction = Action
         export type XStateEffect = StateEffect
-      `
+      `,
+      {
+        output: stripIndent`
+          // INVALID - invalidUpdate
+          import { Effect, Action } from '@ts-elmish/core'
+          import { setErrorAction, setErrorUpdate } from './set-error'
+
+          type State = {
+            readonly x: number
+            readonly y: number
+          }
+
+          type Action =
+            | readonly ['set-x', number]
+            | readonly ['set-y', number]
+            | readonly ['set-error', string]
+
+          const setXAction = (val: number): Action => ['set-x', val]
+          // const setYAction = (val: number): Action => ['set-y', val]
+
+          type StateEffect = readonly [State, Effect<Action>]
+
+          export const initX = (state: State): StateEffect => {
+            return [state, Effect.none()]
+          }
+
+          export const updateX = (state: State, action: Action): StateEffect => {
+            switch (action[0]) {
+              case 'set-x':
+                return setXUpdate(state, action)
+
+              case 'set-y':
+                return setYUpdate(state, action)
+
+              case 'set-error':
+                return setErrorUpdate(state, action)
+            }
+          }
+
+          const setXUpdate = (state: State, [, x]: readonly ['set-x', number]): StateEffect => {
+            return [{ ...state, x }, Effect.none()]
+          }
+
+          const setYUpdate = (state: State, [, y]: readonly ['set-y', number]): StateEffect => {
+            return [{ ...state, y }, Effect.none()]
+          }
+
+          export type XState = State
+          export type XAction = Action
+          export type XStateEffect = StateEffect
+        `
+      }
     ),
     fromFixture(
       stripIndent`
@@ -697,7 +799,58 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
         export type XState = State
         export type XAction = Action
         export type XStateEffect = StateEffect
-      `
+      `,
+      {
+        output: stripIndent`
+          // INVALID - invalidUpdate
+          import { Effect, Action } from '@ts-elmish/core'
+          import { setErrorAction, setErrorUpdate } from './set-error'
+
+          type State = {
+            readonly x: number
+            readonly y: number
+          }
+
+          type Action =
+            | readonly ['set-x', number]
+            | readonly ['set-y', number]
+            | readonly ['set-error', string]
+
+          const setXAction = (val: number): Action => ['set-x', val]
+          // const setYAction = (val: number): Action => ['set-y', val]
+
+          type StateEffect = readonly [State, Effect<Action>]
+
+          export const initX = (state: State): StateEffect => {
+            return [state, Effect.none()]
+          }
+
+          export const updateX = (state: State, action: Action): StateEffect => {
+            switch (action[0]) {
+              case 'set-x':
+                return setXUpdate(state, action)
+
+              case 'set-y':
+                return setYUpdate(state, action)
+
+              case 'set-error':
+                return setErrorUpdate(state, action)
+            }
+          }
+
+          const setXUpdate = (state: State, [, x]: readonly ['set-x', number]): StateEffect => {
+            return [{ ...state, x }, Effect.none()]
+          }
+
+          const setYUpdate = (state: State, [, y]: readonly ['set-y', number]): StateEffect => {
+            return [{ ...state, y }, Effect.none()]
+          }
+
+          export type XState = State
+          export type XAction = Action
+          export type XStateEffect = StateEffect
+        `
+      }
     ),
     fromFixture(
       stripIndent`
@@ -724,8 +877,8 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
           return [state, Effect.none()]
         }
 
-        export const updateX = (state: State, action: Action): StateEffect => { switch (action[0]) { case 'set-x': { return setXUpdate(state, action) } case 'set-y': { return setYUpdate(state, action) } case 'set-x': { return setErrorUpdate(state, action) } } }
-                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [invalidUpdate]
+        export const updateX = (state: State, action: Action, effects: Effects): StateEffect => { switch (action[0]) { case 'set-x': { return setXUpdate(state, action) } case 'set-y': { return setYUpdate(state, action) } case 'set-x': { return setErrorUpdate(state, action) } } }
+                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [invalidUpdate]
 
         const setXUpdate = (state: State, [, x]: readonly ['set-x', number]): StateEffect => {
           return [{ ...state, x }, Effect.none()]
@@ -738,7 +891,58 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
         export type XState = State
         export type XAction = Action
         export type XStateEffect = StateEffect
-      `
+      `,
+      {
+        output: stripIndent`
+          // INVALID - invalidUpdate
+          import { Effect, Action } from '@ts-elmish/core'
+          import { setErrorAction, setErrorUpdate } from './set-error'
+
+          type State = {
+            readonly x: number
+            readonly y: number
+          }
+
+          type Action =
+            | readonly ['set-x', number]
+            | readonly ['set-y', number]
+            | readonly ['set-error', string]
+
+          const setXAction = (val: number): Action => ['set-x', val]
+          // const setYAction = (val: number): Action => ['set-y', val]
+
+          type StateEffect = readonly [State, Effect<Action>]
+
+          export const initX = (state: State): StateEffect => {
+            return [state, Effect.none()]
+          }
+
+          export const updateX = (state: State, action: Action, effects: Effects): StateEffect => {
+            switch (action[0]) {
+              case 'set-x':
+                return setXUpdate(state, action, effects)
+
+              case 'set-y':
+                return setYUpdate(state, action, effects)
+
+              case 'set-error':
+                return setErrorUpdate(state, action, effects)
+            }
+          }
+
+          const setXUpdate = (state: State, [, x]: readonly ['set-x', number]): StateEffect => {
+            return [{ ...state, x }, Effect.none()]
+          }
+
+          const setYUpdate = (state: State, [, y]: readonly ['set-y', number]): StateEffect => {
+            return [{ ...state, y }, Effect.none()]
+          }
+
+          export type XState = State
+          export type XAction = Action
+          export type XStateEffect = StateEffect
+        `
+      }
     )
   ]
 })
