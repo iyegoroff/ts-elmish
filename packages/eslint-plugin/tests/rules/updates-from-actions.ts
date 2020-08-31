@@ -49,7 +49,7 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
         }
 
         const canNavigateUpdate = (state: State, action: readonly ['can-navigate']): StateEffect => {
-          return [state, Effects.none()]
+          return [state, Effect.none()]
         }
 
         const setXUpdate = (state: State, [, x]: readonly ['set-x', number]): StateEffect => {
@@ -384,12 +384,12 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
         }
 
         type Action =
-          | readonly ['set-x', number]
-            ~~~~~~~~~~~~~~~~~~~~~~~~~~ [noUpdate]
+          | readonly ['set-todo-filter', number]
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [noUpdate]
           | readonly ['set-y', number]
           | readonly ['set-error', string]
 
-        const setXAction = (val: number): Action => ['set-x', val]
+        const setTodoFilterAction = (val: number): Action => ['set-todo-filter', val]
         // const setYAction = (val: number): Action => ['set-y', val]
 
         type StateEffect = readonly [State, Effect<Action>]
@@ -400,8 +400,8 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
 
         export const updateX = (state: State, action: Action): StateEffect => {
           switch (action[0]) {
-            case 'set-x':
-              return setXUpdate(state, action)
+            case 'set-todo-filter':
+              return setTodoFilterUpdate(state, action)
 
             case 'set-y':
               return setYUpdate(state, action)
@@ -431,11 +431,11 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
           }
 
           type Action =
-            | readonly ['set-x', number]
+            | readonly ['set-todo-filter', number]
             | readonly ['set-y', number]
             | readonly ['set-error', string]
 
-          const setXAction = (val: number): Action => ['set-x', val]
+          const setTodoFilterAction = (val: number): Action => ['set-todo-filter', val]
           // const setYAction = (val: number): Action => ['set-y', val]
 
           type StateEffect = readonly [State, Effect<Action>]
@@ -444,17 +444,17 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
             return [state, Effect.none()]
           }
 
-          const setXUpdate = (
+          const setTodoFilterUpdate = (
             state: State,
-            [, x]: readonly ['set-x', number]
+            [, todoFilter]: readonly ['set-todo-filter', number]
           ): StateEffect => {
-            return [{ ...state, x }, Effects.none()]
+            return [{ ...state, todoFilter }, Effect.none()]
           }
 
           export const updateX = (state: State, action: Action): StateEffect => {
             switch (action[0]) {
-              case 'set-x':
-                return setXUpdate(state, action)
+              case 'set-todo-filter':
+                return setTodoFilterUpdate(state, action)
 
               case 'set-y':
                 return setYUpdate(state, action)
@@ -554,7 +554,7 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
             state: State,
             action: readonly ['sets-error', string]
           ): StateEffect => {
-            return [state, Effects.none()]
+            return [state, Effect.none()]
           }
 
           export const updateX = (state: State, action: Action): StateEffect => {
@@ -665,7 +665,7 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
             state: State,
             [, error]: readonly ['set-error', string]
           ): StateEffect => {
-            return [{ ...state, error }, Effects.none()]
+            return [{ ...state, error }, Effect.none()]
           }
 
           export const updateX = (state: State, action: Action): StateEffect => {
@@ -720,8 +720,8 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
           return [state, Effect.none()]
         }
 
-        export const updateX = (state: State, action: Action): StateEffect => [state, Effects.none()]
-                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [invalidUpdate]
+        export const updateX = (state: State, action: Action): StateEffect => [state, Effect.none()]
+                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [invalidUpdate]
 
         const setXUpdate = (state: State, [, x]: readonly ['set-x', number]): StateEffect => {
           return [{ ...state, x }, Effect.none()]

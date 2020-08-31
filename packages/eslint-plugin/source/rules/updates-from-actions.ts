@@ -255,15 +255,15 @@ const rule = ruleCreator({
               .map((p) =>
                 `  ${code.getText(p)}`.replace(
                   /(\w+)(: Action)/,
-                  isSetter ? `[, ${raw.replace(/'set-(\w+)'/, '$1')}]$2` : '$1$2'
+                  isSetter ? `[, ${camelCase(raw.replace(/'set-([\w-]+)'/, '$1'))}]$2` : '$1$2'
                 )
               )
               .join(',\n')
               .replace('Action', code.getText(act))}\n)${code.getText(
               defUpdate.returnType
             )} => {\n  return [${
-              isSetter ? `{ ...state, ${raw.replace(/'set-(\w+)'/, '$1')} }` : 'state'
-            }, Effects.none()]\n}\n\n`
+              isSetter ? `{ ...state, ${camelCase(raw.replace(/'set-([\w-]+)'/, '$1'))} }` : 'state'
+            }, Effect.none()]\n}\n\n`
 
             context.report({
               messageId: 'noUpdate',
