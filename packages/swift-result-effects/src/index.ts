@@ -1,22 +1,13 @@
 import { ElmishEffect } from '@ts-elmish/core'
-import { Effect as BasicEffect } from '@ts-elmish/basic-effects'
+import {
+  Effect as BasicEffect,
+  ActionArgs,
+  FunctionArgs,
+  PromiseArgs
+} from '@ts-elmish/basic-effects'
 import { Result, AsyncResult } from 'ts-swift-result'
 
 export type Effect<Action> = ElmishEffect<Action>
-
-type ActionArgs<Action> = { readonly action: Action }
-
-type FunctionArgs<Action, Success> = {
-  readonly func: () => Success
-  readonly success?: (value: Success) => Action
-  readonly failure: (error: unknown) => Action
-}
-
-type PromiseArgs<Action, Success> = {
-  readonly promise: () => Promise<Success>
-  readonly success?: (value: Success) => Action
-  readonly failure: (error: unknown) => Action
-}
 
 type ResultArgs<Action, Success, Failure> = {
   readonly result: () => Result<Success, Failure>

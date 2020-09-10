@@ -19,7 +19,7 @@
     "dot-json": "^1.2.0",
     "eslint": "^7.7.0",
     "eslint-config-prettier": "^6.11.0",
-    "eslint-config-standard-with-typescript": "^18.0.2",
+    "eslint-config-standard-with-typescript": "^19.0.1",
     "eslint-plugin-functional": "^3.0.2",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-no-null": "^1.0.2",

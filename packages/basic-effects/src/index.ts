@@ -14,15 +14,15 @@ const map = <Action0, Action1>(
 const batch = <Action>(...actions: ReadonlyArray<Effect<Action>>): Effect<Action> =>
   ([] as Effect<Action>).concat(...actions)
 
-type ActionArgs<Action> = { readonly action: Action }
+export type ActionArgs<Action> = { readonly action: Action }
 
-type FunctionArgs<Action, Success> = {
+export type FunctionArgs<Action, Success> = {
   readonly func: () => Success
   readonly success?: (value: Success) => Action
   readonly failure: (error: unknown) => Action
 }
 
-type PromiseArgs<Action, Success> = {
+export type PromiseArgs<Action, Success> = {
   readonly promise: () => Promise<Success>
   readonly success?: (value: Success) => Action
   readonly failure: (error: unknown) => Action

@@ -10,7 +10,7 @@ importers:
       dot-json: 1.2.0
       eslint: 7.8.1
       eslint-config-prettier: 6.11.0_eslint@7.8.1
-      eslint-config-standard-with-typescript: 18.0.2_930e08ce87cd5ebad5c8e7a855eba566
+      eslint-config-standard-with-typescript: 19.0.1_930e08ce87cd5ebad5c8e7a855eba566
       eslint-plugin-functional: 3.0.2_eslint@7.8.1+typescript@4.0.2
       eslint-plugin-import: 2.22.0_eslint@7.8.1
       eslint-plugin-no-null: 1.0.2_eslint@7.8.1
@@ -36,7 +36,7 @@ importers:
       dot-json: ^1.2.0
       eslint: ^7.7.0
       eslint-config-prettier: ^6.11.0
-      eslint-config-standard-with-typescript: ^18.0.2
+      eslint-config-standard-with-typescript: ^19.0.1
       eslint-plugin-functional: ^3.0.2
       eslint-plugin-import: ^2.22.0
       eslint-plugin-no-null: ^1.0.2
@@ -3221,10 +3221,10 @@ packages:
       eslint: '>=3.14.1'
     resolution:
       integrity: sha512-oB8cpLWSAjOVFEJhhyMZh6NOEOtBVziaqdDQ86+qhDHFbZXoRTM7pNSvFRfW/W/L/LrQ38C99J5CGuRBBzBsdA==
-  /eslint-config-standard-with-typescript/18.0.2_930e08ce87cd5ebad5c8e7a855eba566:
+  /eslint-config-standard-with-typescript/19.0.1_930e08ce87cd5ebad5c8e7a855eba566:
     dependencies:
       '@typescript-eslint/eslint-plugin': 4.1.0_b6bc46430148c1bc3b139457a4312fe7
-      '@typescript-eslint/parser': 3.10.1_eslint@7.8.1+typescript@4.0.2
+      '@typescript-eslint/parser': 4.1.0_eslint@7.8.1+typescript@4.0.2
       eslint: 7.8.1
       eslint-config-standard: 14.1.1_8cc67b666ce1c4ba83fc2c9d10c70f54
       eslint-plugin-import: 2.22.0_eslint@7.8.1
@@ -3234,7 +3234,7 @@ packages:
       typescript: 4.0.2
     dev: true
     peerDependencies:
-      '@typescript-eslint/eslint-plugin': '>=3.0.1'
+      '@typescript-eslint/eslint-plugin': '>=4.0.1'
       eslint: '>=6.2.2'
       eslint-plugin-import: '>=2.18.0'
       eslint-plugin-node: '>=9.1.0'
@@ -3242,7 +3242,7 @@ packages:
       eslint-plugin-standard: '>=4.0.0'
       typescript: '>=3.9'
     resolution:
-      integrity: sha512-6D++u/gifJgj2hQ13e+YRyNs+1v3oihkfsL36P6HjeQjiOBdhRC/0wq3PRqfOwFA0hMCkcWBvhfO0GXWtGW9bg==
+      integrity: sha512-hAKj81+f4a+9lnvpHwZ4XSL672CbwSe5UJ7fTdL/RsQdqs4IjHudMETZuNQwwU7NlYpBTF9se7FRf5Pp7CVdag==
   /eslint-config-standard/14.1.1_8cc67b666ce1c4ba83fc2c9d10c70f54:
     dependencies:
       eslint: 7.8.1
