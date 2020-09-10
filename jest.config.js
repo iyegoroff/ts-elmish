@@ -1,4 +1,9 @@
-const projects = ['packages/core', 'examples/todos']
+const projects = [
+  'packages/core',
+  'packages/basic-effects',
+  'packages/swift-result-effects',
+  'examples/todos'
+]
 
 const config = {
   moduleFileExtensions: ['js', 'ts'],

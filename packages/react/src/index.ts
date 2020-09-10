@@ -1,5 +1,5 @@
 import React from 'react'
-import { runProgram, Dispatch, Effect } from '@ts-elmish/core'
+import { runProgram, Dispatch, ElmishEffect as Effect } from '@ts-elmish/core'
 import shallowEqual from './shallowEqual'
 
 type AssertDispatch<T> = T extends { readonly dispatch: unknown } ? never : T

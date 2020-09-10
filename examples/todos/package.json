@@ -10,6 +10,7 @@
   "dependencies": {
     "@hot-loader/react-dom": "^16.13.0",
     "@ts-elmish/core": "workspace:*",
+    "@ts-elmish/basic-effects": "workspace:*",
     "@ts-elmish/react": "workspace:*",
     "react": "^16.13.1",
     "react-dom": "16.13.0",

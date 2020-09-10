@@ -1,4 +1,4 @@
-import { Effect } from '@ts-elmish/core'
+import { Effect } from '@ts-elmish/basic-effects'
 
 type State = {
   readonly count: number

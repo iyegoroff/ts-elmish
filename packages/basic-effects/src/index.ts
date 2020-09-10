@@ -1,4 +1,6 @@
-import { Effect } from './program'
+import { ElmishEffect } from '@ts-elmish/core'
+
+export type Effect<Action> = ElmishEffect<Action>
 
 const empty: Effect<never> = []
 
@@ -13,11 +15,13 @@ const batch = <Action>(...actions: ReadonlyArray<Effect<Action>>): Effect<Action
   ([] as Effect<Action>).concat(...actions)
 
 type ActionArgs<Action> = { readonly action: Action }
+
 type FunctionArgs<Action, Success> = {
   readonly func: () => Success
   readonly success?: (value: Success) => Action
   readonly failure: (error: unknown) => Action
 }
+
 type PromiseArgs<Action, Success> = {
   readonly promise: () => Promise<Success>
   readonly success?: (value: Success) => Action
@@ -64,7 +68,7 @@ function from<Action, Success = unknown>(
   }
 }
 
-export const Effects = {
+export const Effect = {
   none,
   from,
   map,

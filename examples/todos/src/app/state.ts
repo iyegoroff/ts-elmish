@@ -1,7 +1,8 @@
 import { Dict, put, omit } from 'ts-micro-dict'
 import { CounterState, CounterAction, initCounter, updateCounter } from '../counter'
 import { assertIsDefined } from 'ts-is-defined'
-import { Effect, Action } from '@ts-elmish/core'
+import { Action } from '@ts-elmish/core'
+import { Effect } from '@ts-elmish/basic-effects'
 
 type Id = string
 

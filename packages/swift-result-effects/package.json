@@ -1,0 +1,49 @@
+{
+  "name": "@ts-elmish/swift-result-effects",
+  "version": "0.0.48",
+  "private": false,
+  "description": "ts-swift-result powered effects for ts-elmish",
+  "main": "src/index.ts",
+  "publishConfig": {
+    "main": "dist/umd/index.js",
+    "module": "dist/index.js",
+    "browser": "dist/index.js",
+    "types": "dist/index.d.ts"
+  },
+  "scripts": {
+    "update-version": "npm version",
+    "build:dts": "tsc -p ./src -d true --emitDeclarationOnly true --removeComments false",
+    "build:umd": "tsc -p ./src -m umd -t es5 --outDir ./dist/umd",
+    "build:es6": "tsc -p ./src",
+    "build": "rm -rf dist && mkdir dist && npm run build:dts && npm run build:umd && npm run build:es6"
+  },
+  "keywords": [
+    "elmish",
+    "typescript"
+  ],
+  "files": [
+    "dist",
+    "src"
+  ],
+  "bugs": {
+    "url": "https://github.com/iyegoroff/ts-elmish/issues"
+  },
+  "homepage": "https://github.com/iyegoroff/ts-elmish#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iyegoroff/ts-elmish.git"
+  },
+  "author": "iyegoroff <iegoroff@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@ts-elmish/basic-effects": "workspace:*"
+  },
+  "peerDependencies": {
+    "@ts-elmish/core": "workspace:*",
+    "ts-swift-result": "^3"
+  },
+  "devDependencies": {
+    "@ts-elmish/core": "workspace:*",
+    "ts-swift-result": "^3"
+  }
+}

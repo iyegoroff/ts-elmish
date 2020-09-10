@@ -20,6 +20,20 @@ Elmish architecture in Typescript
 [![devDependencies Status](https://img.shields.io/david/dev/iyegoroff/ts-elmish?path=packages%2Feslint-plugin)](https://david-dm.org/iyegoroff/ts-elmish?path=packages%2Feslint-plugin&type=dev)
 [![npm](https://img.shields.io/npm/l/@ts-elmish/eslint-plugin.svg?t=1495378566925)](https://www.npmjs.com/package/@ts-elmish/eslint-plugin)
 
+## basic-effects
+
+[![npm version](https://badge.fury.io/js/%40ts-elmish%2Fbasic-effects.svg?t=1495378566925)](https://badge.fury.io/js/%40ts-elmish%2Fbasic-effects)
+[![Dependency Status](https://img.shields.io/david/iyegoroff/ts-elmish?path=packages%2Fbasic-effects)](https://david-dm.org/iyegoroff/ts-elmish?path=packages%2Fbasic-effects)
+[![devDependencies Status](https://img.shields.io/david/dev/iyegoroff/ts-elmish?path=packages%2Fbasic-effects)](https://david-dm.org/iyegoroff/ts-elmish?path=packages%2Fbasic-effects&type=dev)
+[![npm](https://img.shields.io/npm/l/@ts-elmish/basic-effects.svg?t=1495378566925)](https://www.npmjs.com/package/@ts-elmish/basic-effects)
+
+## swift-result-effects
+
+[![npm version](https://badge.fury.io/js/%40ts-elmish%2Fswift-result-effects.svg?t=1495378566925)](https://badge.fury.io/js/%40ts-elmish%2Fswift-result-effects)
+[![Dependency Status](https://img.shields.io/david/iyegoroff/ts-elmish?path=packages%2Fswift-result-effects)](https://david-dm.org/iyegoroff/ts-elmish?path=packages%2Fswift-result-effects)
+[![devDependencies Status](https://img.shields.io/david/dev/iyegoroff/ts-elmish?path=packages%2Fswift-result-effects)](https://david-dm.org/iyegoroff/ts-elmish?path=packages%2Fswift-result-effects&type=dev)
+[![npm](https://img.shields.io/npm/l/@ts-elmish/swift-result-effects.svg?t=1495378566925)](https://www.npmjs.com/package/@ts-elmish/swift-result-effects)
+
 ## react
 
 [![npm version](https://badge.fury.io/js/%40ts-elmish%2Freact.svg?t=1495378566925)](https://badge.fury.io/js/%40ts-elmish%2Freact)

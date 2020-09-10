@@ -1,5 +1,5 @@
 import m, { Component, Vnode } from 'mithril'
-import { runProgram, Dispatch, Effect } from '@ts-elmish/core'
+import { runProgram, Dispatch, ElmishEffect as Effect } from '@ts-elmish/core'
 
 type AssertDispatch<T> = T extends { readonly dispatch: unknown } ? never : T
 export type ElmishAttrs<State, Action> = Readonly<AssertDispatch<State>> & {

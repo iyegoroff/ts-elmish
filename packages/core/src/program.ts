@@ -1,13 +1,13 @@
 export type Dispatch<Action> = (action: Action) => void
-export type Effect<Action> = Array<(dispatch: Dispatch<Action>) => void>
+export type ElmishEffect<Action> = Array<(dispatch: Dispatch<Action>) => void>
 
 export const runProgram = <State, Action>({
   init,
   update,
   view
 }: {
-  readonly init: () => readonly [State, Effect<Action>]
-  readonly update: (state: State, action: Action) => readonly [State, Effect<Action>]
+  readonly init: () => readonly [State, ElmishEffect<Action>]
+  readonly update: (state: State, action: Action) => readonly [State, ElmishEffect<Action>]
   readonly view: (state: State) => void
 }) => {
   let canRender = false

@@ -1,5 +1,5 @@
 import 'ts-jest'
-import { Effect } from '@ts-elmish/core'
+import { Effect } from '@ts-elmish/basic-effects'
 import { initApp, updateApp, AppStateEffect, AppState } from './state'
 import { initCounter } from '../counter/state'
 

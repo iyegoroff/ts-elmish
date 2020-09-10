@@ -5,6 +5,10 @@
     "project": [
       "./packages/core/src/tsconfig.json",
       "./packages/core/src/tsconfig.test.json",
+      "./packages/basic-effects/src/tsconfig.json",
+      "./packages/basic-effects/src/tsconfig.test.json",
+      "./packages/swift-result-effects/src/tsconfig.json",
+      "./packages/swift-result-effects/src/tsconfig.test.json",
       "./packages/mithril/src/tsconfig.json",
       "./packages/react/src/tsconfig.json",
       "./packages/eslint-plugin/source/tsconfig.json",
