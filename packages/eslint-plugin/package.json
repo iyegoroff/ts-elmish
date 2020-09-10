@@ -13,7 +13,7 @@
     "build:dts": "tsc -p ./source -d true --emitDeclarationOnly true --removeComments false",
     "build:esnext": "tsc -p ./source",
     "build": "rm -rf dist && mkdir dist && npm run build:dts && npm run build:esnext",
-    "test": "mocha -r ts-node/register -t 5000 tests/**/*.ts"
+    "test": "mocha -r ts-node/register -t 7500 tests/**/*.ts"
   },
   "keywords": [
     "elmish",
