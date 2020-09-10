@@ -1,5 +1,5 @@
 import { Dict, put, omit } from 'ts-micro-dict'
-import { CounterState, CounterAction, initCounter, updateCounter } from '../counter/state'
+import { CounterState, CounterAction, initCounter, updateCounter } from '../counter'
 import { assertIsDefined } from 'ts-is-defined'
 import { Effect, Action } from '@ts-elmish/core'
 

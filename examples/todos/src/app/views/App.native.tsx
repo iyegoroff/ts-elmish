@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Button } from 'react-native'
 import { toArray } from 'ts-micro-dict'
 import { ElmishMemo } from '@ts-elmish/react'
-import { Counter } from '../../counter/views'
+import { Counter } from '../../counter'
 import { styles } from './styles'
 
 export const App: typeof import('./App.d').App = ElmishMemo(({ dispatch, counters }) => {

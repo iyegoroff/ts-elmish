@@ -2,6 +2,9 @@ const projects = ['packages/core', 'examples/todos']
 
 const config = {
   moduleFileExtensions: ['js', 'ts'],
+  moduleNameMapper: {
+    '\\./views': '<rootDir>/stub.js'
+  },
   testPathIgnorePatterns: ['blueprint-templates'],
   testRegex: '\\.spec\\.ts$',
   transform: {
