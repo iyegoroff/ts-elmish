@@ -16,43 +16,79 @@ describe('effects', () => {
       func: () => {
         throw new Error('message')
       },
-      failure: (error) => (ErrorSchema.guard(error) ? error.message : error)
+      error: (error) => (ErrorSchema.guard(error) ? error.message : error)
     })
 
     const fromFunctionNoFailure = Effect.from({
       func: () => 1,
-      failure: (error) => error
+      error: (error) => error
     })
 
     const fromFunctionSuccess = Effect.from({
       func: () => 1,
-      success: (value: number) => `${value}`,
-      failure: (error) => error
+      done: (value: number) => `${value}`,
+      error: (error) => error
+    })
+
+    const fromFunctionSuccessNoError = Effect.from({
+      func: () => 1,
+      done: (value: number) => `${value}`
+    })
+
+    const fromFunctionSuccessNoDone = Effect.from({
+      func: () => 1
+    })
+
+    const fromFunctionThrow = Effect.from({
+      func: () => {
+        throw new Error('message')
+      }
     })
 
     const fromPromiseFailure = Effect.from({
       promise: () => Promise.reject(new Error('message')),
-      failure: (error) => (ErrorSchema.guard(error) ? error.message : error)
+      error: (error) => (ErrorSchema.guard(error) ? error.message : error)
     })
 
     const fromPromiseNoFailure = Effect.from({
       promise: () => Promise.resolve(1),
-      failure: (error) => error
+      error: (error) => error
     })
 
     const fromPromiseSuccess = Effect.from({
       promise: () => Promise.resolve(1),
-      success: (value: number) => `${value}`,
-      failure: (error) => (ErrorSchema.guard(error) ? error.message : error)
+      then: (value: number) => `${value}`,
+      error: (error) => (ErrorSchema.guard(error) ? error.message : error)
+    })
+
+    const fromPromiseSuccessNoError = Effect.from({
+      promise: () => Promise.resolve(1),
+      then: (value: number) => `${value}`
+    })
+
+    const fromPromiseSuccessNoThen = Effect.from({
+      promise: () => Promise.resolve(1)
+    })
+
+    const fromPromiseThrow = Effect.from({
+      promise: () => Promise.reject(new Error('message'))
     })
 
     expect(fromAction[0]((x) => x)).toEqual('action')
     expect(fromFunctionFailure[0]((x) => x)).toEqual('message')
     expect(fromFunctionNoFailure[0]((x) => x)).toEqual(1)
     expect(fromFunctionSuccess[0]((x) => x)).toEqual('1')
+    expect(fromFunctionSuccessNoError[0]((x) => x)).toEqual('1')
+    expect(fromFunctionSuccessNoDone[0]((x) => x)).toEqual(1)
+    expect(() => {
+      fromFunctionThrow[0]((x) => x)
+    }).toThrow(Error)
     await expect(fromPromiseFailure[0]((x) => x)).resolves.toEqual('message')
     await expect(fromPromiseNoFailure[0]((x) => x)).resolves.toEqual(1)
     await expect(fromPromiseSuccess[0]((x) => x)).resolves.toEqual('1')
+    await expect(fromPromiseSuccessNoThen[0]((x) => x)).resolves.toEqual(1)
+    await expect(fromPromiseSuccessNoError[0]((x) => x)).resolves.toEqual('1')
+    await expect(fromPromiseThrow[0]((x) => x)).rejects.toEqual(new Error('message'))
   })
 
   test('map', () => {

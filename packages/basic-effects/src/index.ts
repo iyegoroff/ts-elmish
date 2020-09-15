@@ -18,14 +18,14 @@ export type ActionArgs<Action> = { readonly action: Action }
 
 export type FunctionArgs<Action, Success> = {
   readonly func: () => Success
-  readonly success?: (value: Success) => Action
-  readonly failure: (error: unknown) => Action
+  readonly done?: (value: Success) => Action
+  readonly error?: (error: unknown) => Action
 }
 
 export type PromiseArgs<Action, Success> = {
   readonly promise: () => Promise<Success>
-  readonly success?: (value: Success) => Action
-  readonly failure: (error: unknown) => Action
+  readonly then?: (value: Success) => Action
+  readonly error?: (error: unknown) => Action
 }
 
 function from<Action>(args: ActionArgs<Action>): Effect<Action>
@@ -40,28 +40,40 @@ function from<Action, Success = unknown>(
   if ('action' in args) {
     return [(dispatch) => dispatch(args.action)]
   } else if ('func' in args) {
-    const { func, success, failure } = args
+    const { func, done, error } = args
 
     return [
       (dispatch) => {
-        try {
+        if (typeof error === 'function') {
+          try {
+            const value = func()
+            return typeof done === 'function' ? dispatch(done(value)) : value
+          } catch (err) {
+            return dispatch(error(err))
+          }
+
+        } else {
           const value = func()
-          return typeof success === 'function' ? dispatch(success(value)) : value
-        } catch (error) {
-          return dispatch(failure(error))
+          return typeof done === 'function' ? dispatch(done(value)) : value
         }
       }
     ]
   } else {
-    const { promise, success, failure } = args
+    const { promise, then, error } = args
 
     return [
       async (dispatch) => {
-        try {
+        if (typeof error === 'function') {
+          try {
+            const value = await promise()
+            return typeof then === 'function' ? dispatch(then(value)) : value
+          } catch (err) {
+            return dispatch(error(err))
+          }
+
+        } else {
           const value = await promise()
-          return typeof success === 'function' ? dispatch(success(value)) : value
-        } catch (error) {
-          return dispatch(failure(error))
+          return typeof then === 'function' ? dispatch(then(value)) : value
         }
       }
     ]

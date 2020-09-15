@@ -12,15 +12,15 @@ export type Effect<Action> = ElmishEffect<Action>
 type ResultArgs<Action, Success, Failure> = {
   readonly result: () => Result<Success, Failure>
   readonly success?: (value: Success) => Action
-  readonly failure: (error: unknown) => Action
-  readonly resultFailure?: (error: Failure) => Action
+  readonly failure: (error: Failure) => Action
+  readonly error?: (error: unknown) => Action
 }
 
 type AsyncResultArgs<Action, Success, Failure> = {
   readonly asyncResult: () => AsyncResult<Success, Failure>
   readonly success?: (value: Success) => Action
-  readonly failure: (error: unknown) => Action
-  readonly resultFailure?: (error: Failure) => Action
+  readonly failure: (error: Failure) => Action
+  readonly error?: (error: unknown) => Action
 }
 
 function from<Action>(args: ActionArgs<Action>): Effect<Action>
@@ -52,36 +52,54 @@ function from<Action, Success = unknown, Failure = unknown>(
   } else if ('func' in args) {
     return BasicEffect.from(args)
   } else if ('result' in args) {
-    const { failure, success, resultFailure = args.failure, result } = args
+    const { failure, success, error, result } = args
 
     return [
       (dispatch) => {
-        try {
+        if (typeof error === 'function') {
+          try {
+            const value = result()
+            return value.tag === 'failure'
+              ? dispatch(failure(value.failure))
+              : typeof success === 'function'
+              ? dispatch(success(value.success))
+              : value.success
+          } catch (err) {
+            return dispatch(error(err))
+          }
+        } else {
           const value = result()
           return value.tag === 'failure'
-            ? dispatch(resultFailure(value.failure))
+            ? dispatch(failure(value.failure))
             : typeof success === 'function'
             ? dispatch(success(value.success))
             : value.success
-        } catch (error) {
-          return dispatch(failure(error))
         }
       }
     ]
   } else {
-    const { failure, success, resultFailure = args.failure, asyncResult } = args
+    const { failure, success, error, asyncResult } = args
 
     return [
       async (dispatch) => {
-        try {
+        if (typeof error === 'function') {
+          try {
+            const value = await asyncResult()
+            return value.tag === 'failure'
+              ? dispatch(failure(value.failure))
+              : typeof success === 'function'
+              ? dispatch(success(value.success))
+              : value.success
+          } catch (err) {
+            return dispatch(error(err))
+          }
+        } else {
           const value = await asyncResult()
           return value.tag === 'failure'
-            ? dispatch(resultFailure(value.failure))
+            ? dispatch(failure(value.failure))
             : typeof success === 'function'
             ? dispatch(success(value.success))
             : value.success
-        } catch (error) {
-          return dispatch(failure(error))
         }
       }
     ]
