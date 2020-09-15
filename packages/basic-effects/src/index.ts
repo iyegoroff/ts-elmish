@@ -51,7 +51,6 @@ function from<Action, Success = unknown>(
           } catch (err) {
             return dispatch(error(err))
           }
-
         } else {
           const value = func()
           return typeof done === 'function' ? dispatch(done(value)) : value
@@ -70,7 +69,6 @@ function from<Action, Success = unknown>(
           } catch (err) {
             return dispatch(error(err))
           }
-
         } else {
           const value = await promise()
           return typeof then === 'function' ? dispatch(then(value)) : value
