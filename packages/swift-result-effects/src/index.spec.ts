@@ -82,7 +82,6 @@ describe('effects', () => {
 
     const fromResultNoSuccessAndError = Effect.from({
       result: () => Result.success(1),
-      failure: (error) => error,
       error: (error) => error
     })
 
@@ -123,7 +122,6 @@ describe('effects', () => {
 
     const fromAsyncResultNoSuccessAndError = Effect.from({
       asyncResult: () => Promise.resolve(Result.success(1)),
-      failure: (error) => error,
       error: (error) => error
     })
 
@@ -139,18 +137,24 @@ describe('effects', () => {
 
     expect(fromResultFailure[0]((x) => x)).toEqual('message')
     expect(fromResultFailureAndError[0]((x) => x)).toEqual('message')
-    expect(fromResultNoFailure[0]((x) => x)).toEqual(1)
+    expect(fromResultNoFailure[0]((x) => x)).toEqual({ success: 1, tag: 'success' })
     expect(fromResultBasicFailure[0]((x) => x)).toEqual(new Error('message'))
     expect(fromResultSuccess[0]((x) => x)).toEqual('1')
     expect(fromResultSuccessAndError[0]((x) => x)).toEqual('1')
-    expect(fromResultNoSuccessAndError[0]((x) => x)).toEqual(1)
+    expect(fromResultNoSuccessAndError[0]((x) => x)).toEqual({ success: 1, tag: 'success' })
 
     await expect(fromAsyncResultFailure[0]((x) => x)).resolves.toEqual('message')
     await expect(fromAsyncResultFailureNoError[0]((x) => x)).resolves.toEqual('message')
-    await expect(fromAsyncResultNoFailure[0]((x) => x)).resolves.toEqual(1)
+    await expect(fromAsyncResultNoFailure[0]((x) => x)).resolves.toEqual({
+      success: 1,
+      tag: 'success'
+    })
     await expect(fromAsyncResultBasicFailure[0]((x) => x)).resolves.toEqual(new Error('message'))
     await expect(fromAsyncResultSuccess[0]((x) => x)).resolves.toEqual('1')
     await expect(fromAsyncResultSuccessAndError[0]((x) => x)).resolves.toEqual('1')
-    await expect(fromAsyncResultNoSuccessAndError[0]((x) => x)).resolves.toEqual(1)
+    await expect(fromAsyncResultNoSuccessAndError[0]((x) => x)).resolves.toEqual({
+      success: 1,
+      tag: 'success'
+    })
   })
 })
