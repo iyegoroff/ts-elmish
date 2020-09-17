@@ -9,15 +9,18 @@
     "coverage": "codecov",
     "type-coverage": "type-coverage --strict --detail --ignore-files **/dist/* --ignore-files **/blueprint-templates/**/* --ignore-catch"
   },
+  "typeCoverage": {
+    "atLeast": 100
+  },
   "devDependencies": {
     "@react-native-community/eslint-config": "^2.0.0",
     "@react-native-community/eslint-plugin": "^1.1.0",
-    "@types/jest": "^26.0.7",
-    "@typescript-eslint/eslint-plugin": "^4.0.1",
-    "@typescript-eslint/parser": "^4.0.1",
+    "@types/jest": "^26.0.14",
+    "@typescript-eslint/eslint-plugin": "^4.1.1",
+    "@typescript-eslint/parser": "^4.1.1",
     "codecov": "^3.7.2",
-    "dot-json": "^1.2.0",
-    "eslint": "^7.7.0",
+    "dot-json": "^1.2.1",
+    "eslint": "^7.9.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-config-standard-with-typescript": "^19.0.1",
     "eslint-plugin-functional": "^3.0.2",
@@ -27,16 +30,13 @@
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-react": "^7.20.6",
-    "eslint-plugin-react-hooks": "^4.1.0",
+    "eslint-plugin-react-hooks": "^4.1.2",
     "eslint-plugin-standard": "^4.0.1",
-    "jest": "^26.4.0",
-    "prettier": "^2.0.5",
+    "jest": "^26.4.2",
+    "prettier": "^2.1.2",
     "runtypes": "^5.0.1",
-    "ts-jest": "^26.2.0",
-    "type-coverage": "^2.9.0",
+    "ts-jest": "^26.3.0",
+    "type-coverage": "^2.13.0",
     "typescript": "^4.0.2"
-  },
-  "typeCoverage": {
-    "atLeast": 100
   }
 }

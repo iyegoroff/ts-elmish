@@ -6,6 +6,98 @@ import { Result } from 'ts-swift-result'
 const ErrorSchema = Record({ message: String })
 
 describe('effects', () => {
+  test('types', async () => {
+    const foo = (x: number, y: number) => {
+      if (Number.isNaN(x)) {
+        return Result.failure({ nan: 'x' } as const)
+      }
+
+      if (Number.isNaN(y)) {
+        return Result.failure({ nan: 'y' } as const)
+      }
+
+      if (x > y) {
+        return Result.success({ op: '>' } as const)
+      }
+
+      if (x < y) {
+        return Result.success({ op: '<' } as const)
+      }
+
+      if (x === y) {
+        return Result.success({ op: '===' } as const)
+      }
+
+      return Result.failure({ nan: 'fail' } as const)
+    }
+
+    const bar = (x: number, y: number) => {
+      if (Number.isNaN(x)) {
+        return Result.success({ nan: 'x' } as const)
+      }
+
+      if (Number.isNaN(y)) {
+        return Result.success({ nan: 'y' } as const)
+      }
+
+      if (x > y) {
+        return Result.success({ op: '>' } as const)
+      }
+
+      if (x < y) {
+        return Result.success({ op: '<' } as const)
+      }
+
+      if (x === y) {
+        return Result.success({ op: '===' } as const)
+      }
+
+      return Result.success({ nan: 'fail' } as const)
+    }
+
+    const fromResultNoSuccess = Effect.from({
+      result: () => foo(1, 2),
+      failure: (error) => error
+    })
+    const fromResultNoFailure = Effect.from({
+      result: () => bar(1, 2),
+      success: (value) => value
+    })
+
+    const fromResult = Effect.from({
+      result: () => foo(1, 2),
+      success: (value) => value.op,
+      failure: (error) => error.nan
+    })
+
+    const fromAsyncResultNoSuccess = Effect.from({
+      asyncResult: () => Promise.resolve(foo(1, 2)),
+      failure: (error) => error
+    })
+
+    const fromAsyncResultNoFailure = Effect.from({
+      asyncResult: () => Promise.resolve(bar(1, 2)),
+      success: (value) => value
+    })
+
+    const fromAsyncResult = Effect.from({
+      asyncResult: () => Promise.resolve(foo(1, 2)),
+      success: (value) => value.op,
+      failure: (error) => error.nan
+    })
+
+    expect(fromResultNoSuccess[0]((x) => x)).toEqual({ success: { op: '<' }, tag: 'success' })
+    expect(fromResultNoFailure[0]((x) => x)).toEqual({ op: '<' })
+    expect(fromResult[0]((x) => x)).toEqual('<')
+
+    await expect(fromAsyncResultNoSuccess[0]((x) => x)).resolves.toEqual({
+      success: { op: '<' },
+      tag: 'success'
+    })
+    await expect(fromAsyncResultNoFailure[0]((x) => x)).resolves.toEqual({ op: '<' })
+    await expect(fromAsyncResult[0]((x) => x)).resolves.toEqual('<')
+  })
+
   test('from', async () => {
     const fromAction = Effect.from({ action: 'action' })
 
@@ -69,13 +161,13 @@ describe('effects', () => {
 
     const fromResultSuccess = Effect.from({
       result: () => Result.success(1),
-      success: (value: number) => `${value}`,
+      success: (value) => `${value}`,
       failure: (error) => error
     })
 
     const fromResultSuccessAndError = Effect.from({
       result: () => Result.success(1),
-      success: (value: number) => `${value}`,
+      success: (value) => `${value}`,
       failure: (error) => error,
       error: (error) => error
     })
@@ -109,13 +201,13 @@ describe('effects', () => {
 
     const fromAsyncResultSuccess = Effect.from({
       asyncResult: () => Promise.resolve(Result.success(1)),
-      success: (value: number) => `${value}`,
+      success: (value) => `${value}`,
       failure: (error) => error
     })
 
     const fromAsyncResultSuccessAndError = Effect.from({
       asyncResult: () => Promise.resolve(Result.success(1)),
-      success: (value: number) => `${value}`,
+      success: (value) => `${value}`,
       failure: (error) => error,
       error: (error) => error
     })

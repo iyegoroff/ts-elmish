@@ -44,6 +44,6 @@
   },
   "devDependencies": {
     "@ts-elmish/core": "workspace:*",
-    "ts-swift-result": "^4"
+    "ts-swift-result": "^4.0.0"
   }
 }

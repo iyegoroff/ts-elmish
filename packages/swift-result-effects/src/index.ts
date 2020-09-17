@@ -5,33 +5,33 @@ import {
   FunctionArgs,
   PromiseArgs
 } from '@ts-elmish/basic-effects'
-import { Result, AsyncResult } from 'ts-swift-result'
+import { Result, AsyncResult, SuccessCase, FailureCase } from 'ts-swift-result'
 
 export type Effect<Action> = ElmishEffect<Action>
 
-type ResultArgs<Action, Success, Failure> = {
-  readonly result: () => Result<Success, Failure>
-  readonly success?: (value: Success) => Action
-  readonly failure: (error: Failure) => Action
+type ResultArgs<Action, Success, Failure, ResultLike extends Result<Success, Failure>> = {
+  readonly result: () => ResultLike
+  readonly success?: (value: SuccessCase<ResultLike>) => Action
+  readonly failure: (error: FailureCase<ResultLike>) => Action
   readonly error?: (error: unknown) => Action
 }
 
-type ResultArgsNoFailure<Action, Success> = {
-  readonly result: () => Result<Success, never>
-  readonly success?: (value: Success) => Action
+type ResultArgsNoFailure<Action, Success, ResultLike extends Result<Success, never>> = {
+  readonly result: () => ResultLike
+  readonly success?: (value: SuccessCase<ResultLike>) => Action
   readonly error?: (error: unknown) => Action
 }
 
-type AsyncResultArgs<Action, Success, Failure> = {
-  readonly asyncResult: () => AsyncResult<Success, Failure>
-  readonly success?: (value: Success) => Action
-  readonly failure: (error: Failure) => Action
+type AsyncResultArgs<Action, Success, Failure, ResultLike extends AsyncResult<Success, Failure>> = {
+  readonly asyncResult: () => ResultLike
+  readonly success?: (value: SuccessCase<ResultLike>) => Action
+  readonly failure: (error: FailureCase<ResultLike>) => Action
   readonly error?: (error: unknown) => Action
 }
 
-type AsyncResultArgsNoFailure<Action, Success> = {
-  readonly asyncResult: () => AsyncResult<Success, never>
-  readonly success?: (value: Success) => Action
+type AsyncResultArgsNoFailure<Action, Success, ResultLike extends AsyncResult<Success, never>> = {
+  readonly asyncResult: () => ResultLike
+  readonly success?: (value: SuccessCase<ResultLike>) => Action
   readonly error?: (error: unknown) => Action
 }
 
@@ -41,29 +41,39 @@ function from<Action, Success = unknown>(args: FunctionArgs<Action, Success>): E
 
 function from<Action, Success = unknown>(args: PromiseArgs<Action, Success>): Effect<Action>
 
-function from<Action, Success = unknown, Failure = unknown>(
-  args: ResultArgs<Action, Success, Failure>
+function from<
+  Action,
+  Success,
+  Failure,
+  ResultLike extends Result<Success, Failure> = Result<Success, Failure>
+>(args: ResultArgs<Action, Success, Failure, ResultLike>): Effect<Action>
+
+function from<Action, Success, ResultLike extends Result<Success, never> = Result<Success, never>>(
+  args: ResultArgsNoFailure<Action, Success, ResultLike>
 ): Effect<Action>
 
-function from<Action, Success = unknown>(args: ResultArgsNoFailure<Action, Success>): Effect<Action>
+function from<
+  Action,
+  Success,
+  Failure,
+  ResultLike extends AsyncResult<Success, Failure> = AsyncResult<Success, Failure>
+>(args: AsyncResultArgs<Action, Success, Failure, ResultLike>): Effect<Action>
 
-function from<Action, Success = unknown, Failure = unknown>(
-  args: AsyncResultArgs<Action, Success, Failure>
-): Effect<Action>
+function from<
+  Action,
+  Success,
+  ResultLike extends AsyncResult<Success, never> = AsyncResult<Success, never>
+>(args: AsyncResultArgsNoFailure<Action, Success, ResultLike>): Effect<Action>
 
-function from<Action, Success = unknown>(
-  args: AsyncResultArgsNoFailure<Action, Success>
-): Effect<Action>
-
-function from<Action, Success = unknown, Failure = unknown>(
+function from<Action, Success, Failure>(
   args:
     | ActionArgs<Action>
     | FunctionArgs<Action, Success>
     | PromiseArgs<Action, Success>
-    | ResultArgs<Action, Success, Failure>
-    | ResultArgsNoFailure<Action, Success>
-    | AsyncResultArgs<Action, Success, Failure>
-    | AsyncResultArgsNoFailure<Action, Success>
+    | ResultArgs<Action, Success, Failure, Result<Success, Failure>>
+    | ResultArgsNoFailure<Action, Success, Result<Success, never>>
+    | AsyncResultArgs<Action, Success, Failure, AsyncResult<Success, Failure>>
+    | AsyncResultArgsNoFailure<Action, Success, AsyncResult<Success, never>>
 ): Effect<Action> {
   if ('action' in args) {
     return BasicEffect.from(args)
