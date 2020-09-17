@@ -40,10 +40,10 @@
   },
   "peerDependencies": {
     "@ts-elmish/core": "workspace:*",
-    "ts-swift-result": "^3"
+    "ts-swift-result": "^4"
   },
   "devDependencies": {
     "@ts-elmish/core": "workspace:*",
-    "ts-swift-result": "^3"
+    "ts-swift-result": "^4"
   }
 }
