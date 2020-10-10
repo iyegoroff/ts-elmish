@@ -1,10 +1,5 @@
 import { Dispatch, ElmishEffect } from '@ts-elmish/core'
-import {
-  Effect as BasicEffect,
-  ActionArgs,
-  FunctionArgs,
-  PromiseArgs
-} from '@ts-elmish/basic-effects'
+import { Effect as BasicEffect, ActionArgs } from '@ts-elmish/basic-effects'
 import { Result, AsyncResult, SuccessCase, FailureCase } from 'ts-swift-result'
 
 export type Effect<Action> = ElmishEffect<Action>
@@ -13,33 +8,25 @@ type ResultArgs<Action, Success, Failure, ResultLike extends Result<Success, Fai
   readonly result: () => ResultLike
   readonly success?: (value: SuccessCase<ResultLike>) => Action
   readonly failure: (error: FailureCase<ResultLike>) => Action
-  readonly error?: (error: unknown) => Action
 }
 
 type ResultArgsNoFailure<Action, Success, ResultLike extends Result<Success, never>> = {
   readonly result: () => ResultLike
   readonly success?: (value: SuccessCase<ResultLike>) => Action
-  readonly error?: (error: unknown) => Action
 }
 
 type AsyncResultArgs<Action, Success, Failure, ResultLike extends AsyncResult<Success, Failure>> = {
   readonly asyncResult: () => ResultLike
   readonly success?: (value: SuccessCase<ResultLike>) => Action
   readonly failure: (error: FailureCase<ResultLike>) => Action
-  readonly error?: (error: unknown) => Action
 }
 
 type AsyncResultArgsNoFailure<Action, Success, ResultLike extends AsyncResult<Success, never>> = {
   readonly asyncResult: () => ResultLike
   readonly success?: (value: SuccessCase<ResultLike>) => Action
-  readonly error?: (error: unknown) => Action
 }
 
 function from<Action>(args: ActionArgs<Action>): Effect<Action>
-
-function from<Action, Success = unknown>(args: FunctionArgs<Action, Success>): Effect<Action>
-
-function from<Action, Success = unknown>(args: PromiseArgs<Action, Success>): Effect<Action>
 
 function from<
   Action,
@@ -68,8 +55,6 @@ function from<
 function from<Action, Success, Failure>(
   args:
     | ActionArgs<Action>
-    | FunctionArgs<Action, Success>
-    | PromiseArgs<Action, Success>
     | ResultArgs<Action, Success, Failure, Result<Success, Failure>>
     | ResultArgsNoFailure<Action, Success, Result<Success, never>>
     | AsyncResultArgs<Action, Success, Failure, AsyncResult<Success, Failure>>
@@ -77,44 +62,16 @@ function from<Action, Success, Failure>(
 ): Effect<Action> {
   if ('action' in args) {
     return BasicEffect.from(args)
-  } else if ('promise' in args) {
-    return BasicEffect.from(args)
-  } else if ('func' in args) {
-    return BasicEffect.from(args)
   } else if ('result' in args) {
-    const { success, error, result } = args
+    const { success, result } = args
     const failure = 'failure' in args ? args.failure : undefined
 
-    return [
-      (dispatch) => {
-        if (error === undefined) {
-          return effectFromResult(result(), dispatch, success, failure)
-        } else {
-          try {
-            return effectFromResult(result(), dispatch, success, failure)
-          } catch (err) {
-            return dispatch(error(err))
-          }
-        }
-      }
-    ]
+    return [(dispatch) => effectFromResult(result(), dispatch, success, failure)]
   } else {
-    const { success, error, asyncResult } = args
+    const { success, asyncResult } = args
     const failure = 'failure' in args ? args.failure : undefined
 
-    return [
-      async (dispatch) => {
-        if (error === undefined) {
-          return effectFromResult(await asyncResult(), dispatch, success, failure)
-        } else {
-          try {
-            return effectFromResult(await asyncResult(), dispatch, success, failure)
-          } catch (err) {
-            return dispatch(error(err))
-          }
-        }
-      }
-    ]
+    return [async (dispatch) => effectFromResult(await asyncResult(), dispatch, success, failure)]
   }
 }
 

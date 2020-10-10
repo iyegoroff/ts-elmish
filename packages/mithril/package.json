@@ -41,6 +41,6 @@
   },
   "devDependencies": {
     "@ts-elmish/core": "workspace:*",
-    "@types/mithril": "^2.0.3"
+    "@types/mithril": "^2.0.4"
   }
 }

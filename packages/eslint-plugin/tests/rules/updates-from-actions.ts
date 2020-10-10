@@ -999,7 +999,7 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
         export const updateX = (state: State, action: Action, effects: Effects): StateEffect => { switch (action[0]) { case 'set-x': { return setXUpdate(state, action) } case 'set-y': { return setYUpdate(state, action) } case 'set-x': { return setErrorUpdate(state, action) } } }
                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [invalidUpdate]
 
-        const setXUpdate = (state: State, [, x]: readonly ['set-x', number]): StateEffect => {
+        const setXUpdate = (state: State, [, x]: readonly ['set-x', number], effects: Effects): StateEffect => {
           return [{ ...state, x }, Effect.none()]
         }
 
@@ -1042,14 +1042,14 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
                 return setXUpdate(state, action, effects)
 
               case 'set-y':
-                return setYUpdate(state, action, effects)
+                return setYUpdate(state, action)
 
               case 'set-error':
                 return setErrorUpdate(state, action, effects)
             }
           }
 
-          const setXUpdate = (state: State, [, x]: readonly ['set-x', number]): StateEffect => {
+          const setXUpdate = (state: State, [, x]: readonly ['set-x', number], effects: Effects): StateEffect => {
             return [{ ...state, x }, Effect.none()]
           }
 

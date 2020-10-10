@@ -44,6 +44,7 @@ const rule = ruleCreator({
         const declaredActions: string[] = []
         const exportedUpdates: string[] = []
         const declaredUpdates: string[] = []
+        const declaredUpdatesParams: Record<string, es.Parameter[] | undefined> = {}
         const updateCases: es.Literal[] = []
         const updateStatements: es.Identifier[] = []
         const comments = (node.comments ?? []).map((c) => c.value)
@@ -104,13 +105,18 @@ const rule = ruleCreator({
           const decl = val.type === 'ExportNamedDeclaration' ? val.declaration : val
 
           if (decl?.type === 'VariableDeclaration' && decl.declarations.length > 0) {
-            const name = code.getText(decl.declarations[0].id)
+            const firstDecl = decl.declarations[0]
+            const name = code.getText(firstDecl.id)
 
             if (name.endsWith('Action')) {
               declaredActions.push(name)
             }
 
             if (name.endsWith('Update')) {
+              if (isDefined(firstDecl.init) && firstDecl.init.type === 'ArrowFunctionExpression') {
+                declaredUpdatesParams[name] = firstDecl.init.params
+              }
+
               declaredUpdates.push(name)
             }
           }
@@ -140,7 +146,6 @@ const rule = ruleCreator({
             hasState &&
             isDefined(update) &&
             isDefined(action) &&
-            isDefined(update) &&
             isDefined(init) &&
             isDefined(updateNode) &&
             update.type === 'ArrowFunctionExpression'
@@ -153,13 +158,24 @@ const rule = ruleCreator({
         const defInit = init
         const defUpdateNode = updateNode
 
-        const params = update.params.map((p, i) => (p.type === 'Identifier' ? p.name : `arg${i}`))
+        const params = (updateName: string) =>
+          (declaredUpdatesParams[updateName] ?? defUpdate.params).map((p, i) => {
+            const fallback = defUpdate.params[i]
+            return p.type === 'Identifier'
+              ? p.name
+              : fallback.type === 'Identifier'
+              ? fallback.name
+              : `arg_${i}`
+          })
+
         const subst =
           '{\n  switch (action[0]) {\n' +
           requiredActions
             .map(
               (val) =>
-                `    case ${val.literal}:\n      return ${val.name}Update(${params.join(', ')})\n`
+                `    case ${val.literal}:\n      return ${val.name}Update(${params(
+                  `${val.name}Update`
+                ).join(', ')})\n`
             )
             .join('\n') +
           '  }\n}'
