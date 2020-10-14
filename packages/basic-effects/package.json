@@ -1,6 +1,6 @@
 {
   "name": "@ts-elmish/basic-effects",
-  "version": "0.0.54",
+  "version": "0.0.55",
   "private": false,
   "description": "Basic effects for ts-elmish",
   "main": "src/index.ts",
