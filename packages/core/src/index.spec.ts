@@ -1,5 +1,5 @@
 import 'ts-jest'
-import { Action, runProgram } from './index'
+import { runProgram } from './index'
 
 describe('runProgram', () => {
   test('run', () => {
@@ -21,15 +21,5 @@ describe('runProgram', () => {
 
     expect(initial).toEqual(4)
     expect(states).toEqual([4, 4, 4, 5])
-  })
-})
-
-describe('actions', () => {
-  test('map', () => {
-    expect(Action.map('name')('action')).toEqual(['name', 'action'])
-  })
-
-  test('mapArg', () => {
-    expect(Action.mapArg('name', 'arg')('action')).toEqual(['name', 'arg', 'action'])
   })
 })

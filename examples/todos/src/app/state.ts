@@ -1,7 +1,6 @@
 import { Dict, put, omit } from 'ts-micro-dict'
 import { CounterState, CounterAction, initCounter, updateCounter } from '../counter'
 import { assertIsDefined } from 'ts-is-defined'
-import { Action } from '@ts-elmish/core'
 import { Effect } from '@ts-elmish/basic-effects'
 
 type Id = string
@@ -21,6 +20,12 @@ type StateEffect = readonly [State, Effect<Action>]
 export const initApp = (): StateEffect => {
   return [{ nextCounterId: 0, counters: {} }, Effect.none()]
 }
+
+export const counterAction = (id: Id) => (action: CounterAction): Action => [
+  'counter-action',
+  id,
+  action
+]
 
 export const updateApp = (state: State, action: Action): StateEffect => {
   const { counters, nextCounterId } = state
@@ -42,16 +47,16 @@ export const updateApp = (state: State, action: Action): StateEffect => {
     }
 
     case 'counter-action': {
-      const [, id, counterAction] = action
+      const [, id, counterAct] = action
       const counter = counters[id]
 
       assertIsDefined(counter, `invalid counter id - ${id}`)
 
-      const [nextCounterState, nextCounterEffect] = updateCounter(counter, counterAction)
+      const [nextCounterState, nextCounterEffect] = updateCounter(counter, counterAct)
 
       return [
         { ...state, counters: put(counters, id, nextCounterState) },
-        Effect.map(Action.mapArg('counter-action', id), nextCounterEffect)
+        Effect.map(counterAction(id), nextCounterEffect)
       ]
     }
   }

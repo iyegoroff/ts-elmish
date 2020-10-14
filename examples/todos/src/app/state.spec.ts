@@ -1,6 +1,6 @@
 import 'ts-jest'
 import { Effect } from '@ts-elmish/basic-effects'
-import { initApp, updateApp, AppStateEffect, AppState } from './state'
+import { initApp, updateApp, AppStateEffect, AppState, counterAction } from './state'
 import { initCounter } from '../counter/state'
 
 describe('Counter state', () => {
@@ -32,5 +32,7 @@ describe('Counter state', () => {
     ]
 
     expect(updateApp(initial, ['counter-action', '0', ['increment']])).toEqual(expected)
+
+    expect(counterAction('0')(['increment'])).toEqual(['counter-action', '0', ['increment']])
   })
 })
