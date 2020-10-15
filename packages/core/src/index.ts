@@ -8,7 +8,7 @@ export const runProgram = <State, Action>({
 }: {
   readonly init: () => readonly [State, ElmishEffect<Action>]
   readonly update: (state: State, action: Action) => readonly [State, ElmishEffect<Action>]
-  readonly view: (state: State) => void
+  readonly view: (state: State, hasEffects: boolean) => void
 }) => {
   let canRender = false
   let [state, effects] = init()
@@ -21,7 +21,7 @@ export const runProgram = <State, Action>({
     }
 
     if (canRender) {
-      view(state)
+      view(state, effect !== undefined)
     } else {
       canRender = true
     }
