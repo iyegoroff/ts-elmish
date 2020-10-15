@@ -1,6 +1,6 @@
 {
   "name": "@ts-elmish/swift-result-effects",
-  "version": "0.0.56",
+  "version": "0.0.57",
   "private": false,
   "description": "ts-swift-result powered effects for ts-elmish",
   "main": "src/index.ts",
