@@ -334,11 +334,9 @@ const rule = ruleCreator({
               .join(',\n')
               .replace('Action', code.getText(act))}\n)${code.getText(defUpdate.returnType)}${
               isAction
-                ? ` => {\n  const [${actionCase(raw)}, ${actionCase(
-                    raw
-                  )}Effect] = update${capitalCase(actionCase(raw))}(state.${actionCase(
-                    raw
-                  )}, action${defUpdate.params
+                ? ` => {\n  const [${actionCase(raw)}, ${actionCase(raw)}Effect] = ${capitalCase(
+                    actionCase(raw)
+                  )}State.update(state.${actionCase(raw)}, action${defUpdate.params
                     .slice(2)
                     .map((p) => code.getText(p).replace(/(\w+)(: \w+)/, ', $1'))
                     .join('')})\n\n  return [{ ...state, ${actionCase(

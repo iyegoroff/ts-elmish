@@ -28,11 +28,11 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
 
         type StateEffect = readonly [State, Effect<Action>]
 
-        export const initX = (state: State): StateEffect => {
+        export const init = (state: State): StateEffect => {
           return [state, Effect.none()]
         }
 
-        export const updateX = (state: State, action: Action): StateEffect => {
+        export const update = (state: State, action: Action): StateEffect => {
           switch (action[0]) {
             case 'set-x':
               return setXUpdate(state, action)
@@ -87,11 +87,11 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
 
         // const setYAction = (val: number): Action => ['set-y', val]
 
-        export const initX = (state: State): StateEffect => {
+        export const init = (state: State): StateEffect => {
           return [state, Effect.none()]
         }
 
-        export const updateX = (state: State, action: Action): StateEffect => {
+        export const update = (state: State, action: Action): StateEffect => {
           switch (action[0]) {
             case 'set-x':
               return setXUpdate(state, action)
@@ -137,11 +137,11 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
 
           // const setXAction = (val: number): Action => ['set-x', val]
 
-          export const initX = (state: State): StateEffect => {
+          export const init = (state: State): StateEffect => {
             return [state, Effect.none()]
           }
 
-          export const updateX = (state: State, action: Action): StateEffect => {
+          export const update = (state: State, action: Action): StateEffect => {
             switch (action[0]) {
               case 'set-x':
                 return setXUpdate(state, action)
@@ -188,11 +188,11 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
 
         const setXAction = (val: number): Action => ['set-x', val]
 
-        export const initX = (state: State): StateEffect => {
+        export const init = (state: State): StateEffect => {
           return [state, Effect.none()]
         }
 
-        export const updateX = (state: State, action: Action): StateEffect => {
+        export const update = (state: State, action: Action): StateEffect => {
           switch (action[0]) {
             case 'set-x':
               return setXUpdate(state, action)
@@ -238,11 +238,11 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
 
           // const setYAction = (val: number): Action => ['set-y', val]
 
-          export const initX = (state: State): StateEffect => {
+          export const init = (state: State): StateEffect => {
             return [state, Effect.none()]
           }
 
-          export const updateX = (state: State, action: Action): StateEffect => {
+          export const update = (state: State, action: Action): StateEffect => {
             switch (action[0]) {
               case 'set-x':
                 return setXUpdate(state, action)
@@ -290,11 +290,11 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
         const setXAction = (val: number): Action => ['set-x', val]
         // const setYAction = (val: number): Action => ['set-y', val]
 
-        export const initX = (state: State): StateEffect => {
+        export const init = (state: State): StateEffect => {
           return [state, Effect.none()]
         }
 
-        export const updateX = (state: State, action: Action): StateEffect => {
+        export const update = (state: State, action: Action): StateEffect => {
           switch (action[0]) {
             case 'set-x':
               return setXUpdate(state, action)
@@ -341,11 +341,11 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
 
           // const setErrorAction = (val: string): Action => ['set-error', val]
 
-          export const initX = (state: State): StateEffect => {
+          export const init = (state: State): StateEffect => {
             return [state, Effect.none()]
           }
 
-          export const updateX = (state: State, action: Action): StateEffect => {
+          export const update = (state: State, action: Action): StateEffect => {
             switch (action[0]) {
               case 'set-x':
                 return setXUpdate(state, action)
@@ -394,11 +394,11 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
 
         type StateEffect = readonly [State, Effect<Action>]
 
-        export const initX = (state: State): StateEffect => {
+        export const init = (state: State): StateEffect => {
           return [state, Effect.none()]
         }
 
-        export const updateX = (state: State, action: Action): StateEffect => {
+        export const update = (state: State, action: Action): StateEffect => {
           switch (action[0]) {
             case 'set-todo-filter':
               return setTodoFilterUpdate(state, action)
@@ -440,7 +440,7 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
 
           type StateEffect = readonly [State, Effect<Action>]
 
-          export const initX = (state: State): StateEffect => {
+          export const init = (state: State): StateEffect => {
             return [state, Effect.none()]
           }
 
@@ -451,7 +451,7 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
             return [{ ...state, todoFilter }, Effect.none()]
           }
 
-          export const updateX = (state: State, action: Action): StateEffect => {
+          export const update = (state: State, action: Action): StateEffect => {
             switch (action[0]) {
               case 'set-todo-filter':
                 return setTodoFilterUpdate(state, action)
@@ -496,11 +496,11 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
 
         type StateEffect = readonly [State, Effect<Action>]
 
-        export const initX = (state: State): StateEffect => {
+        export const init = (state: State): StateEffect => {
           return [state, Effect.none()]
         }
 
-        export const updateX = (state: State, action: Action): StateEffect => {
+        export const update = (state: State, action: Action): StateEffect => {
           switch (action[0]) {
             case 'set-x':
               return setXUpdate(state, action)
@@ -546,7 +546,7 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
 
           type StateEffect = readonly [State, Effect<Action>]
 
-          export const initX = (state: State): StateEffect => {
+          export const init = (state: State): StateEffect => {
             return [state, Effect.none()]
           }
 
@@ -557,7 +557,7 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
             return [state, Effect.none()]
           }
 
-          export const updateX = (state: State, action: Action): StateEffect => {
+          export const update = (state: State, action: Action): StateEffect => {
             switch (action[0]) {
               case 'set-x':
                 return setXUpdate(state, action)
@@ -606,11 +606,11 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
         const setXAction = (val: number): Action => ['set-x', val]
         // const setYAction = (val: number): Action => ['set-y', val]
 
-        export const initX = (state: State): StateEffect => {
+        export const init = (state: State): StateEffect => {
           return [state, Effect.none()]
         }
 
-        export const updateX = (state: State, action: Action): StateEffect => {
+        export const update = (state: State, action: Action): StateEffect => {
           switch (action[0]) {
             case 'set-x':
               return setXUpdate(state, action)
@@ -657,7 +657,7 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
 
           // const setErrorAction = (val: string): Action => ['set-error', val]
 
-          export const initX = (state: State): StateEffect => {
+          export const init = (state: State): StateEffect => {
             return [state, Effect.none()]
           }
 
@@ -668,7 +668,7 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
             return [{ ...state, error }, Effect.none()]
           }
 
-          export const updateX = (state: State, action: Action): StateEffect => {
+          export const update = (state: State, action: Action): StateEffect => {
             switch (action[0]) {
               case 'set-x':
                 return setXUpdate(state, action)
@@ -716,12 +716,12 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
 
         type StateEffect = readonly [State, Effect<Action>]
 
-        export const initX = (state: State): StateEffect => {
+        export const init = (state: State): StateEffect => {
           return [state, Effect.none()]
         }
 
-        export const updateX = (state: State, action: Action): StateEffect => [state, Effect.none()]
-                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [invalidUpdate]
+        export const update = (state: State, action: Action): StateEffect => [state, Effect.none()]
+                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [invalidUpdate]
 
         const setXUpdate = (state: State, [, x]: readonly ['set-x', number]): StateEffect => {
           return [{ ...state, x }, Effect.none()]
@@ -756,11 +756,11 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
 
           type StateEffect = readonly [State, Effect<Action>]
 
-          export const initX = (state: State): StateEffect => {
+          export const init = (state: State): StateEffect => {
             return [state, Effect.none()]
           }
 
-          export const updateX = (state: State, action: Action): StateEffect => {
+          export const update = (state: State, action: Action): StateEffect => {
             switch (action[0]) {
               case 'set-x':
                 return setXUpdate(state, action)
@@ -808,12 +808,12 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
 
         type StateEffect = readonly [State, Effect<Action>]
 
-        export const initX = (state: State): StateEffect => {
+        export const init = (state: State): StateEffect => {
           return [state, Effect.none()]
         }
 
-        export const updateX = (state: State, action: Action): StateEffect => { switch (action[0]) { case 'set-x': { return setXUpdate(state, action) } case 'set-y': { return setYUpdate(state, action) } } }
-                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [invalidUpdate]
+        export const update = (state: State, action: Action): StateEffect => { switch (action[0]) { case 'set-x': { return setXUpdate(state, action) } case 'set-y': { return setYUpdate(state, action) } } }
+                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [invalidUpdate]
 
         const setXUpdate = (state: State, [, x]: readonly ['set-x', number]): StateEffect => {
           return [{ ...state, x }, Effect.none()]
@@ -848,11 +848,11 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
 
           type StateEffect = readonly [State, Effect<Action>]
 
-          export const initX = (state: State): StateEffect => {
+          export const init = (state: State): StateEffect => {
             return [state, Effect.none()]
           }
 
-          export const updateX = (state: State, action: Action): StateEffect => {
+          export const update = (state: State, action: Action): StateEffect => {
             switch (action[0]) {
               case 'set-x':
                 return setXUpdate(state, action)
@@ -900,12 +900,12 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
 
         type StateEffect = readonly [State, Effect<Action>]
 
-        export const initX = (state: State): StateEffect => {
+        export const init = (state: State): StateEffect => {
           return [state, Effect.none()]
         }
 
-        export const updateX = (state: State, action: Action): StateEffect => { switch (action[0]) { case 'set-x': { return setXUpdate(state, action) } case 'set-y': { return setYUpdate(state, action) } case 'set-error': { return setYUpdate(state, action) } } }
-                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [invalidUpdate]
+        export const update = (state: State, action: Action): StateEffect => { switch (action[0]) { case 'set-x': { return setXUpdate(state, action) } case 'set-y': { return setYUpdate(state, action) } case 'set-error': { return setYUpdate(state, action) } } }
+                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [invalidUpdate]
 
         const setXUpdate = (state: State, [, x]: readonly ['set-x', number]): StateEffect => {
           return [{ ...state, x }, Effect.none()]
@@ -940,11 +940,11 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
 
           type StateEffect = readonly [State, Effect<Action>]
 
-          export const initX = (state: State): StateEffect => {
+          export const init = (state: State): StateEffect => {
             return [state, Effect.none()]
           }
 
-          export const updateX = (state: State, action: Action): StateEffect => {
+          export const update = (state: State, action: Action): StateEffect => {
             switch (action[0]) {
               case 'set-x':
                 return setXUpdate(state, action)
@@ -988,12 +988,12 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
 
         type StateEffect = readonly [State, Effect<Action>]
 
-        export const initX = (state: State): StateEffect => {
+        export const init = (state: State): StateEffect => {
           return [state, Effect.none()]
         }
 
-        export const updateX = (state: State, action: Action): StateEffect => {}
-                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [invalidUpdate]
+        export const update = (state: State, action: Action): StateEffect => {}
+                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [invalidUpdate]
 
         export type XState = State
         export type XAction = Action
@@ -1016,7 +1016,7 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
 
           const xAction = (val: number): Action => ['x-action', val]
 
-          export const initX = (state: State): StateEffect => {
+          export const init = (state: State): StateEffect => {
             return [state, Effect.none()]
           }
 
@@ -1024,12 +1024,12 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
             state: State,
             [, action]: readonly ['x-action', number]
           ): StateEffect => {
-            const [x, xEffect] = updateX(state.x, action)
+            const [x, xEffect] = XState.update(state.x, action)
 
             return [{ ...state, x }, Effect.map(xAction, xEffect)]
           }
 
-          export const updateX = (state: State, action: Action): StateEffect => {
+          export const update = (state: State, action: Action): StateEffect => {
             switch (action[0]) {
               case 'x-action':
                 return xUpdate(state, action)
@@ -1060,12 +1060,12 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
 
         type StateEffect = readonly [State, Effect<Action>]
 
-        export const initX = (state: State): StateEffect => {
+        export const init = (state: State): StateEffect => {
           return [state, Effect.none()]
         }
 
-        export const updateX = (state: State, action: Action, effects: Effects): StateEffect => {}
-                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [invalidUpdate]
+        export const update = (state: State, action: Action, effects: Effects): StateEffect => {}
+                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [invalidUpdate]
 
         export type XState = State
         export type XAction = Action
@@ -1089,7 +1089,7 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
 
           const xAction = (val: number): Action => ['x-action', val]
 
-          export const initX = (state: State): StateEffect => {
+          export const init = (state: State): StateEffect => {
             return [state, Effect.none()]
           }
 
@@ -1098,12 +1098,12 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
             [, action]: readonly ['x-action', number],
             effects: Effects
           ): StateEffect => {
-            const [x, xEffect] = updateX(state.x, action, effects)
+            const [x, xEffect] = XState.update(state.x, action, effects)
 
             return [{ ...state, x }, Effect.map(xAction, xEffect)]
           }
 
-          export const updateX = (state: State, action: Action, effects: Effects): StateEffect => {
+          export const update = (state: State, action: Action, effects: Effects): StateEffect => {
             switch (action[0]) {
               case 'x-action':
                 return xUpdate(state, action, effects)
@@ -1134,7 +1134,7 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
 
         const xAction = (val: number): Action => ['x-action', val]
 
-        export const initX = (state: State): StateEffect => {
+        export const init = (state: State): StateEffect => {
           return [state, Effect.none()]
         }
 
@@ -1148,8 +1148,8 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
           return [{ ...state, x }, Effect.map(xAction, xEffect)]
         }
 
-        export const updateX = (state: State, action: Action, effects: Effects): StateEffect => {}
-                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [invalidUpdate]
+        export const update = (state: State, action: Action, effects: Effects): StateEffect => {}
+                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [invalidUpdate]
 
         export type XState = State
         export type XAction = Action
@@ -1173,7 +1173,7 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
 
           const xAction = (val: number): Action => ['x-action', val]
 
-          export const initX = (state: State): StateEffect => {
+          export const init = (state: State): StateEffect => {
             return [state, Effect.none()]
           }
 
@@ -1187,7 +1187,7 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
             return [{ ...state, x }, Effect.map(xAction, xEffect)]
           }
 
-          export const updateX = (state: State, action: Action, effects: Effects): StateEffect => {
+          export const update = (state: State, action: Action, effects: Effects): StateEffect => {
             switch (action[0]) {
               case 'x-action':
                 return xUpdate(state, action, effects)
@@ -1221,12 +1221,12 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
 
         type StateEffect = readonly [State, Effect<Action>]
 
-        export const initX = (state: State): StateEffect => {
+        export const init = (state: State): StateEffect => {
           return [state, Effect.none()]
         }
 
-        export const updateX = (state: State, action: Action, effects: Effects): StateEffect => { switch (action[0]) { case 'set-x': { return setXUpdate(state, action) } case 'set-y': { return setYUpdate(state, action) } case 'set-x': { return setErrorUpdate(state, action) } } }
-                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [invalidUpdate]
+        export const update = (state: State, action: Action, effects: Effects): StateEffect => { switch (action[0]) { case 'set-x': { return setXUpdate(state, action) } case 'set-y': { return setYUpdate(state, action) } case 'set-x': { return setErrorUpdate(state, action) } } }
+                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [invalidUpdate]
 
         const setXUpdate = (state: State, [, x]: readonly ['set-x', number], effects: Effects): StateEffect => {
           return [{ ...state, x }, Effect.none()]
@@ -1261,11 +1261,11 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
 
           type StateEffect = readonly [State, Effect<Action>]
 
-          export const initX = (state: State): StateEffect => {
+          export const init = (state: State): StateEffect => {
             return [state, Effect.none()]
           }
 
-          export const updateX = (state: State, action: Action, effects: Effects): StateEffect => {
+          export const update = (state: State, action: Action, effects: Effects): StateEffect => {
             switch (action[0]) {
               case 'set-x':
                 return setXUpdate(state, action, effects)
@@ -1311,12 +1311,12 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
 
         type StateEffect = readonly [State, Effect<Action>]
 
-        export const initX = (state: State): StateEffect => {
+        export const init = (state: State): StateEffect => {
           return [state, Effect.none()]
         }
 
-        export const updateX = (state: State, action: Action, effects: Effects): StateEffect => { switch(action[0]) {} }
-                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [invalidUpdate]
+        export const update = (state: State, action: Action, effects: Effects): StateEffect => { switch(action[0]) {} }
+                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [invalidUpdate]
 
         export type XState = State
         export type XAction = Action
@@ -1339,11 +1339,11 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
 
           type StateEffect = readonly [State, Effect<Action>]
 
-          export const initX = (state: State): StateEffect => {
+          export const init = (state: State): StateEffect => {
             return [state, Effect.none()]
           }
 
-          export const updateX = (state: State, action: Action, effects: Effects): StateEffect => {
+          export const update = (state: State, action: Action, effects: Effects): StateEffect => {
             switch (action[0]) {
               case 'log-error':
                 return logErrorUpdate(state, action, effects)
