@@ -1,6 +1,7 @@
 import 'ts-jest'
 import { Effect } from './index'
 import { Record, String } from 'runtypes'
+import { ElmishIdleAction } from '@ts-elmish/core'
 
 const ErrorSchema = Record({ message: String })
 
@@ -76,17 +77,17 @@ describe('effects', () => {
 
     expect(fromAction[0]((x) => x)).toEqual('action')
     expect(fromFunctionFailure[0]((x) => x)).toEqual('message')
-    expect(fromFunctionNoFailure[0]((x) => x)).toEqual(1)
+    expect(fromFunctionNoFailure[0]((x) => x)).toEqual(ElmishIdleAction)
     expect(fromFunctionSuccess[0]((x) => x)).toEqual('1')
     expect(fromFunctionSuccessNoError[0]((x) => x)).toEqual('1')
-    expect(fromFunctionSuccessNoDone[0]((x) => x)).toEqual(1)
+    expect(fromFunctionSuccessNoDone[0]((x) => x)).toEqual(ElmishIdleAction)
     expect(() => {
       fromFunctionThrow[0]((x) => x)
     }).toThrow(Error)
     await expect(fromPromiseFailure[0]((x) => x)).resolves.toEqual('message')
-    await expect(fromPromiseNoFailure[0]((x) => x)).resolves.toEqual(1)
+    await expect(fromPromiseNoFailure[0]((x) => x)).resolves.toEqual(ElmishIdleAction)
     await expect(fromPromiseSuccess[0]((x) => x)).resolves.toEqual('1')
-    await expect(fromPromiseSuccessNoThen[0]((x) => x)).resolves.toEqual(1)
+    await expect(fromPromiseSuccessNoThen[0]((x) => x)).resolves.toEqual(ElmishIdleAction)
     await expect(fromPromiseSuccessNoError[0]((x) => x)).resolves.toEqual('1')
     await expect(fromPromiseThrow[0]((x) => x)).rejects.toEqual(new Error('message'))
   })

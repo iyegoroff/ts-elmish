@@ -1,4 +1,4 @@
-import { Dispatch, ElmishEffect } from '@ts-elmish/core'
+import { ElmishEffect, ElmishIdleAction } from '@ts-elmish/core'
 import { Effect as BasicEffect, ActionArgs } from '@ts-elmish/basic-effects'
 import { Result, AsyncResult, SuccessCase, FailureCase } from 'ts-swift-result'
 
@@ -59,33 +59,32 @@ function from<Action, Success, Failure>(
     | ResultArgsNoFailure<Action, Success, Result<Success, never>>
     | AsyncResultArgs<Action, Success, Failure, AsyncResult<Success, Failure>>
     | AsyncResultArgsNoFailure<Action, Success, AsyncResult<Success, never>>
-): Effect<Action> {
+): Effect<Action | ElmishIdleAction> {
   if ('action' in args) {
     return BasicEffect.from(args)
   } else if ('result' in args) {
     const { success, result } = args
     const failure = 'failure' in args ? args.failure : undefined
 
-    return [(dispatch) => effectFromResult(result(), dispatch, success, failure)]
+    return [(dispatch) => dispatch(effectFromResult(result(), success, failure))]
   } else {
     const { success, asyncResult } = args
     const failure = 'failure' in args ? args.failure : undefined
 
-    return [async (dispatch) => effectFromResult(await asyncResult(), dispatch, success, failure)]
+    return [async (dispatch) => dispatch(effectFromResult(await asyncResult(), success, failure))]
   }
 }
 
 const effectFromResult = <Action, Success, Failure>(
   result: Result<Success, Failure>,
-  dispatch: Dispatch<Action>,
   success: ((value: Success) => Action) | undefined,
   failure: ((error: Failure) => Action) | undefined
 ) =>
   result.tag === 'success' && success !== undefined
-    ? dispatch(success(result.success))
+    ? success(result.success)
     : result.tag === 'failure' && failure !== undefined
-    ? dispatch(failure(result.failure))
-    : result
+    ? failure(result.failure)
+    : ElmishIdleAction
 
 export const Effect = {
   ...BasicEffect,

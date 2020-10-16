@@ -1,4 +1,4 @@
-import { ElmishEffect } from '@ts-elmish/core'
+import { ElmishEffect, ElmishIdleAction } from '@ts-elmish/core'
 
 export type Effect<Action> = ElmishEffect<Action>
 
@@ -36,7 +36,7 @@ function from<Action, Success = unknown>(args: PromiseArgs<Action, Success>): Ef
 
 function from<Action, Success = unknown>(
   args: ActionArgs<Action> | FunctionArgs<Action, Success> | PromiseArgs<Action, Success>
-): Effect<Action> {
+): Effect<Action | ElmishIdleAction> {
   if ('action' in args) {
     return [(dispatch) => dispatch(args.action)]
   } else if ('func' in args) {
@@ -47,13 +47,13 @@ function from<Action, Success = unknown>(
         if (typeof error === 'function') {
           try {
             const value = func()
-            return typeof done === 'function' ? dispatch(done(value)) : value
+            return dispatch(typeof done === 'function' ? done(value) : ElmishIdleAction)
           } catch (err) {
             return dispatch(error(err))
           }
         } else {
           const value = func()
-          return typeof done === 'function' ? dispatch(done(value)) : value
+          return dispatch(typeof done === 'function' ? done(value) : ElmishIdleAction)
         }
       }
     ]
@@ -65,13 +65,13 @@ function from<Action, Success = unknown>(
         if (typeof error === 'function') {
           try {
             const value = await promise()
-            return typeof then === 'function' ? dispatch(then(value)) : value
+            return dispatch(typeof then === 'function' ? then(value) : ElmishIdleAction)
           } catch (err) {
             return dispatch(error(err))
           }
         } else {
           const value = await promise()
-          return typeof then === 'function' ? dispatch(then(value)) : value
+          return dispatch(typeof then === 'function' ? then(value) : ElmishIdleAction)
         }
       }
     ]

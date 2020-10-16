@@ -2,6 +2,7 @@ import 'ts-jest'
 import { Effect } from './index'
 import { Record, String } from 'runtypes'
 import { Result } from 'ts-swift-result'
+import { ElmishIdleAction } from '@ts-elmish/core'
 
 const ErrorSchema = Record({ message: String })
 
@@ -86,14 +87,11 @@ describe('effects', () => {
       failure: (error) => error.nan
     })
 
-    expect(fromResultNoSuccess[0]((x) => x)).toEqual({ success: { op: '<' }, tag: 'success' })
+    expect(fromResultNoSuccess[0]((x) => x)).toEqual(ElmishIdleAction)
     expect(fromResultNoFailure[0]((x) => x)).toEqual({ op: '<' })
     expect(fromResult[0]((x) => x)).toEqual('<')
 
-    await expect(fromAsyncResultNoSuccess[0]((x) => x)).resolves.toEqual({
-      success: { op: '<' },
-      tag: 'success'
-    })
+    await expect(fromAsyncResultNoSuccess[0]((x) => x)).resolves.toEqual(ElmishIdleAction)
     await expect(fromAsyncResultNoFailure[0]((x) => x)).resolves.toEqual({ op: '<' })
     await expect(fromAsyncResult[0]((x) => x)).resolves.toEqual('<')
   })
@@ -141,15 +139,12 @@ describe('effects', () => {
     expect(fromAction[0]((x) => x)).toEqual('action')
 
     expect(fromResultFailure[0]((x) => x)).toEqual('message')
-    expect(fromResultNoFailure[0]((x) => x)).toEqual({ success: 1, tag: 'success' })
+    expect(fromResultNoFailure[0]((x) => x)).toEqual(ElmishIdleAction)
     expect(fromResultSuccess[0]((x) => x)).toEqual('1')
 
     await expect(fromAsyncResultFailure[0]((x) => x)).resolves.toEqual('message')
     await expect(fromAsyncResultFailureNoError[0]((x) => x)).resolves.toEqual('message')
-    await expect(fromAsyncResultNoFailure[0]((x) => x)).resolves.toEqual({
-      success: 1,
-      tag: 'success'
-    })
+    await expect(fromAsyncResultNoFailure[0]((x) => x)).resolves.toEqual(ElmishIdleAction)
     await expect(fromAsyncResultSuccess[0]((x) => x)).resolves.toEqual('1')
   })
 })

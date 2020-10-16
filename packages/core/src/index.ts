@@ -1,6 +1,9 @@
 export type Dispatch<Action> = (action: Action) => void
 export type ElmishEffect<Action> = Array<(dispatch: Dispatch<Action>) => void>
 
+export const ElmishIdleAction = Symbol('elmish-idle-action')
+export type ElmishIdleAction = typeof ElmishIdleAction
+
 export const runProgram = <State, Action>({
   init,
   update,
@@ -27,10 +30,12 @@ export const runProgram = <State, Action>({
     }
   }
 
-  const dispatch: Dispatch<Action> = (action) => {
-    const [nextState, nextEffect] = update(state, action)
-    state = nextState
-    effects.push(...nextEffect)
+  const dispatch: Dispatch<Action | ElmishIdleAction> = (action) => {
+    if (action !== ElmishIdleAction) {
+      const [nextState, nextEffect] = update(state, action)
+      state = nextState
+      effects.push(...nextEffect)
+    }
 
     run()
   }
