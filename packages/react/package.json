@@ -13,7 +13,7 @@
   "scripts": {
     "update-version": "npm version",
     "build:dts": "tsc -p ./src -d true --emitDeclarationOnly true --removeComments false",
-    "build:umd": "tsc -p ./src -m umd -t es5 --lib es5,dom,es2015.symbol --outDir ./dist/umd",
+    "build:umd": "tsc -p ./src -m umd -t es5 --lib es5,dom,es2015.symbol,es2015.collection --outDir ./dist/umd",
     "build:es6": "tsc -p ./src",
     "build": "rm -rf dist && mkdir dist && npm run build:dts && npm run build:umd && npm run build:es6"
   },
