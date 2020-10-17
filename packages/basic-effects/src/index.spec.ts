@@ -95,6 +95,11 @@ describe('effects', () => {
   test('map', () => {
     const mapped = Effect.map((x: number) => ['action', x] as const, [(dispatch) => dispatch(1)])
     expect(mapped[0](([, x]) => ['action', x + 1])).toEqual(['action', 2])
+
+    const mappedIdle = Effect.map((x) => ['action', x] as const, [
+      (dispatch) => dispatch(ElmishIdleAction)
+    ])
+    expect(mappedIdle[0]((x) => x)).toEqual(ElmishIdleAction)
   })
 
   test('batch', () => {

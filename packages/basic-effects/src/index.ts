@@ -7,10 +7,19 @@ const empty: Effect<never> = []
 
 const none = <Action>(): Effect<Action> => empty
 
-const map = <Action0, Action1>(
+function map<Action0, Action1>(
   func: (a: Action0) => Action1,
   effect: Effect<Action0>
-): Effect<Action1> => effect.map((g) => (dispatch) => g((a) => dispatch(func(a))))
+): Effect<Action1>
+
+function map<Action0, Action1>(
+  func: (a: Action0) => Action1,
+  effect: Effect<Action0 | ElmishIdleAction>
+): Effect<Action1 | ElmishIdleAction> {
+  return effect.map((g) => (dispatch) =>
+    g((a) => dispatch(a === ElmishIdleAction ? ElmishIdleAction : func(a)))
+  )
+}
 
 const batch = <Action>(...actions: ReadonlyArray<Effect<Action>>): Effect<Action> =>
   ([] as Effect<Action>).concat(...actions)
