@@ -1,5 +1,5 @@
 import { TSESTree as es } from '@typescript-eslint/experimental-utils'
-import { camelCase, capitalCase, paramCase } from 'change-case'
+import { camelCase, pascalCase } from 'change-case'
 import { getLoc, getParserServices } from 'eslint-etc'
 import { isDefined } from 'ts-is-defined'
 import { ruleCreator } from '../utils'
@@ -31,20 +31,14 @@ const rule = ruleCreator({
 
     return {
       Program: (node: es.Program) => {
-        let hasState = false
         let hasInvalidUpdate = false
+        let state: es.TSTypeLiteral | undefined
         let action: es.TSTypeAliasDeclaration | undefined
         let updateNode: es.Node | undefined
         let update: es.Expression | undefined
         let init: es.Node | undefined
         const requiredActions: Array<{
           readonly action: es.TSTypeOperator
-          readonly name: string
-          readonly literal: string
-        }> = []
-        const imports: es.ImportDeclaration[] = []
-        const requiredImportedActions: Array<{
-          readonly action: es.TSTypeReference
           readonly name: string
           readonly literal: string
         }> = []
@@ -59,8 +53,6 @@ const rule = ruleCreator({
 
         node.body.forEach((val) => {
           if (val.type === 'ImportDeclaration') {
-            imports.push(val)
-
             val.specifiers.forEach((spec) => {
               const name = spec.type === 'ImportSpecifier' ? spec.local.name : ''
 
@@ -74,8 +66,12 @@ const rule = ruleCreator({
             })
           }
 
-          if (val.type === 'TSTypeAliasDeclaration' && code.getText(val.id) === 'State') {
-            hasState = true
+          if (
+            val.type === 'TSTypeAliasDeclaration' &&
+            code.getText(val.id) === 'State' &&
+            val.typeAnnotation.type === 'TSTypeLiteral'
+          ) {
+            state = val.typeAnnotation
           }
 
           if (
@@ -108,16 +104,6 @@ const rule = ruleCreator({
                     name: actionCase(literal)
                   })
                 }
-              } else if (
-                act.type === 'TSTypeReference' &&
-                act.typeName.type === 'Identifier' &&
-                act.typeName.name.endsWith('Action')
-              ) {
-                requiredImportedActions.push({
-                  name: act.typeName.name,
-                  action: act,
-                  literal: `'${paramCase(act.typeName.name.replace(/Action$/, ''))}'`
-                })
               }
             })
           }
@@ -157,16 +143,14 @@ const rule = ruleCreator({
             code.getText(decl.declarations[0].id).startsWith('init') &&
             isDefined(decl.declarations[0].init)
           ) {
-            init = decl.parent
+            init = decl.parent?.type === 'Program' ? decl : decl.parent
           }
         })
 
         if (
           !(
-            hasState &&
             isDefined(update) &&
             isDefined(action) &&
-            isDefined(init) &&
             isDefined(updateNode) &&
             update.type === 'ArrowFunctionExpression'
           )
@@ -175,7 +159,7 @@ const rule = ruleCreator({
         }
 
         const defUpdate = update
-        const defInit = init
+        const defAction = action
         const defUpdateNode = updateNode
 
         const params = (updateName: string) =>
@@ -186,7 +170,7 @@ const rule = ruleCreator({
 
         const subst =
           '{\n  switch (action[0]) {\n' +
-          [...requiredActions, ...requiredImportedActions]
+          requiredActions
             .map(
               ({ name, literal }) =>
                 `    case ${literal}:\n      return ${actionCase(name)}Update(${params(
@@ -207,8 +191,7 @@ const rule = ruleCreator({
               c.consequent[0].type === 'ReturnStatement' &&
               c.consequent[0].argument?.type === 'CallExpression' &&
               c.consequent[0].argument.callee.type === 'Identifier'
-          ).length ===
-            requiredActions.length + requiredImportedActions.length
+          ).length === requiredActions.length
         ) {
           update.body.body[0].cases.forEach((c) => {
             if (c.test?.type === 'Literal') {
@@ -233,39 +216,6 @@ const rule = ruleCreator({
             fix: (fixer) => fixer.replaceTextRange(defUpdate.body.range, subst)
           })
         }
-
-        requiredImportedActions.forEach(({ name, action: act }) => {
-          const actionName = camelCase(name)
-          const updateName = actionName.replace(/Action$/, 'Update')
-
-          const parentImport = imports.find((imp) =>
-            imp.specifiers.some((spec) => spec.local.name === name)
-          )
-
-          const actionSpec = parentImport?.specifiers.find((spec) => spec.local.name === name)
-
-          if (
-            isDefined(actionSpec) &&
-            !(parentImport?.specifiers ?? []).some((spec) => spec.local.name === actionName)
-          ) {
-            context.report({
-              messageId: 'noAction',
-              loc: getLoc(esTreeNodeToTSNodeMap.get(act)),
-              fix: (fixer) => fixer.insertTextAfterRange(actionSpec.range, `, ${actionName}`)
-            })
-          }
-
-          if (
-            isDefined(actionSpec) &&
-            !(parentImport?.specifiers ?? []).some((spec) => spec.local.name === updateName)
-          ) {
-            context.report({
-              messageId: 'noUpdate',
-              loc: getLoc(esTreeNodeToTSNodeMap.get(act)),
-              fix: (fixer) => fixer.insertTextBeforeRange(actionSpec.range, `${updateName}, `)
-            })
-          }
-        })
 
         requiredActions.forEach(({ name, literal: raw, action: act }) => {
           const actionName = `${name}Action`
@@ -305,14 +255,15 @@ const rule = ruleCreator({
                       )}`
                     : `val: readonly ${code.getText(act.typeAnnotation).replace(`${raw}, `, '')}`
 
-                return fixer.insertTextBefore(
-                  defInit,
-                  `${
-                    raw.endsWith("-action'") ? '' : '// '
-                  }const ${actionName} = (${val}): Action => [${raw}${
-                    elementTypes.length === 1 ? '' : ', val'
-                  }]\n\n`
-                )
+                const fix = `${
+                  raw.endsWith("-action'") ? '' : '// '
+                }const ${actionName} = (${val}): Action => [${raw}${
+                  elementTypes.length === 1 ? '' : ', val'
+                }]`
+
+                return isDefined(init)
+                  ? fixer.insertTextBefore(init, `${fix}\n\n`)
+                  : fixer.insertTextAfter(defAction, `\n\n${fix}`)
               }
             })
           }
@@ -320,6 +271,19 @@ const rule = ruleCreator({
           if (!importedUpdates.includes(updateName) && !declaredUpdates.includes(updateName)) {
             const isSetter = raw.startsWith("'set-")
             const isAction = raw.endsWith("-action'")
+            const isStateless = !(
+              state?.members.some(
+                (member) =>
+                  member.type === 'TSPropertySignature' &&
+                  member.key.type === 'Identifier' &&
+                  member.key.name === name
+              ) ?? false
+            )
+            const restUpdateParams = defUpdate.params
+              .slice(2)
+              .map((p) => code.getText(p).replace(/(\w+)(: \w+)/, ', $1'))
+              .join('')
+
             const upd = `const ${updateName} = (\n${defUpdate.params
               .map((p) =>
                 `  ${code.getText(p)}`.replace(
@@ -333,15 +297,22 @@ const rule = ruleCreator({
               )
               .join(',\n')
               .replace('Action', code.getText(act))}\n)${code.getText(defUpdate.returnType)}${
-              isAction
-                ? ` => {\n  const [${actionCase(raw)}, ${actionCase(raw)}Effect] = ${capitalCase(
-                    actionCase(raw)
-                  )}State.update(state.${actionCase(raw)}, action${defUpdate.params
-                    .slice(2)
-                    .map((p) => code.getText(p).replace(/(\w+)(: \w+)/, ', $1'))
-                    .join('')})\n\n  return [{ ...state, ${actionCase(
-                    raw
-                  )} }, Effect.map(${actionCase(raw)}Action, ${actionCase(raw)}Effect)]\n}\n\n`
+              !isDefined(state)
+                ? ` => {\n  return Effect.none()\n}\n\n`
+                : isAction
+                ? isStateless
+                  ? ` => {\n  const ${actionCase(raw)}Effect = ${pascalCase(
+                      actionCase(raw)
+                    )}State.update(action${restUpdateParams})\n\n  return [state, Effect.map(${actionCase(
+                      raw
+                    )}Action, ${actionCase(raw)}Effect)]\n}\n\n`
+                  : ` => {\n  const [${actionCase(raw)}, ${actionCase(raw)}Effect] = ${pascalCase(
+                      actionCase(raw)
+                    )}State.update(state.${actionCase(
+                      raw
+                    )}, action${restUpdateParams})\n\n  return [{ ...state, ${actionCase(
+                      raw
+                    )} }, Effect.map(${actionCase(raw)}Action, ${actionCase(raw)}Effect)]\n}\n\n`
                 : ` => {\n  return [${
                     isSetter
                       ? `{ ...state, ${actionCase(raw.replace(/'set-([\w-]+)'/, '$1'))} }`

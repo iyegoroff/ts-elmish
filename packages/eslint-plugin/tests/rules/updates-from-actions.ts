@@ -87,11 +87,11 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
 
         // const setYAction = (val: number): Action => ['set-y', val]
 
-        export const init = (state: State): StateEffect => {
+        const init = (state: State): StateEffect => {
           return [state, Effect.none()]
         }
 
-        export const update = (state: State, action: Action): StateEffect => {
+        const update = (state: State, action: Action): StateEffect => {
           switch (action[0]) {
             case 'set-x':
               return setXUpdate(state, action)
@@ -137,11 +137,11 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
 
           // const setXAction = (val: number): Action => ['set-x', val]
 
-          export const init = (state: State): StateEffect => {
+          const init = (state: State): StateEffect => {
             return [state, Effect.none()]
           }
 
-          export const update = (state: State, action: Action): StateEffect => {
+          const update = (state: State, action: Action): StateEffect => {
             switch (action[0]) {
               case 'set-x':
                 return setXUpdate(state, action)
@@ -1294,65 +1294,114 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
     ),
     fromFixture(
       stripIndent`
-        // INVALID - invalidUpdate, noAction, noUpdate
-        import { Effect, Action } from '@ts-elmish/core'
-        import { Effects } from '../effects'
-        import { LogErrorAction } from '../log-error'
-
-        type State = {
-          readonly x: number
-          readonly y: number
-        }
+        // INVALID - noAction, noUpdate, invalidUpdate
+        import { Effect } from '@ts-elmish/swift-result-effects'
+        import { DomainError } from '../../../domain/types'
+        import { ServicesError } from '../../../services/types'
+        import { Effects } from '../../effects/types'
 
         type Action =
-          | LogErrorAction
-            ~~~~~~~~~~~~~~ [noAction]
-            ~~~~~~~~~~~~~~ [noUpdate]
+          | readonly ['log-error', DomainError | ServicesError]
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [noAction]
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [noUpdate]
 
-        type StateEffect = readonly [State, Effect<Action>]
-
-        export const init = (state: State): StateEffect => {
-          return [state, Effect.none()]
-        }
-
-        export const update = (state: State, action: Action, effects: Effects): StateEffect => { switch(action[0]) {} }
-                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [invalidUpdate]
-
-        export type XState = State
-        export type XAction = Action
-        export type XStateEffect = StateEffect
+        const update = (action: Action, effects: Effects): Effect<Action> => {}
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [invalidUpdate]
       `,
       {
         output: stripIndent`
-          // INVALID - invalidUpdate, noAction, noUpdate
-          import { Effect, Action } from '@ts-elmish/core'
-          import { Effects } from '../effects'
-          import { logErrorUpdate, LogErrorAction, logErrorAction } from '../log-error'
+          // INVALID - noAction, noUpdate, invalidUpdate
+          import { Effect } from '@ts-elmish/swift-result-effects'
+          import { DomainError } from '../../../domain/types'
+          import { ServicesError } from '../../../services/types'
+          import { Effects } from '../../effects/types'
+
+          type Action =
+            | readonly ['log-error', DomainError | ServicesError]
+
+          // const logErrorAction = (val: DomainError | ServicesError): Action => ['log-error', val]
+
+          const logErrorUpdate = (
+            action: readonly ['log-error', DomainError | ServicesError],
+            effects: Effects
+          ): Effect<Action> => {
+            return Effect.none()
+          }
+
+          const update = (action: Action, effects: Effects): Effect<Action> => {
+            switch (action[0]) {
+              case 'log-error':
+                return logErrorUpdate(action, effects)
+            }
+          }
+        `
+      }
+    ),
+    fromFixture(
+      stripIndent`
+        // INVALID - noAction, noUpdate, invalidUpdate
+        import { Effect } from '@ts-elmish/swift-result-effects'
+        import { DomainError } from '../../../domain/types'
+        import { Effects } from '../../effects/types'
+        import { ErrorHandlerAction, ErrorHandlerState } from '../error-handler'
+
+        type State = {
+          readonly backendAddressStatus: 'valid' | 'invalid'
+        }
+
+        type Action =
+          | readonly ['error-handler-action', ErrorHandlerAction]
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [noAction]
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [noUpdate]
+
+        type StateEffect = readonly [State, Effect<Action>]
+
+        const init = (effects: Effects): StateEffect => {
+          return [{ backendAddressStatus: 'valid' }, Effect.none()]
+        }
+
+        const update = (state: State, action: Action, effects: Effects): StateEffect => {}
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [invalidUpdate]
+      `,
+      {
+        output: stripIndent`
+          // INVALID - noAction, noUpdate, invalidUpdate
+          import { Effect } from '@ts-elmish/swift-result-effects'
+          import { DomainError } from '../../../domain/types'
+          import { Effects } from '../../effects/types'
+          import { ErrorHandlerAction, ErrorHandlerState } from '../error-handler'
 
           type State = {
-            readonly x: number
-            readonly y: number
+            readonly backendAddressStatus: 'valid' | 'invalid'
           }
 
           type Action =
-            | LogErrorAction
+            | readonly ['error-handler-action', ErrorHandlerAction]
 
           type StateEffect = readonly [State, Effect<Action>]
 
-          export const init = (state: State): StateEffect => {
-            return [state, Effect.none()]
+          const errorHandlerAction = (val: ErrorHandlerAction): Action => ['error-handler-action', val]
+
+          const init = (effects: Effects): StateEffect => {
+            return [{ backendAddressStatus: 'valid' }, Effect.none()]
           }
 
-          export const update = (state: State, action: Action, effects: Effects): StateEffect => {
+          const errorHandlerUpdate = (
+            state: State,
+            [, action]: readonly ['error-handler-action', ErrorHandlerAction],
+            effects: Effects
+          ): StateEffect => {
+            const errorHandlerEffect = ErrorHandlerState.update(action, effects)
+
+            return [state, Effect.map(errorHandlerAction, errorHandlerEffect)]
+          }
+
+          const update = (state: State, action: Action, effects: Effects): StateEffect => {
             switch (action[0]) {
-              case 'log-error':
-                return logErrorUpdate(state, action, effects)
+              case 'error-handler-action':
+                return errorHandlerUpdate(state, action, effects)
             }
           }
-
-          export type XState = State
-          export type XAction = Action
-          export type XStateEffect = StateEffect
         `
       }
     )
