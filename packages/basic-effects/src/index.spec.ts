@@ -1,7 +1,7 @@
 import 'ts-jest'
-import { Effect } from './index'
+import { ElmishIdleAction } from '@ts-elmish/idle-action'
 import { Record, String } from 'runtypes'
-import { ElmishIdleAction } from '@ts-elmish/core'
+import { Effect } from './index'
 
 const ErrorSchema = Record({ message: String })
 

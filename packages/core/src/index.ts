@@ -1,8 +1,7 @@
+import { ElmishIdleAction } from '@ts-elmish/idle-action'
+
 export type Dispatch<Action> = (action: Action) => void
 export type ElmishEffect<Action> = Array<(dispatch: Dispatch<Action>) => void>
-
-export const ElmishIdleAction = Symbol('elmish-idle-action')
-export type ElmishIdleAction = typeof ElmishIdleAction
 
 export const runProgram = <State, Action>({
   init,

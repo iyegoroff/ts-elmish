@@ -1,4 +1,5 @@
-import { ElmishEffect, ElmishIdleAction } from '@ts-elmish/core'
+import { ElmishEffect } from '@ts-elmish/core'
+import { ElmishIdleAction } from '@ts-elmish/idle-action'
 
 export type Effect<Action> = ElmishEffect<Action>
 

@@ -1,4 +1,5 @@
-import { ElmishEffect, ElmishIdleAction } from '@ts-elmish/core'
+import { ElmishEffect } from '@ts-elmish/core'
+import { ElmishIdleAction } from '@ts-elmish/idle-action'
 import { Effect as BasicEffect, ActionArgs } from '@ts-elmish/basic-effects'
 import { Result, AsyncResult, SuccessCase, FailureCase } from 'ts-swift-result'
 

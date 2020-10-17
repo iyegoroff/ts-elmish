@@ -1,5 +1,6 @@
 import 'ts-jest'
-import { ElmishIdleAction, runProgram } from './index'
+import { ElmishIdleAction } from '@ts-elmish/idle-action'
+import { runProgram } from './index'
 
 describe('runProgram', () => {
   test('run', () => {

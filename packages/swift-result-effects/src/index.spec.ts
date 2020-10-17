@@ -1,8 +1,8 @@
 import 'ts-jest'
-import { Effect } from './index'
 import { Record, String } from 'runtypes'
 import { Result } from 'ts-swift-result'
-import { ElmishIdleAction } from '@ts-elmish/core'
+import { ElmishIdleAction } from '@ts-elmish/idle-action'
+import { Effect } from './index'
 
 const ErrorSchema = Record({ message: String })
 

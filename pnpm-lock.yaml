@@ -93,12 +93,18 @@ importers:
       ts-pipe: ^1.2.3
       ts-swift-result: ^2.2.2
   packages/basic-effects:
+    dependencies:
+      '@ts-elmish/idle-action': 'link:../idle-action'
     devDependencies:
       '@ts-elmish/core': 'link:../core'
     specifiers:
       '@ts-elmish/core': 'workspace:*'
+      '@ts-elmish/idle-action': 'workspace:*'
   packages/core:
-    specifiers: {}
+    dependencies:
+      '@ts-elmish/idle-action': 'link:../idle-action'
+    specifiers:
+      '@ts-elmish/idle-action': 'workspace:*'
   packages/eslint-plugin:
     dependencies:
       '@typescript-eslint/experimental-utils': 4.4.1
@@ -127,6 +133,8 @@ importers:
       requireindex: ^1.2.0
       ts-is-defined: ^1.0.0
       ts-node: ^9.0.0
+  packages/idle-action:
+    specifiers: {}
   packages/mithril:
     devDependencies:
       '@ts-elmish/core': 'link:../core'
@@ -144,12 +152,14 @@ importers:
   packages/swift-result-effects:
     dependencies:
       '@ts-elmish/basic-effects': 'link:../basic-effects'
+      '@ts-elmish/idle-action': 'link:../idle-action'
     devDependencies:
       '@ts-elmish/core': 'link:../core'
       ts-swift-result: 4.1.1
     specifiers:
       '@ts-elmish/basic-effects': 'workspace:*'
       '@ts-elmish/core': 'workspace:*'
+      '@ts-elmish/idle-action': 'workspace:*'
       ts-swift-result: ^4.1.1
 lockfileVersion: 5.1
 packages:
@@ -946,6 +956,7 @@ packages:
       react: ^16.0.0
     resolution:
       integrity: sha512-lJZrmkucz2MrQJTQtJobx5MICXcfQvKihszqv655p557HPi0hMOWxrNpiHv3DWD8ugNWjtWcVWqRnFvwsHq1mQ==
+      tarball: '@hot-loader/react-dom/-/react-dom-16.13.0.tgz'
   /@istanbuljs/load-nyc-config/1.1.0:
     dependencies:
       camelcase: 5.3.1
