@@ -34,5 +34,8 @@
     "url": "git+https://github.com/iyegoroff/ts-elmish.git"
   },
   "author": "iyegoroff <iegoroff@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@ts-elmish/idle-action": "workspace:*"
+  }
 }

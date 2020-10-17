@@ -36,7 +36,8 @@
   "author": "iyegoroff <iegoroff@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@ts-elmish/basic-effects": "workspace:*"
+    "@ts-elmish/basic-effects": "workspace:*",
+    "@ts-elmish/idle-action": "workspace:*"
   },
   "peerDependencies": {
     "@ts-elmish/core": "workspace:*",
