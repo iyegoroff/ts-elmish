@@ -12,7 +12,6 @@ export const runProgram = <State, Action>({
   readonly update: (state: State, action: Action) => readonly [State, ElmishEffect<Action>]
   readonly view: (state: State, hasEffects: boolean) => void
 }) => {
-  let canRender = false
   let [state, effects] = init()
 
   const run = () => {
@@ -22,11 +21,7 @@ export const runProgram = <State, Action>({
       effect(dispatch)
     }
 
-    if (canRender) {
-      view(state, effect !== undefined)
-    } else {
-      canRender = true
-    }
+    view(state, effect !== undefined)
   }
 
   const dispatch: Dispatch<Action | ElmishIdleAction> = (action) => {

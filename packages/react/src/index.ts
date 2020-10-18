@@ -19,6 +19,7 @@ export const createElmishComponent = <Props extends Record<string, unknown>, Sta
 ) =>
   class ElmishComponent extends React.Component<Props, AssertDispatch<State>> {
     readonly dispatch: Dispatch<Action>
+    canRender: boolean = false
 
     constructor(props: Props) {
       super(props)
@@ -27,12 +28,18 @@ export const createElmishComponent = <Props extends Record<string, unknown>, Sta
         init: () => init(props),
         update,
         view: (state) => {
-          this.setState(state)
+          if (this.canRender) {
+            this.setState(state)
+          }
         }
       })
 
       this.state = initialState
       this.dispatch = dispatch
+    }
+
+    componentDidMount() {
+      this.canRender = true
     }
 
     render() {
