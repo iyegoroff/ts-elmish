@@ -24,11 +24,11 @@ describe('runProgram', () => {
 
     expect(initial).toEqual(4)
     expect(states).toEqual([4, 4, 4, 4, 5])
-    expect(effects).toEqual([true, true, true, true, false])
+    expect(effects).toEqual([false, true, true, true, false])
 
     dispatch(ElmishIdleAction)
 
     expect(states).toEqual([4, 4, 4, 4, 5, 5])
-    expect(effects).toEqual([true, true, true, true, false, false])
+    expect(effects).toEqual([false, true, true, true, false, false])
   })
 })
