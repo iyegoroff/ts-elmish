@@ -1,6 +1,6 @@
 {
   "name": "@ts-elmish/idle-action",
-  "version": "0.0.62",
+  "version": "0.0.63",
   "private": false,
   "description": "Elmish internals",
   "main": "src/index.ts",
