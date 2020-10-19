@@ -1258,6 +1258,64 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
           }
         `
       }
+    ),
+    fromFixture(
+      stripIndent`
+        // INVALID - noAction, noUpdate, invalidUpdate
+        import { Effect } from '@ts-elmish/swift-result-effects'
+        import { DomainError } from '../../../domain/types'
+        import { Effects } from '../../effects/types'
+        import { ErrorHandlerAction, ErrorHandlerState } from '../error-handler'
+        type State = {
+          readonly backendAddressStatus: 'valid' | 'invalid'
+        }
+        type Action = readonly ['error-handler-action', ErrorHandlerAction]
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [noUpdate]
+        const Action = {} as const
+                       ~~ [noAction]
+        type StateEffect = readonly [State, Effect<Action>]
+        const init = (effects: Effects): StateEffect => {
+          return [{ backendAddressStatus: 'valid' }, Effect.none()]
+        }
+        const update = (state: State, action: Action, effects: Effects): StateEffect => {}
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [invalidUpdate]
+      `,
+      {
+        output: stripIndent`
+          // INVALID - noAction, noUpdate, invalidUpdate
+          import { Effect } from '@ts-elmish/swift-result-effects'
+          import { DomainError } from '../../../domain/types'
+          import { Effects } from '../../effects/types'
+          import { ErrorHandlerAction, ErrorHandlerState } from '../error-handler'
+          type State = {
+            readonly backendAddressStatus: 'valid' | 'invalid'
+          }
+          type Action = readonly ['error-handler-action', ErrorHandlerAction]
+          const Action = {
+            errorHandlerAction: (val: ErrorHandlerAction): Action => ['error-handler-action', val]
+          } as const
+          type StateEffect = readonly [State, Effect<Action>]
+          const init = (effects: Effects): StateEffect => {
+            return [{ backendAddressStatus: 'valid' }, Effect.none()]
+          }
+          const errorHandlerUpdate = (
+            state: State,
+            [, action]: readonly ['error-handler-action', ErrorHandlerAction],
+            effects: Effects
+          ): StateEffect => {
+            const errorHandlerEffect = ErrorHandlerState.update(action, effects)
+
+            return [state, Effect.map(Action.errorHandlerAction, errorHandlerEffect)]
+          }
+
+          const update = (state: State, action: Action, effects: Effects): StateEffect => {
+            switch (action[0]) {
+              case 'error-handler-action':
+                return errorHandlerUpdate(state, action, effects)
+            }
+          }
+        `
+      }
     )
   ]
 })

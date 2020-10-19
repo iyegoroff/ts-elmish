@@ -48,18 +48,50 @@ const rule = ruleCreator({
         const updateCases: es.Literal[] = []
         const updateStatements: es.Identifier[] = []
 
+        const addAction = (act: es.TypeNode) => {
+          if (
+            act.type === 'TSTypeOperator' &&
+            act.typeAnnotation?.type === 'TSTupleType' &&
+            act.typeAnnotation.elementTypes.length > 0
+          ) {
+            const first = act.typeAnnotation.elementTypes[0]
+            const literal =
+              first.type === 'TSLiteralType' && first.literal.type === 'Literal'
+                ? first.literal.raw
+                : first.type === 'TSNamedTupleMember' &&
+                  first.elementType.type === 'TSLiteralType' &&
+                  first.elementType.literal.type === 'Literal'
+                ? first.elementType.literal.raw
+                : undefined
+
+            if (isDefined(literal)) {
+              requiredActions.push({
+                action: act,
+                literal,
+                name: actionCase(literal)
+              })
+            }
+          }
+        }
+
         node.body.forEach((val) => {
           if (
             val.type === 'VariableDeclaration' &&
             val.declarations.length === 1 &&
             val.declarations[0].type === 'VariableDeclarator' &&
             val.declarations[0].id.type === 'Identifier' &&
-            val.declarations[0].id.name === 'Action' &&
-            val.declarations[0].init?.type === 'ObjectExpression'
+            val.declarations[0].id.name === 'Action'
           ) {
-            actionsObject = val.declarations[0].init
+            if (val.declarations[0].init?.type === 'ObjectExpression') {
+              actionsObject = val.declarations[0].init
+            } else if (
+              val.declarations[0].init?.type === 'TSAsExpression' &&
+              val.declarations[0].init?.expression.type === 'ObjectExpression'
+            ) {
+              actionsObject = val.declarations[0].init.expression
+            }
 
-            actionsObject.properties.forEach((p) => {
+            actionsObject?.properties.forEach((p) => {
               if (p.type === 'Property' && p.key.type === 'Identifier') {
                 declaredActions.push(p.key.name)
               }
@@ -74,38 +106,14 @@ const rule = ruleCreator({
             state = val.typeAnnotation
           }
 
-          if (
-            val.type === 'TSTypeAliasDeclaration' &&
-            code.getText(val.id) === 'Action' &&
-            val.typeAnnotation.type === 'TSUnionType'
-          ) {
+          if (val.type === 'TSTypeAliasDeclaration' && code.getText(val.id) === 'Action') {
             action = val
 
-            val.typeAnnotation.types.forEach((act) => {
-              if (
-                act.type === 'TSTypeOperator' &&
-                act.typeAnnotation?.type === 'TSTupleType' &&
-                act.typeAnnotation.elementTypes.length > 0
-              ) {
-                const first = act.typeAnnotation.elementTypes[0]
-                const literal =
-                  first.type === 'TSLiteralType' && first.literal.type === 'Literal'
-                    ? first.literal.raw
-                    : first.type === 'TSNamedTupleMember' &&
-                      first.elementType.type === 'TSLiteralType' &&
-                      first.elementType.literal.type === 'Literal'
-                    ? first.elementType.literal.raw
-                    : undefined
-
-                if (isDefined(literal)) {
-                  requiredActions.push({
-                    action: act,
-                    literal,
-                    name: actionCase(literal)
-                  })
-                }
-              }
-            })
+            if (val.typeAnnotation.type === 'TSUnionType') {
+              val.typeAnnotation.types.forEach(addAction)
+            } else if (val.typeAnnotation.type === 'TSTypeOperator') {
+              addAction(val.typeAnnotation)
+            }
           }
 
           const decl = val.type === 'ExportNamedDeclaration' ? val.declaration : val
