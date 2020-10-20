@@ -1277,8 +1277,10 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
         const init = (effects: Effects): StateEffect => {
           return [{ backendAddressStatus: 'valid' }, Effect.none()]
         }
+        // #region update
         const update = (state: State, action: Action, effects: Effects): StateEffect => {}
                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [invalidUpdate]
+        // #endregion
       `,
       {
         output: stripIndent`
@@ -1308,12 +1310,14 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
             return [state, Effect.map(Action.errorHandlerAction, errorHandlerEffect)]
           }
 
+          // #region update
           const update = (state: State, action: Action, effects: Effects): StateEffect => {
             switch (action[0]) {
               case 'error-handler-action':
                 return errorHandlerUpdate(state, action, effects)
             }
           }
+          // #endregion
         `
       }
     )

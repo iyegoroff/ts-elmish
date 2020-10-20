@@ -47,6 +47,7 @@ const rule = ruleCreator({
         const declaredUpdatesParams: Record<string, es.Parameter[] | undefined> = {}
         const updateCases: es.Literal[] = []
         const updateStatements: es.Identifier[] = []
+        const comments = code.getAllComments()
 
         const addAction = (act: es.TypeNode) => {
           if (
@@ -328,10 +329,15 @@ const rule = ruleCreator({
                   }, Effect.none()]\n}\n\n`
             }`
 
+            const leadingComment = comments.find(
+              ({ range: [, end] }) => end + 1 === defUpdateNode.range[0]
+            )
+            const range = isDefined(leadingComment) ? leadingComment.range : defUpdateNode.range
+
             context.report({
               messageId: 'noUpdate',
               loc: getLoc(esTreeNodeToTSNodeMap.get(act)),
-              fix: (fixer) => fixer.insertTextBefore(defUpdateNode, upd)
+              fix: (fixer) => fixer.insertTextBeforeRange(range, upd)
             })
           }
         })
