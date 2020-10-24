@@ -295,7 +295,11 @@ const rule = ruleCreator({
           const updateName = `${name}Update`
           const param = declaredUpdatesActionParams[updateName]
 
-          if (isDefined(param) && code.getText(act) !== code.getText(param)) {
+          if (
+            isDefined(param) &&
+            code.getText(act).replace(/\s[^\s\S]/g, '') !==
+              code.getText(param).replace(/\s[^\s\S]/g, '')
+          ) {
             context.report({
               messageId: 'invalidParam',
               loc: getLoc(esTreeNodeToTSNodeMap.get(param)),
