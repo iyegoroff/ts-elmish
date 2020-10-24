@@ -1,11 +1,25 @@
 import { TSESTree as es } from '@typescript-eslint/experimental-utils'
-import { camelCase, pascalCase } from 'change-case'
+import { camelCase, paramCase, pascalCase } from 'change-case'
 import { getLoc, getParserServices } from 'eslint-etc'
 import { isDefined } from 'ts-is-defined'
 import { ruleCreator } from '../utils'
 import { RuleListener } from '@typescript-eslint/experimental-utils/dist/ts-eslint'
 
+type Action = {
+  readonly action: es.TSTypeOperator
+  readonly name: string
+  readonly literal: string
+}
+
 const actionCase = (text: string) => camelCase(text).replace(/Action$/, '')
+
+const stateType = (literal: string, { typeAnnotation }: es.TSTypeOperator) =>
+  typeAnnotation?.type === 'TSTupleType' &&
+  typeAnnotation.elementTypes.length === 2 &&
+  typeAnnotation.elementTypes[1].type === 'TSTypeReference' &&
+  typeAnnotation.elementTypes[1].typeName.type === 'Identifier'
+    ? typeAnnotation.elementTypes[1].typeName.name.replace(/Action$/, 'State')
+    : `${pascalCase(actionCase(literal))}State`
 
 const rule = ruleCreator({
   defaultOptions: [],
@@ -19,7 +33,8 @@ const rule = ruleCreator({
     messages: {
       noAction: 'action object format invalid',
       noUpdate: 'needs update function',
-      invalidUpdate: 'update function format invalid'
+      invalidUpdate: 'update function format invalid',
+      invalidParam: 'invalid update function param'
     },
     schema: [],
     type: 'problem'
@@ -37,15 +52,15 @@ const rule = ruleCreator({
         let actionsObject: es.ObjectExpression | undefined
         let updateNode: es.Node | undefined
         let update: es.Expression | undefined
-        const requiredActions: Array<{
-          readonly action: es.TSTypeOperator
-          readonly name: string
-          readonly literal: string
-        }> = []
+        const requiredActions: Action[] = []
         const declaredActions: string[] = []
         const declaredUpdates: string[] = []
         const declaredUpdatesParams: Record<string, es.Parameter[] | undefined> = {}
-        const updateCases: es.Literal[] = []
+        const declaredUpdatesActionParams: Record<string, es.TypeNode | undefined> = {}
+        const updateCases: Array<{
+          readonly name: es.Literal
+          readonly argsCount: number
+        }> = []
         const updateStatements: es.Identifier[] = []
         const comments = code.getAllComments()
 
@@ -126,6 +141,17 @@ const rule = ruleCreator({
             if (name.endsWith('Update')) {
               if (isDefined(firstDecl.init) && firstDecl.init.type === 'ArrowFunctionExpression') {
                 declaredUpdatesParams[name] = firstDecl.init.params
+
+                firstDecl.init.params.forEach((p) => {
+                  if (
+                    'typeAnnotation' in p &&
+                    code
+                      .getText(p.typeAnnotation?.typeAnnotation)
+                      .includes(paramCase(name.replace(/Update$/, '')))
+                  ) {
+                    declaredUpdatesActionParams[name] = p.typeAnnotation?.typeAnnotation
+                  }
+                })
               }
 
               declaredUpdates.push(name)
@@ -191,8 +217,16 @@ const rule = ruleCreator({
           ).length === requiredActions.length
         ) {
           update.body.body[0].cases.forEach((c) => {
-            if (c.test?.type === 'Literal') {
-              updateCases.push(c.test)
+            if (
+              c.test?.type === 'Literal' &&
+              isDefined(c.consequent[0]) &&
+              c.consequent[0].type === 'ReturnStatement' &&
+              c.consequent[0].argument?.type === 'CallExpression'
+            ) {
+              updateCases.push({
+                name: c.test,
+                argsCount: c.consequent[0].argument.arguments.length
+              })
             }
 
             if (
@@ -214,46 +248,42 @@ const rule = ruleCreator({
           })
         }
 
+        const actionBody = requiredActions
+          .map(({ name, literal: raw, action: act }) => {
+            const actionName = raw.endsWith("-action'") ? `${name}Action` : name
+
+            if (act.typeAnnotation?.type === 'TSTupleType') {
+              const { elementTypes } = act.typeAnnotation
+
+              const val =
+                elementTypes.length === 1
+                  ? ''
+                  : elementTypes.length === 2
+                  ? `val: ${code.getText(
+                      elementTypes[1].type === 'TSNamedTupleMember'
+                        ? elementTypes[1].elementType
+                        : elementTypes[1]
+                    )}`
+                  : `val: readonly ${code.getText(act.typeAnnotation).replace(`${raw}, `, '')}`
+
+              return `\n  ${actionName}: (${val}): Action => [${raw}${
+                elementTypes.length === 1 ? '' : ', val'
+              }]`
+            }
+
+            return ''
+          })
+          .join(',')
+
         if (
-          requiredActions
-            .map(({ name, literal }) => (literal.endsWith("-action'") ? `${name}Action` : name))
-            .sort((x, y) => x.localeCompare(y))
-            .join() !== [...declaredActions].sort((x, y) => x.localeCompare(y)).join() &&
+          code.getText(defActionsObject).replace(/^\{|\}$|\s|[^\s\S]/g, '') !==
+            actionBody.replace(/^\{|\}$|\s|[^\s\S]/g, '') &&
           requiredActions.every(({ action: act }) => act.typeAnnotation?.type === 'TSTupleType')
         ) {
           context.report({
             messageId: 'noAction',
             loc: getLoc(esTreeNodeToTSNodeMap.get(defActionsObject)),
             fix: (fixer) => {
-              const actionBody = requiredActions
-                .map(({ name, literal: raw, action: act }) => {
-                  const actionName = raw.endsWith("-action'") ? `${name}Action` : name
-
-                  if (act.typeAnnotation?.type === 'TSTupleType') {
-                    const { elementTypes } = act.typeAnnotation
-
-                    const val =
-                      elementTypes.length === 1
-                        ? ''
-                        : elementTypes.length === 2
-                        ? `val: ${code.getText(
-                            elementTypes[1].type === 'TSNamedTupleMember'
-                              ? elementTypes[1].elementType
-                              : elementTypes[1]
-                          )}`
-                        : `val: readonly ${code
-                            .getText(act.typeAnnotation)
-                            .replace(`${raw}, `, '')}`
-
-                    return `\n  ${actionName}: (${val}): Action => [${raw}${
-                      elementTypes.length === 1 ? '' : ', val'
-                    }]`
-                  }
-
-                  return ''
-                })
-                .join(',')
-
               const [start, end] = defActionsObject.range
 
               return fixer.replaceTextRange([start + 1, end - 1], `${actionBody}\n`)
@@ -263,11 +293,23 @@ const rule = ruleCreator({
 
         requiredActions.forEach(({ name, literal: raw, action: act }) => {
           const updateName = `${name}Update`
+          const param = declaredUpdatesActionParams[updateName]
+
+          if (isDefined(param) && code.getText(act) !== code.getText(param)) {
+            context.report({
+              messageId: 'invalidParam',
+              loc: getLoc(esTreeNodeToTSNodeMap.get(param)),
+              fix: (fixer) => fixer.replaceText(param, code.getText(act))
+            })
+          }
 
           if (
             !hasInvalidUpdate &&
-            !updateCases.some((c, i) => c.raw === raw && updateStatements[i].name === updateName)
+            code.getText(defUpdate.body).replace(/[^\s\S]|\s/g, '') !==
+              updateBody.replace(/[^\s\S]|\s/g, '')
           ) {
+            console.warn(code.getText(defUpdate.body))
+            console.warn(updateBody)
             context.report({
               messageId: 'invalidUpdate',
               loc: getLoc(esTreeNodeToTSNodeMap.get(defUpdate)),
@@ -308,14 +350,16 @@ const rule = ruleCreator({
                 ? ` => {\n  return Effect.none()\n}\n\n`
                 : isAction
                 ? isStateless
-                  ? ` => {\n  const ${actionCase(raw)}Effect = ${pascalCase(
-                      actionCase(raw)
-                    )}State.update(action${restUpdateParams})\n\n  return [state, Effect.map(Action.${actionCase(
+                  ? ` => {\n  const ${actionCase(raw)}Effect = ${stateType(
+                      raw,
+                      act
+                    )}.update(action${restUpdateParams})\n\n  return [state, Effect.map(Action.${actionCase(
                       raw
                     )}Action, ${actionCase(raw)}Effect)]\n}\n\n`
-                  : ` => {\n  const [${actionCase(raw)}, ${actionCase(raw)}Effect] = ${pascalCase(
-                      actionCase(raw)
-                    )}State.update(state.${actionCase(
+                  : ` => {\n  const [${actionCase(raw)}, ${actionCase(raw)}Effect] = ${stateType(
+                      raw,
+                      act
+                    )}.update(state.${actionCase(
                       raw
                     )}, action${restUpdateParams})\n\n  return [{ ...state, ${actionCase(
                       raw

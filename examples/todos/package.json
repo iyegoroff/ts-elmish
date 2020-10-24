@@ -8,7 +8,7 @@
     "start:native": "react-native start"
   },
   "dependencies": {
-    "@hot-loader/react-dom": "^16.13.0",
+    "@hot-loader/react-dom": "^16.14.0",
     "@ts-elmish/basic-effects": "workspace:*",
     "@ts-elmish/core": "workspace:*",
     "@ts-elmish/react": "workspace:*",
@@ -26,7 +26,7 @@
     "@babel/runtime": "^7.12.1",
     "@types/react": "^16.9.53",
     "@types/react-dom": "^16.9.8",
-    "@types/react-native": "^0.63.25",
+    "@types/react-native": "^0.63.30",
     "metro-react-native-babel-preset": "^0.61.0"
   }
 }

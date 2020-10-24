@@ -7,7 +7,7 @@ jobs:
     steps:
       - checkout
 
-      - run: sudo npm i -g pnpm@5.5.1
+      - run: sudo npm i -g pnpm@5.10.1
       - run: pnpm i
       - run: pnpm run lint
       - run: pnpm run build -r
@@ -28,7 +28,7 @@ jobs:
       - attach_workspace:
           at: .
       - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
-      - run: sudo npm i -g pnpm@5.5.1
+      - run: sudo npm i -g pnpm@5.10.1
       - run: pnpm i --frozen-lockfile
       - run: pnpm -r publish --access public --no-git-checks
 
