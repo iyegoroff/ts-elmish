@@ -50,7 +50,9 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
           }
         }
 
-        const canNavigateUpdate = (state: State, action: readonly ['can-navigate']): StateEffect => {
+        const canNavigateUpdate = (state: State, action: readonly [
+          'can-navigate'
+        ]): StateEffect => {
           return [state, Effect.none()]
         }
 

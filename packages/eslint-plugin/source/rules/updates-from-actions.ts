@@ -11,6 +11,8 @@ type Action = {
   readonly literal: string
 }
 
+const spaces = /\s|[^\s\S]/g
+
 const actionCase = (text: string) => camelCase(text).replace(/Action$/, '')
 
 const stateType = (literal: string, { typeAnnotation }: es.TSTypeOperator) =>
@@ -297,8 +299,7 @@ const rule = ruleCreator({
 
           if (
             isDefined(param) &&
-            code.getText(act).replace(/\s[^\s\S]/g, '') !==
-              code.getText(param).replace(/\s[^\s\S]/g, '')
+            code.getText(act).replace(spaces, '') !== code.getText(param).replace(spaces, '')
           ) {
             context.report({
               messageId: 'invalidParam',
@@ -309,8 +310,7 @@ const rule = ruleCreator({
 
           if (
             !hasInvalidUpdate &&
-            code.getText(defUpdate.body).replace(/[^\s\S]|\s/g, '') !==
-              updateBody.replace(/[^\s\S]|\s/g, '')
+            code.getText(defUpdate.body).replace(spaces, '') !== updateBody.replace(spaces, '')
           ) {
             console.warn(code.getText(defUpdate.body))
             console.warn(updateBody)
