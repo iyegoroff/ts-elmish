@@ -26,9 +26,9 @@ Elmish architecture in Typescript
 
 #### railway-effects
 
-[![npm version](https://badge.fury.io/js/%40ts-elmish%2Fswift-result-effects.svg?t=1495378566925)](https://badge.fury.io/js/%40ts-elmish%2Fswift-result-effects)
-[![Dependency Status](https://img.shields.io/david/iyegoroff/ts-elmish?path=packages%2Fswift-result-effects)](https://david-dm.org/iyegoroff/ts-elmish?path=packages%2Fswift-result-effects)
-[![devDependencies Status](https://img.shields.io/david/dev/iyegoroff/ts-elmish?path=packages%2Fswift-result-effects)](https://david-dm.org/iyegoroff/ts-elmish?path=packages%2Fswift-result-effects&type=dev)
+[![npm version](https://badge.fury.io/js/%40ts-elmish%2Frailway-effects.svg?t=1495378566925)](https://badge.fury.io/js/%40ts-elmish%2Frailway-effects)
+[![Dependency Status](https://img.shields.io/david/iyegoroff/ts-elmish?path=packages%2Frailway-effects)](https://david-dm.org/iyegoroff/ts-elmish?path=packages%2Frailway-effects)
+[![devDependencies Status](https://img.shields.io/david/dev/iyegoroff/ts-elmish?path=packages%2Frailway-effects)](https://david-dm.org/iyegoroff/ts-elmish?path=packages%2Frailway-effects&type=dev)
 [![npm](https://img.shields.io/npm/l/@ts-elmish/railway-effects.svg?t=1495378566925)](https://www.npmjs.com/package/@ts-elmish/railway-effects)
 
 ---
