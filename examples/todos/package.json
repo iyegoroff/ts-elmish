@@ -19,7 +19,7 @@
     "ts-is-defined": "^0.0.3",
     "ts-micro-dict": "^1.2.1",
     "ts-pipe": "^1.2.3",
-    "ts-swift-result": "^2.2.2"
+    "ts-railway": "^1.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",

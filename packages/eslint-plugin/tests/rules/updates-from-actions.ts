@@ -1161,7 +1161,7 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
     fromFixture(
       stripIndent`
         // INVALID - noAction, noUpdate, invalidUpdate
-        import { Effect } from '@ts-elmish/swift-result-effects'
+        import { Effect } from '@ts-elmish/railway-effects'
         import { DomainError } from '../../../domain/types'
         import { ServicesError } from '../../../services/types'
         import { Effects } from '../../effects/types'
@@ -1176,7 +1176,7 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
       {
         output: stripIndent`
           // INVALID - noAction, noUpdate, invalidUpdate
-          import { Effect } from '@ts-elmish/swift-result-effects'
+          import { Effect } from '@ts-elmish/railway-effects'
           import { DomainError } from '../../../domain/types'
           import { ServicesError } from '../../../services/types'
           import { Effects } from '../../effects/types'
@@ -1204,7 +1204,7 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
     fromFixture(
       stripIndent`
         // INVALID - noAction, noUpdate, invalidUpdate
-        import { Effect } from '@ts-elmish/swift-result-effects'
+        import { Effect } from '@ts-elmish/railway-effects'
         import { DomainError } from '../../../domain/types'
         import { Effects } from '../../effects/types'
         import { ErrorHandlerAction, ErrorHandlerState } from '../error-handler'
@@ -1226,7 +1226,7 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
       {
         output: stripIndent`
           // INVALID - noAction, noUpdate, invalidUpdate
-          import { Effect } from '@ts-elmish/swift-result-effects'
+          import { Effect } from '@ts-elmish/railway-effects'
           import { DomainError } from '../../../domain/types'
           import { Effects } from '../../effects/types'
           import { ErrorHandlerAction, ErrorHandlerState } from '../error-handler'
@@ -1264,7 +1264,7 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
     fromFixture(
       stripIndent`
         // INVALID - noAction, noUpdate, invalidUpdate
-        import { Effect } from '@ts-elmish/swift-result-effects'
+        import { Effect } from '@ts-elmish/railway-effects'
         import { DomainError } from '../../../domain/types'
         import { Effects } from '../../effects/types'
         import { ErrorHandlerAction, ErrorHandlerState } from '../error-handler'
@@ -1287,7 +1287,7 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
       {
         output: stripIndent`
           // INVALID - noAction, noUpdate, invalidUpdate
-          import { Effect } from '@ts-elmish/swift-result-effects'
+          import { Effect } from '@ts-elmish/railway-effects'
           import { DomainError } from '../../../domain/types'
           import { Effects } from '../../effects/types'
           import { ErrorHandlerAction, ErrorHandlerState } from '../error-handler'

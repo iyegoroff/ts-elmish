@@ -1,6 +1,6 @@
 import 'ts-jest'
 import { Record, String } from 'runtypes'
-import { Result } from 'ts-swift-result'
+import { Result } from 'ts-railway'
 import { ElmishIdleAction } from '@ts-elmish/idle-action'
 import { Effect } from './index'
 

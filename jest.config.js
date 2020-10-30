@@ -1,7 +1,7 @@
 const projects = [
   'packages/core',
   'packages/basic-effects',
-  'packages/swift-result-effects',
+  'packages/railway-effects',
   'examples/todos'
 ]
 

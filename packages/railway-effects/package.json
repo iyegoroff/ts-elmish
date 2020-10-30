@@ -1,8 +1,8 @@
 {
-  "name": "@ts-elmish/swift-result-effects",
+  "name": "@ts-elmish/railway-effects",
   "version": "0.0.68",
   "private": false,
-  "description": "ts-swift-result powered effects for ts-elmish",
+  "description": "ts-railway powered effects for ts-elmish",
   "main": "src/index.ts",
   "publishConfig": {
     "main": "dist/umd/index.js",
@@ -41,10 +41,10 @@
   },
   "peerDependencies": {
     "@ts-elmish/core": "workspace:*",
-    "ts-swift-result": "^4"
+    "ts-railway": "^1"
   },
   "devDependencies": {
     "@ts-elmish/core": "workspace:*",
-    "ts-swift-result": "^4.1.1"
+    "ts-railway": "^1.0.0"
   }
 }
