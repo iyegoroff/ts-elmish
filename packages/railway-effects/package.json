@@ -41,10 +41,10 @@
   },
   "peerDependencies": {
     "@ts-elmish/core": "workspace:*",
-    "ts-railway": "^1"
+    "ts-railway": "^2"
   },
   "devDependencies": {
     "@ts-elmish/core": "workspace:*",
-    "ts-railway": "^1.0.0"
+    "ts-railway": "^2.0.0"
   }
 }

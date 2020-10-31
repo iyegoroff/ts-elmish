@@ -19,13 +19,13 @@
     "ts-is-defined": "^0.0.3",
     "ts-micro-dict": "^1.2.1",
     "ts-pipe": "^1.2.3",
-    "ts-railway": "^1.0.0"
+    "ts-railway": "^2.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",
     "@babel/runtime": "^7.12.1",
-    "@types/react": "^16.9.53",
-    "@types/react-dom": "^16.9.8",
+    "@types/react": "^16.9.55",
+    "@types/react-dom": "^16.9.9",
     "@types/react-native": "^0.63.30",
     "metro-react-native-babel-preset": "^0.61.0"
   }

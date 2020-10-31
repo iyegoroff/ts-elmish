@@ -1,30 +1,30 @@
 import { ElmishEffect } from '@ts-elmish/core'
 import { ElmishIdleAction } from '@ts-elmish/idle-action'
 import { Effect as BasicEffect, ActionArgs } from '@ts-elmish/basic-effects'
-import { Result, AsyncResult, SuccessCase, FailureCase } from 'ts-railway'
+import { Result, AsyncResult, SuccessOf, FailureOf } from 'ts-railway'
 
 export type Effect<Action> = ElmishEffect<Action>
 
 type ResultArgs<Action, Success, Failure, ResultLike extends Result<Success, Failure>> = {
   readonly result: () => ResultLike
-  readonly success?: (value: SuccessCase<ResultLike>) => Action
-  readonly failure: (error: FailureCase<ResultLike>) => Action
+  readonly success?: (value: SuccessOf<ResultLike>) => Action
+  readonly failure: (error: FailureOf<ResultLike>) => Action
 }
 
 type ResultArgsNoFailure<Action, Success, ResultLike extends Result<Success, never>> = {
   readonly result: () => ResultLike
-  readonly success?: (value: SuccessCase<ResultLike>) => Action
+  readonly success?: (value: SuccessOf<ResultLike>) => Action
 }
 
 type AsyncResultArgs<Action, Success, Failure, ResultLike extends AsyncResult<Success, Failure>> = {
   readonly asyncResult: () => ResultLike
-  readonly success?: (value: SuccessCase<ResultLike>) => Action
-  readonly failure: (error: FailureCase<ResultLike>) => Action
+  readonly success?: (value: SuccessOf<ResultLike>) => Action
+  readonly failure: (error: FailureOf<ResultLike>) => Action
 }
 
 type AsyncResultArgsNoFailure<Action, Success, ResultLike extends AsyncResult<Success, never>> = {
   readonly asyncResult: () => ResultLike
-  readonly success?: (value: SuccessCase<ResultLike>) => Action
+  readonly success?: (value: SuccessOf<ResultLike>) => Action
 }
 
 function from<Action>(args: ActionArgs<Action>): Effect<Action>
