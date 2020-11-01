@@ -42,6 +42,10 @@ export const createElmishComponent = <Props extends Record<string, unknown>, Sta
       this.canRender = true
     }
 
+    componentWillUnmount() {
+      this.canRender = false
+    }
+
     render() {
       return React.createElement(View, { ...this.state, dispatch: this.dispatch })
     }
