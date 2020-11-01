@@ -45,6 +45,6 @@
   },
   "devDependencies": {
     "@ts-elmish/core": "workspace:*",
-    "ts-railway": "^2.0.0"
+    "ts-railway": "^2.0.1"
   }
 }

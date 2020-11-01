@@ -8,7 +8,9 @@ export type Effect<Action> = ElmishEffect<Action>
 type ResultArgs<Action, Success, Failure, ResultLike extends Result<Success, Failure>> = {
   readonly result: () => ResultLike
   readonly success?: (value: SuccessOf<ResultLike>) => Action
-  readonly failure: (error: FailureOf<ResultLike>) => Action
+  readonly failure: FailureOf<ResultLike> extends never
+    ? never
+    : (error: FailureOf<ResultLike>) => Action
 }
 
 type ResultArgsNoFailure<Action, Success, ResultLike extends Result<Success, never>> = {
@@ -19,7 +21,9 @@ type ResultArgsNoFailure<Action, Success, ResultLike extends Result<Success, nev
 type AsyncResultArgs<Action, Success, Failure, ResultLike extends AsyncResult<Success, Failure>> = {
   readonly asyncResult: () => ResultLike
   readonly success?: (value: SuccessOf<ResultLike>) => Action
-  readonly failure: (error: FailureOf<ResultLike>) => Action
+  readonly failure: FailureOf<ResultLike> extends never
+    ? never
+    : (error: FailureOf<ResultLike>) => Action
 }
 
 type AsyncResultArgsNoFailure<Action, Success, ResultLike extends AsyncResult<Success, never>> = {

@@ -17,8 +17,7 @@ const config = {
   },
   globals: {
     'ts-jest': {
-      tsConfig: '<rootDir>/src/tsconfig.test.json',
-      packageJson: 'package.json'
+      tsconfig: '<rootDir>/src/tsconfig.test.json'
     }
   }
 }

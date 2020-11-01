@@ -65,7 +65,7 @@ importers:
       ts-is-defined: 0.0.3
       ts-micro-dict: 1.2.1
       ts-pipe: 1.2.3
-      ts-railway: 2.0.0
+      ts-railway: 2.0.1
     devDependencies:
       '@babel/core': 7.12.3
       '@babel/runtime': 7.12.1
@@ -91,7 +91,7 @@ importers:
       ts-is-defined: ^0.0.3
       ts-micro-dict: ^1.2.1
       ts-pipe: ^1.2.3
-      ts-railway: ^2.0.0
+      ts-railway: ^2.0.1
   packages/basic-effects:
     dependencies:
       '@ts-elmish/idle-action': 'link:../idle-action'
@@ -148,12 +148,12 @@ importers:
       '@ts-elmish/idle-action': 'link:../idle-action'
     devDependencies:
       '@ts-elmish/core': 'link:../core'
-      ts-railway: 2.0.0
+      ts-railway: 2.0.1
     specifiers:
       '@ts-elmish/basic-effects': 'workspace:*'
       '@ts-elmish/core': 'workspace:*'
       '@ts-elmish/idle-action': 'workspace:*'
-      ts-railway: ^2.0.0
+      ts-railway: ^2.0.1
   packages/react:
     devDependencies:
       '@ts-elmish/core': 'link:../core'
@@ -1344,7 +1344,7 @@ packages:
       metro-resolver: 0.58.0
       minimist: 1.2.5
       mkdirp: 0.5.5
-      node-stream-zip: 1.11.3
+      node-stream-zip: 1.11.4
       ora: 3.4.0
       pretty-format: 25.5.0
       react-native: 0.63.2_react@16.14.0
@@ -6246,12 +6246,12 @@ packages:
     optional: true
     resolution:
       integrity: sha512-46z7DUmcjoYdaWyXouuFNNfUo6eFa94t23c53c+lG/9Cvauk4a98rAUp9672X5dxGdQmLpPzTxzu8f/OeEPaFA==
-  /node-stream-zip/1.11.3:
+  /node-stream-zip/1.11.4:
     dev: false
     engines:
       node: '>=0.10.0'
     resolution:
-      integrity: sha512-GY+9LxkQuIT3O7K8BTdHVGKFcBYBy2vAVcTBtkKpu+OlBef/NSb6VuIWSyLiVDfmLMkggHeRJZN0F3W0GWU/uw==
+      integrity: sha512-Mnl/AOz64eJlfMpMb7cvk31OWtMbfHzwTLg87C5JhePALzVGn3Fp52dqNdb3e2p+7PvA1chGriHSm90Ikf+HJQ==
   /normalize-package-data/2.5.0:
     dependencies:
       hosted-git-info: 2.8.8
@@ -8125,9 +8125,9 @@ packages:
     dev: false
     resolution:
       integrity: sha512-PWnbyb+qHvg2iGv69BH89nwRDmyesVgBH1hm2JIUc2EJW98t8vXbeWCL3+67XSxiRsHtaqCRdieuP8yVRTxrmQ==
-  /ts-railway/2.0.0:
+  /ts-railway/2.0.1:
     resolution:
-      integrity: sha512-1hY0wWf2FenDV1KkR/Agt2mdwkpp/ZyytmEC29N/eZG+2XKUTBR3jJcIm2j1OdI/eG1SqpgprWKLL8TA0dHncg==
+      integrity: sha512-px150EzdhxC/V0wIpCG0EB9MVpVX698BshwFnLyI/nWpl9KMwNE/yo5gkfFE4RayFIhLl78XO+ZpBTVkBmN0+A==
   /ts-tiny-invariant/0.0.3:
     dev: false
     resolution:
