@@ -105,14 +105,12 @@ describe('effects', () => {
     })
 
     const fromResultNoFailure = Effect.from({
-      result: () => Result.success(1),
-      failure: (error) => error
+      result: () => Result.success(1)
     })
 
     const fromResultSuccess = Effect.from({
       result: () => Result.success(1),
-      success: (value) => `${value}`,
-      failure: (error) => error
+      success: (value) => `${value}`
     })
 
     const fromAsyncResultFailure = Effect.from({
@@ -126,14 +124,12 @@ describe('effects', () => {
     })
 
     const fromAsyncResultNoFailure = Effect.from({
-      asyncResult: () => Promise.resolve(Result.success(1)),
-      failure: (error) => error
+      asyncResult: () => Promise.resolve(Result.success(1))
     })
 
     const fromAsyncResultSuccess = Effect.from({
       asyncResult: () => Promise.resolve(Result.success(1)),
-      success: (value) => `${value}`,
-      failure: (error) => error
+      success: (value) => `${value}`
     })
 
     expect(fromAction[0]((x) => x)).toEqual('action')
