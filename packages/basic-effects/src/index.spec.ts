@@ -2,6 +2,7 @@ import 'ts-jest'
 import { ElmishIdleAction } from '@ts-elmish/idle-action'
 import { Record, String } from 'runtypes'
 import { Effect } from './index'
+import { checkAsyncEffect, checkAsyncEffectReject, checkEffect, checkEffectReject } from './checks'
 
 const ErrorSchema = Record({ message: String })
 
@@ -75,31 +76,29 @@ describe('effects', () => {
       promise: () => Promise.reject(new Error('message'))
     })
 
-    expect(fromAction[0]((x) => x)).toEqual('action')
-    expect(fromFunctionFailure[0]((x) => x)).toEqual('message')
-    expect(fromFunctionNoFailure[0]((x) => x)).toEqual(ElmishIdleAction)
-    expect(fromFunctionSuccess[0]((x) => x)).toEqual('1')
-    expect(fromFunctionSuccessNoError[0]((x) => x)).toEqual('1')
-    expect(fromFunctionSuccessNoDone[0]((x) => x)).toEqual(ElmishIdleAction)
-    expect(() => {
-      fromFunctionThrow[0]((x) => x)
-    }).toThrow(Error)
-    await expect(fromPromiseFailure[0]((x) => x)).resolves.toEqual('message')
-    await expect(fromPromiseNoFailure[0]((x) => x)).resolves.toEqual(ElmishIdleAction)
-    await expect(fromPromiseSuccess[0]((x) => x)).resolves.toEqual('1')
-    await expect(fromPromiseSuccessNoThen[0]((x) => x)).resolves.toEqual(ElmishIdleAction)
-    await expect(fromPromiseSuccessNoError[0]((x) => x)).resolves.toEqual('1')
-    await expect(fromPromiseThrow[0]((x) => x)).rejects.toEqual(new Error('message'))
+    checkEffect(fromAction, 'action')
+    checkEffect(fromFunctionFailure, 'message')
+    checkEffect(fromFunctionNoFailure, ElmishIdleAction)
+    checkEffect(fromFunctionSuccess, '1')
+    checkEffect(fromFunctionSuccessNoError, '1')
+    checkEffect(fromFunctionSuccessNoDone, ElmishIdleAction)
+    checkEffectReject(fromFunctionThrow, new Error('message'))
+    await checkAsyncEffect(fromPromiseFailure, 'message')
+    await checkAsyncEffect(fromPromiseNoFailure, ElmishIdleAction)
+    await checkAsyncEffect(fromPromiseSuccess, '1')
+    await checkAsyncEffect(fromPromiseSuccessNoThen, ElmishIdleAction)
+    await checkAsyncEffect(fromPromiseSuccessNoError, '1')
+    await checkAsyncEffectReject(fromPromiseThrow, new Error('message'))
   })
 
   test('map', () => {
     const mapped = Effect.map((x: number) => ['action', x] as const, [(dispatch) => dispatch(1)])
-    expect(mapped[0](([, x]) => ['action', x + 1])).toEqual(['action', 2])
+    checkEffect(mapped, ['action', 1])
 
     const mappedIdle = Effect.map((x) => ['action', x] as const, [
       (dispatch) => dispatch(ElmishIdleAction)
     ])
-    expect(mappedIdle[0]((x) => x)).toEqual(ElmishIdleAction)
+    checkEffect(mappedIdle, ElmishIdleAction)
   })
 
   test('batch', () => {
@@ -108,7 +107,7 @@ describe('effects', () => {
       Effect.from({ action: 'action2' })
     )
 
-    expect(batched[0]((x) => x)).toEqual('action1')
-    expect(batched[1]((x) => x)).toEqual('action2')
+    checkEffect(batched, 'action1')
+    checkEffect(batched, 'action2', 1)
   })
 })

@@ -1,6 +1,6 @@
 import { ElmishIdleAction } from '@ts-elmish/idle-action'
 
-export type Dispatch<Action> = (action: Action) => void
+export type Dispatch<Action> = (action: Action) => undefined
 export type ElmishEffect<Action> = Array<(dispatch: Dispatch<Action>) => void>
 
 export const runProgram = <State, Action>({
@@ -32,6 +32,8 @@ export const runProgram = <State, Action>({
     }
 
     run()
+
+    return undefined
   }
 
   run()

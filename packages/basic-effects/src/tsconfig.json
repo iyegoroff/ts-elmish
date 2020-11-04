@@ -3,7 +3,7 @@
   "compilerOptions": {
     "outDir": "../dist"
   },
-  "exclude": [
-    "**/*.spec.ts"
+  "files": [
+    "index.ts"
   ]
 }

@@ -3,6 +3,7 @@ import { Record, String } from 'runtypes'
 import { Result } from 'ts-railway'
 import { ElmishIdleAction } from '@ts-elmish/idle-action'
 import { Effect } from './index'
+import { checkAsyncEffect, checkEffect } from '@ts-elmish/basic-effects/src/checks'
 
 const ErrorSchema = Record({ message: String })
 
@@ -87,13 +88,13 @@ describe('effects', () => {
       failure: (error) => error.nan
     })
 
-    expect(fromResultNoSuccess[0]((x) => x)).toEqual(ElmishIdleAction)
-    expect(fromResultNoFailure[0]((x) => x)).toEqual({ op: '<' })
-    expect(fromResult[0]((x) => x)).toEqual('<')
+    checkEffect(fromResultNoSuccess, ElmishIdleAction)
+    checkEffect(fromResultNoFailure, { op: '<' })
+    checkEffect(fromResult, '<')
 
-    await expect(fromAsyncResultNoSuccess[0]((x) => x)).resolves.toEqual(ElmishIdleAction)
-    await expect(fromAsyncResultNoFailure[0]((x) => x)).resolves.toEqual({ op: '<' })
-    await expect(fromAsyncResult[0]((x) => x)).resolves.toEqual('<')
+    await checkAsyncEffect(fromAsyncResultNoSuccess, ElmishIdleAction)
+    await checkAsyncEffect(fromAsyncResultNoFailure, { op: '<' })
+    await checkAsyncEffect(fromAsyncResult, '<')
   })
 
   test('from', async () => {
@@ -132,15 +133,15 @@ describe('effects', () => {
       success: (value) => `${value}`
     })
 
-    expect(fromAction[0]((x) => x)).toEqual('action')
+    checkEffect(fromAction, 'action')
 
-    expect(fromResultFailure[0]((x) => x)).toEqual('message')
-    expect(fromResultNoFailure[0]((x) => x)).toEqual(ElmishIdleAction)
-    expect(fromResultSuccess[0]((x) => x)).toEqual('1')
+    checkEffect(fromResultFailure, 'message')
+    checkEffect(fromResultNoFailure, ElmishIdleAction)
+    checkEffect(fromResultSuccess, '1')
 
-    await expect(fromAsyncResultFailure[0]((x) => x)).resolves.toEqual('message')
-    await expect(fromAsyncResultFailureNoError[0]((x) => x)).resolves.toEqual('message')
-    await expect(fromAsyncResultNoFailure[0]((x) => x)).resolves.toEqual(ElmishIdleAction)
-    await expect(fromAsyncResultSuccess[0]((x) => x)).resolves.toEqual('1')
+    await checkAsyncEffect(fromAsyncResultFailure, 'message')
+    await checkAsyncEffect(fromAsyncResultFailureNoError, 'message')
+    await checkAsyncEffect(fromAsyncResultNoFailure, ElmishIdleAction)
+    await checkAsyncEffect(fromAsyncResultSuccess, '1')
   })
 })
