@@ -2,7 +2,7 @@ import { ElmishEffect } from '@ts-elmish/core'
 import 'ts-jest'
 
 const foo = (expected: unknown) =>
-  jest.fn((x) => {
+  jest.fn((x: unknown) => {
     expect(x).toEqual(expected)
     return undefined
   })
