@@ -1,0 +1,14 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "jsx": "react-native",
+    "outDir": "../../build/native",
+    "lib": ["es2016"]
+  },
+  "include": [
+    "index.native.tsx",
+    "../**/*.native.ts*",
+    "../**/*.android.ts*",
+    "../**/*.ios.ts*"
+  ]
+}

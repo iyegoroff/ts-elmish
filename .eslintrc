@@ -11,9 +11,8 @@
       "./packages/railway-effects/src/tsconfig.test.json",
       "./packages/mithril/src/tsconfig.json",
       "./packages/react/src/tsconfig.json",
-      "./packages/eslint-plugin/source/tsconfig.json",
-      "./examples/todos/src/tsconfig.json",
-      "./examples/todos/src/tsconfig.test.json"
+      "./packages/eslint-plugin/src/tsconfig.json",
+      "./examples/counters/src/tsconfig.json"
     ]
   },
   "plugins": ["@typescript-eslint", "prettier", "no-null"],
@@ -25,7 +24,10 @@
     "prettier",
     "prettier/@typescript-eslint",
     "prettier/standard",
-    "prettier/react"
+    "prettier/react",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking"
   ],
   "rules": {
     "@typescript-eslint/space-before-function-paren": [
@@ -48,6 +50,7 @@
         }
       }
     ],
+    "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/promise-function-async": "off",
     "@typescript-eslint/no-explicit-any": "error",
     "@typescript-eslint/no-non-null-assertion": "error",

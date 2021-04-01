@@ -1,13 +1,16 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { runProgram, Dispatch, ElmishEffect as Effect } from '@ts-elmish/core'
 import shallowEqual from './shallowEqual'
+
+Re
 
 type AssertDispatch<T> = T extends { readonly dispatch: unknown } ? never : T
 export type ElmishProps<State, Action> = Readonly<AssertDispatch<State>> & {
   readonly dispatch: Dispatch<Action>
 }
 
-export const ElmishMemo = <P>(component: React.SFC<P>) => React.memo(component, shallowEqual)
+export const ElmishMemo = <P>(component: React.FunctionComponent<P>) =>
+  React.memo(component, shallowEqual)
 
 export const createElmishComponent = <Props extends Record<string, unknown>, State, Action>(
   init: (props: Props) => readonly [AssertDispatch<State>, Effect<Action>],
@@ -16,37 +19,25 @@ export const createElmishComponent = <Props extends Record<string, unknown>, Sta
     action: Action
   ) => readonly [AssertDispatch<State>, Effect<Action>],
   View: React.ComponentType<ElmishProps<State, Action>>
-) =>
-  class ElmishComponent extends React.Component<Props, AssertDispatch<State>> {
-    readonly dispatch: Dispatch<Action>
-    canRender: boolean = false
+): React.FunctionComponent<Props> =>
+  function ElmishComponent(props: Props) {
+    const [state, setState] = useState<AssertDispatch<State>>()
+    const dispatchRef = useRef<Dispatch<Action>>()
 
-    constructor(props: Props) {
-      super(props)
-
-      const [initialState, dispatch] = runProgram({
+    useEffect(() => {
+      const [initialState, dispatch, stop] = runProgram({
         init: () => init(props),
         update,
-        view: (state) => {
-          if (this.canRender) {
-            this.setState(state)
-          }
-        }
+        view: setState
       })
 
-      this.state = initialState
-      this.dispatch = dispatch
-    }
+      setState(initialState)
+      dispatchRef.current = dispatch
 
-    componentDidMount() {
-      this.canRender = true
-    }
+      return stop
+    }, [])
 
-    componentWillUnmount() {
-      this.canRender = false
-    }
-
-    render() {
-      return React.createElement(View, { ...this.state, dispatch: this.dispatch })
-    }
+    return state !== undefined && dispatchRef.current !== undefined
+      ? React.createElement(View, { ...state, dispatch: dispatchRef.current })
+      : React.createElement(React.Fragment)
   }

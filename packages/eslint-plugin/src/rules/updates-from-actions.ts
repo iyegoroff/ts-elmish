@@ -15,13 +15,23 @@ const spaces = /\s|[^\s\S]/g
 
 const actionCase = (text: string) => camelCase(text).replace(/Action$/, '')
 
-const stateType = (literal: string, { typeAnnotation }: es.TSTypeOperator) =>
-  typeAnnotation?.type === 'TSTupleType' &&
-  typeAnnotation.elementTypes.length === 2 &&
-  typeAnnotation.elementTypes[1].type === 'TSTypeReference' &&
-  typeAnnotation.elementTypes[1].typeName.type === 'Identifier'
-    ? typeAnnotation.elementTypes[1].typeName.name.replace(/Action$/, 'State')
-    : `${pascalCase(actionCase(literal))}State`
+const last = <T>(arr: readonly T[]) => arr[arr.length - 1]
+
+const stateType = (literal: string, { typeAnnotation }: es.TSTypeOperator) => {
+  const state = `${pascalCase(actionCase(literal))}State`
+
+  if (typeAnnotation?.type === 'TSTupleType' && typeAnnotation.elementTypes.length > 1) {
+    const act = last(typeAnnotation.elementTypes)
+
+    return act.type === 'TSTypeReference' && act.typeName.type === 'Identifier'
+      ? act.typeName.name.replace(/Action$/, 'State')
+      : state
+  }
+
+  return state
+}
+
+const ruleName = 'updates-from-actions'
 
 const rule = ruleCreator({
   defaultOptions: [],
@@ -41,7 +51,7 @@ const rule = ruleCreator({
     schema: [],
     type: 'problem'
   },
-  name: 'updates-from-actions',
+  name: ruleName,
   create: (context): RuleListener => {
     const code = context.getSourceCode()
     const { esTreeNodeToTSNodeMap } = getParserServices(context)
@@ -250,27 +260,32 @@ const rule = ruleCreator({
           })
         }
 
+        const argName = (arg: es.TypeNode, idx: number) =>
+          arg.type === 'TSNamedTupleMember' ? arg.label.name : `arg${idx}`
+
         const actionBody = requiredActions
           .map(({ name, literal: raw, action: act }) => {
             const actionName = raw.endsWith("-action'") ? `${name}Action` : name
 
             if (act.typeAnnotation?.type === 'TSTupleType') {
               const { elementTypes } = act.typeAnnotation
+              const args = elementTypes.slice(1)
 
-              const val =
-                elementTypes.length === 1
-                  ? ''
-                  : elementTypes.length === 2
-                  ? `val: ${code.getText(
-                      elementTypes[1].type === 'TSNamedTupleMember'
-                        ? elementTypes[1].elementType
-                        : elementTypes[1]
-                    )}`
-                  : `val: readonly ${code.getText(act.typeAnnotation).replace(`${raw}, `, '')}`
+              const signature =
+                args.length === 0
+                  ? `(): Action => `
+                  : args.reduce(
+                      (acc, arg, idx) =>
+                        `${acc}(${argName(arg, idx)}: ${code.getText(
+                          arg.type === 'TSNamedTupleMember' ? arg.elementType : arg
+                        )})${idx === args.length - 1 ? ': Action' : ''} => `,
+                      ''
+                    )
 
-              return `\n  ${actionName}: (${val}): Action => [${raw}${
-                elementTypes.length === 1 ? '' : ', val'
-              }]`
+              return `\n  ${actionName}: ${signature}[${raw}${args.reduce(
+                (acc, arg, idx) => `${acc}, ${argName(arg, idx)}`,
+                ''
+              )}]`
             }
 
             return ''
@@ -312,8 +327,6 @@ const rule = ruleCreator({
             !hasInvalidUpdate &&
             code.getText(defUpdate.body).replace(spaces, '') !== updateBody.replace(spaces, '')
           ) {
-            console.warn(code.getText(defUpdate.body))
-            console.warn(updateBody)
             context.report({
               messageId: 'invalidUpdate',
               loc: getLoc(esTreeNodeToTSNodeMap.get(defUpdate)),
@@ -323,7 +336,17 @@ const rule = ruleCreator({
 
           if (!declaredUpdates.includes(updateName)) {
             const isSetter = raw.startsWith("'set-")
-            const isAction = raw.endsWith("-action'")
+
+            const isDictAction =
+              raw.endsWith("-action'") &&
+              act.typeAnnotation?.type === 'TSTupleType' &&
+              act.typeAnnotation.elementTypes.length === 3
+
+            const isAction =
+              raw.endsWith("-action'") &&
+              act.typeAnnotation?.type === 'TSTupleType' &&
+              act.typeAnnotation.elementTypes.length === 2
+
             const isStateless = !(
               state?.members.some(
                 (member) =>
@@ -332,6 +355,7 @@ const rule = ruleCreator({
                   member.key.name === name
               ) ?? false
             )
+
             const restUpdateParams = defUpdate.params
               .slice(2)
               .map((p) => code.getText(p).replace(/(\w+)(: \w+)/, ', $1'))
@@ -345,6 +369,8 @@ const rule = ruleCreator({
                     ? `[, ${actionCase(raw.replace(/'set-([\w-]+)'/, '$1'))}]$2`
                     : isAction
                     ? `[, action]$2`
+                    : isDictAction
+                    ? `[, id, action]$2`
                     : '$1$2'
                 )
               )
@@ -352,6 +378,19 @@ const rule = ruleCreator({
               .replace('Action', code.getText(act))}\n)${code.getText(defUpdate.returnType)}${
               !isDefined(state)
                 ? ` => {\n  return Effect.none()\n}\n\n`
+                : isDictAction
+                ? ` => {\n  const { ${actionCase(raw)} } = state\n  const prevState = ${actionCase(
+                    raw
+                  )}[id]\n\n  if (prevState === undefined) {\n    return [state, Effect.none()]\n  }\n\n  const [nextState, effect] = ${stateType(
+                    raw,
+                    act
+                  )}.update(prevState, action)\n\n  return [\n    { ...state, ${actionCase(
+                    raw
+                  )}: Dict.put(${actionCase(
+                    raw
+                  )}, id, nextState) },\n    Effect.map(Action.${actionCase(
+                    raw
+                  )}Action(id), effect)\n  ]\n}\n\n`
                 : isAction
                 ? isStateless
                   ? ` => {\n  const ${actionCase(raw)}Effect = ${stateType(
@@ -394,4 +433,4 @@ const rule = ruleCreator({
   }
 })
 
-export = rule
+export = { name: ruleName, rule }

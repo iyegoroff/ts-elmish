@@ -1,11 +1,11 @@
 import { stripIndent } from 'common-tags'
 import { fromFixture } from 'eslint-etc'
 import { ruleTester } from '../utils'
-import rule from '../../source/rules/updates-from-actions'
+import rule from '../../src/rules/updates-from-actions'
 
-ruleTester({ types: true }).run('updates-from-actions', rule, {
+ruleTester({ types: true }).run('updates-from-actions', rule.rule, {
   valid: [
-    fromFixture(
+    fromFixture<string, never[]>(
       stripIndent`
         // VALID
         import { Effect, Action } from '@ts-elmish/core'
@@ -22,9 +22,9 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
           | readonly ['can-navigate']
 
         const Action = {
-          setX: (val: number): Action => ['set-x', val],
-          setY: (val: number): Action => ['set-y', val],
-          setError: (val: string): Action => ['set-error', val],
+          setX: (arg0: number): Action => ['set-x', arg0],
+          setY: (arg0: number): Action => ['set-y', arg0],
+          setError: (arg0: string): Action => ['set-error', arg0],
           canNavigate: (): Action => ['can-navigate']
         }
 
@@ -83,11 +83,11 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
           readonly y: number
         }
         type Action =
-          | readonly [tag: 'set-x', number]
-          | readonly [tag: 'set-y', number]
-          | readonly [tag: 'set-error', string]
+          | readonly [tag: 'set-x', x: number]
+          | readonly [tag: 'set-y', y: number]
+          | readonly [tag: 'set-error', error: string]
         type StateEffect = readonly [State, Effect<Action>]
-        const Action = { setY: (val: number): Action => ['set-y', val], setError: (val: string): Action => ['set-error', val] }
+        const Action = { setY: (y: number): Action => ['set-y', y], setError: (error: string): Action => ['set-error', error] }
                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [noAction]
         const init = (state: State): StateEffect => {
           return [state, Effect.none()]
@@ -102,13 +102,13 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
               return setErrorUpdate(state, action)
           }
         }
-        const setXUpdate = (state: State, [, x]: readonly [tag: 'set-x', number]): StateEffect => {
+        const setXUpdate = (state: State, [, x]: readonly [tag: 'set-x', x: number]): StateEffect => {
           return [{ ...state, x }, Effect.none()]
         }
-        const setYUpdate = (state: State, [, y]: readonly [tag: 'set-y', number]): StateEffect => {
+        const setYUpdate = (state: State, [, y]: readonly [tag: 'set-y', y: number]): StateEffect => {
           return [{ ...state, y }, Effect.none()]
         }
-        const setErrorUpdate = (state: State, [, error]: readonly [tag: 'set-error', string]): StateEffect => {
+        const setErrorUpdate = (state: State, [, error]: readonly [tag: 'set-error', error: string]): StateEffect => {
           return [{ ...state, error }, Effect.none()]
         }
         export type XState = State
@@ -123,14 +123,14 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
             readonly y: number
           }
           type Action =
-            | readonly [tag: 'set-x', number]
-            | readonly [tag: 'set-y', number]
-            | readonly [tag: 'set-error', string]
+            | readonly [tag: 'set-x', x: number]
+            | readonly [tag: 'set-y', y: number]
+            | readonly [tag: 'set-error', error: string]
           type StateEffect = readonly [State, Effect<Action>]
           const Action = {
-            setX: (val: number): Action => ['set-x', val],
-            setY: (val: number): Action => ['set-y', val],
-            setError: (val: string): Action => ['set-error', val]
+            setX: (x: number): Action => ['set-x', x],
+            setY: (y: number): Action => ['set-y', y],
+            setError: (error: string): Action => ['set-error', error]
           }
           const init = (state: State): StateEffect => {
             return [state, Effect.none()]
@@ -145,13 +145,13 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
                 return setErrorUpdate(state, action)
             }
           }
-          const setXUpdate = (state: State, [, x]: readonly [tag: 'set-x', number]): StateEffect => {
+          const setXUpdate = (state: State, [, x]: readonly [tag: 'set-x', x: number]): StateEffect => {
             return [{ ...state, x }, Effect.none()]
           }
-          const setYUpdate = (state: State, [, y]: readonly [tag: 'set-y', number]): StateEffect => {
+          const setYUpdate = (state: State, [, y]: readonly [tag: 'set-y', y: number]): StateEffect => {
             return [{ ...state, y }, Effect.none()]
           }
-          const setErrorUpdate = (state: State, [, error]: readonly [tag: 'set-error', string]): StateEffect => {
+          const setErrorUpdate = (state: State, [, error]: readonly [tag: 'set-error', error: string]): StateEffect => {
             return [{ ...state, error }, Effect.none()]
           }
           export type XState = State
@@ -172,8 +172,8 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
           | readonly [tag: 'set-y', y: number]
           | readonly ['sets-error', string]
         type StateEffect = readonly [State, Effect<Action>]
-        const Action = {setX: (val: number): Action => ['set-x', val], setsError: (val: string): Action => ['set-error', val]}
-                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [noAction]
+        const Action = {setX: (arg0: number): Action => ['set-x', arg0], setsError: (arg0: string): Action => ['set-error', arg0]}
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [noAction]
         export const init = (state: State): StateEffect => {
           return [state, Effect.none()]
         }
@@ -213,9 +213,9 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
             | readonly ['sets-error', string]
           type StateEffect = readonly [State, Effect<Action>]
           const Action = {
-            setX: (val: number): Action => ['set-x', val],
-            setY: (val: number): Action => ['set-y', val],
-            setsError: (val: string): Action => ['sets-error', val]
+            setX: (arg0: number): Action => ['set-x', arg0],
+            setY: (y: number): Action => ['set-y', y],
+            setsError: (arg0: string): Action => ['sets-error', arg0]
           }
           export const init = (state: State): StateEffect => {
             return [state, Effect.none()]
@@ -257,8 +257,8 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
           | readonly ['set-y', number]
           | readonly ['set-error', string]
         type StateEffect = readonly [State, Effect<Action>]
-        const Action = { setX: (val: number): Action => ['set-x', val], setY: (val: number): Action => ['set-y', val] }
-                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [noAction]
+        const Action = { setX: (arg0: number): Action => ['set-x', arg0], setY: (arg0: number): Action => ['set-y', arg0] }
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [noAction]
         export const init = (state: State): StateEffect => {
           return [state, Effect.none()]
         }
@@ -298,9 +298,9 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
             | readonly ['set-error', string]
           type StateEffect = readonly [State, Effect<Action>]
           const Action = {
-            setX: (val: number): Action => ['set-x', val],
-            setY: (val: number): Action => ['set-y', val],
-            setError: (val: string): Action => ['set-error', val]
+            setX: (arg0: number): Action => ['set-x', arg0],
+            setY: (arg0: number): Action => ['set-y', arg0],
+            setError: (arg0: string): Action => ['set-error', arg0]
           }
           export const init = (state: State): StateEffect => {
             return [state, Effect.none()]
@@ -344,9 +344,9 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
           | readonly ['set-y', number]
           | readonly ['set-error', string]
         const Action = {
-          setTodoFilter: (val: number): Action => ['set-todo-filter', val],
-          setY: (val: number): Action => ['set-y', val],
-          setError: (val: string): Action => ['set-error', val]
+          setTodoFilter: (arg0: number): Action => ['set-todo-filter', arg0],
+          setY: (arg0: number): Action => ['set-y', arg0],
+          setError: (arg0: string): Action => ['set-error', arg0]
         }
         type StateEffect = readonly [State, Effect<Action>]
         export const init = (state: State): StateEffect => {
@@ -385,9 +385,9 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
             | readonly ['set-y', number]
             | readonly ['set-error', string]
           const Action = {
-            setTodoFilter: (val: number): Action => ['set-todo-filter', val],
-            setY: (val: number): Action => ['set-y', val],
-            setError: (val: string): Action => ['set-error', val]
+            setTodoFilter: (arg0: number): Action => ['set-todo-filter', arg0],
+            setY: (arg0: number): Action => ['set-y', arg0],
+            setError: (arg0: string): Action => ['set-error', arg0]
           }
           type StateEffect = readonly [State, Effect<Action>]
           export const init = (state: State): StateEffect => {
@@ -436,9 +436,9 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
           | readonly ['sets-error', string]
             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [noUpdate]
         const Action = {
-          setX: (val: number): Action => ['set-x', val],
-          setY: (val: number): Action => ['set-y', val],
-          setsError: (val: string): Action => ['sets-error', val]
+          setX: (arg0: number): Action => ['set-x', arg0],
+          setY: (arg0: number): Action => ['set-y', arg0],
+          setsError: (arg0: string): Action => ['sets-error', arg0]
         }
         type StateEffect = readonly [State, Effect<Action>]
         export const init = (state: State): StateEffect => {
@@ -477,9 +477,9 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
             | readonly ['set-y', number]
             | readonly ['sets-error', string]
           const Action = {
-            setX: (val: number): Action => ['set-x', val],
-            setY: (val: number): Action => ['set-y', val],
-            setsError: (val: string): Action => ['sets-error', val]
+            setX: (arg0: number): Action => ['set-x', arg0],
+            setY: (arg0: number): Action => ['set-y', arg0],
+            setsError: (arg0: string): Action => ['sets-error', arg0]
           }
           type StateEffect = readonly [State, Effect<Action>]
           export const init = (state: State): StateEffect => {
@@ -528,8 +528,8 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
           | readonly ['set-error', string]
             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [noUpdate]
         type StateEffect = readonly [State, Effect<Action>]
-        const Action = { setX: (val: number): Action => ['set-x', val],setY: (val: number): Action => ['set-y', val]}
-                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [noAction]
+        const Action = { setX: (arg0: number): Action => ['set-x', arg0],setY: (arg0: number): Action => ['set-y', arg0]}
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [noAction]
         export const init = (state: State): StateEffect => {
           return [state, Effect.none()]
         }
@@ -567,9 +567,9 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
             | readonly ['set-error', string]
           type StateEffect = readonly [State, Effect<Action>]
           const Action = {
-            setX: (val: number): Action => ['set-x', val],
-            setY: (val: number): Action => ['set-y', val],
-            setError: (val: string): Action => ['set-error', val]
+            setX: (arg0: number): Action => ['set-x', arg0],
+            setY: (arg0: number): Action => ['set-y', arg0],
+            setError: (arg0: string): Action => ['set-error', arg0]
           }
           export const init = (state: State): StateEffect => {
             return [state, Effect.none()]
@@ -616,9 +616,9 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
           | readonly ['set-y', number]
           | readonly ['set-error', string]
         const Action = {
-          setX: (val: number): Action => ['set-x', val],
-          setY: (val: number): Action => ['set-y', val],
-          setError: (val: string): Action => ['set-error', val]
+          setX: (arg0: number): Action => ['set-x', arg0],
+          setY: (arg0: number): Action => ['set-y', arg0],
+          setError: (arg0: string): Action => ['set-error', arg0]
         }
         type StateEffect = readonly [State, Effect<Action>]
         export const init = (state: State): StateEffect => {
@@ -655,9 +655,9 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
             | readonly ['set-y', number]
             | readonly ['set-error', string]
           const Action = {
-            setX: (val: number): Action => ['set-x', val],
-            setY: (val: number): Action => ['set-y', val],
-            setError: (val: string): Action => ['set-error', val]
+            setX: (arg0: number): Action => ['set-x', arg0],
+            setY: (arg0: number): Action => ['set-y', arg0],
+            setError: (arg0: string): Action => ['set-error', arg0]
           }
           type StateEffect = readonly [State, Effect<Action>]
           export const init = (state: State): StateEffect => {
@@ -706,9 +706,9 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
           | readonly ['set-y', number]
           | readonly ['set-error', string]
         const Action = {
-          setX: (val: number): Action => ['set-x', val],
-          setY: (val: number): Action => ['set-y', val],
-          setError: (val: string): Action => ['set-error', val]
+          setX: (arg0: number): Action => ['set-x', arg0],
+          setY: (arg0: number): Action => ['set-y', arg0],
+          setError: (arg0: string): Action => ['set-error', arg0]
         }
         type StateEffect = readonly [State, Effect<Action>]
         export const init = (state: State): StateEffect => {
@@ -745,9 +745,9 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
             | readonly ['set-y', number]
             | readonly ['set-error', string]
           const Action = {
-            setX: (val: number): Action => ['set-x', val],
-            setY: (val: number): Action => ['set-y', val],
-            setError: (val: string): Action => ['set-error', val]
+            setX: (arg0: number): Action => ['set-x', arg0],
+            setY: (arg0: number): Action => ['set-y', arg0],
+            setError: (arg0: string): Action => ['set-error', arg0]
           }
           type StateEffect = readonly [State, Effect<Action>]
           export const init = (state: State): StateEffect => {
@@ -796,9 +796,9 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
           | readonly ['set-y', number]
           | readonly ['set-error', string]
         const Action = {
-          setX: (val: number): Action => ['set-x', val],
-          setY: (val: number): Action => ['set-y', val],
-          setError: (val: string): Action => ['set-error', val]
+          setX: (arg0: number): Action => ['set-x', arg0],
+          setY: (arg0: number): Action => ['set-y', arg0],
+          setError: (arg0: string): Action => ['set-error', arg0]
         }
         type StateEffect = readonly [State, Effect<Action>]
         export const init = (state: State): StateEffect => {
@@ -835,9 +835,9 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
             | readonly ['set-y', number]
             | readonly ['set-error', string]
           const Action = {
-            setX: (val: number): Action => ['set-x', val],
-            setY: (val: number): Action => ['set-y', val],
-            setError: (val: string): Action => ['set-error', val]
+            setX: (arg0: number): Action => ['set-x', arg0],
+            setY: (arg0: number): Action => ['set-y', arg0],
+            setError: (arg0: string): Action => ['set-error', arg0]
           }
           type StateEffect = readonly [State, Effect<Action>]
           export const init = (state: State): StateEffect => {
@@ -907,7 +907,7 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
           type Action =
             | readonly ['x-action', number]
           const Action = {
-            xAction: (val: number): Action => ['x-action', val]
+            xAction: (arg0: number): Action => ['x-action', arg0]
           }
           type StateEffect = readonly [State, Effect<Action>]
           export const init = (state: State): StateEffect => {
@@ -970,7 +970,7 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
           type Action =
             | readonly ['x-action', ValueAction]
           const Action = {
-            xAction: (val: ValueAction): Action => ['x-action', val]
+            xAction: (arg0: ValueAction): Action => ['x-action', arg0]
           }
           type StateEffect = readonly [State, Effect<Action>]
           export const init = (state: State): StateEffect => {
@@ -1010,7 +1010,7 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
         type Action =
           | readonly ['x-action', number]
         const Action = {
-          xAction: (val: number): Action => ['x-action', val]
+          xAction: (arg0: number): Action => ['x-action', arg0]
         }
         type StateEffect = readonly [State, Effect<Action>]
         export const init = (state: State): StateEffect => {
@@ -1042,7 +1042,7 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
           type Action =
             | readonly ['x-action', number]
           const Action = {
-            xAction: (val: number): Action => ['x-action', val]
+            xAction: (arg0: number): Action => ['x-action', arg0]
           }
           type StateEffect = readonly [State, Effect<Action>]
           export const init = (state: State): StateEffect => {
@@ -1081,9 +1081,9 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
           | readonly [tag: 'set-y', y: number]
           | readonly [tag: 'set-error', error: string]
         const Action = {
-          setX: (val: number): Action => ['set-x', val],
-          setY: (val: number): Action => ['set-y', val],
-          setError: (val: string): Action => ['set-error', val]
+          setX: (x: number): Action => ['set-x', x],
+          setY: (y: number): Action => ['set-y', y],
+          setError: (error: string): Action => ['set-error', error]
         }
         type StateEffect = readonly [State, Effect<Action>]
         export const init = (state: State): StateEffect => {
@@ -1120,9 +1120,9 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
             | readonly [tag: 'set-y', y: number]
             | readonly [tag: 'set-error', error: string]
           const Action = {
-            setX: (val: number): Action => ['set-x', val],
-            setY: (val: number): Action => ['set-y', val],
-            setError: (val: string): Action => ['set-error', val]
+            setX: (x: number): Action => ['set-x', x],
+            setY: (y: number): Action => ['set-y', y],
+            setError: (error: string): Action => ['set-error', error]
           }
           type StateEffect = readonly [State, Effect<Action>]
           export const init = (state: State): StateEffect => {
@@ -1183,7 +1183,7 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
           type Action =
             | readonly ['log-error', DomainError | ServicesError]
           const Action = {
-            logError: (val: DomainError | ServicesError): Action => ['log-error', val]
+            logError: (arg0: DomainError | ServicesError): Action => ['log-error', arg0]
           }
           const logErrorUpdate = (
             action: readonly ['log-error', DomainError | ServicesError],
@@ -1236,7 +1236,7 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
           type Action =
             | readonly ['error-handler-action', ErrorHandlerAction]
           const Action = {
-            errorHandlerAction: (val: ErrorHandlerAction): Action => ['error-handler-action', val]
+            errorHandlerAction: (arg0: ErrorHandlerAction): Action => ['error-handler-action', arg0]
           }
           type StateEffect = readonly [State, Effect<Action>]
           const init = (effects: Effects): StateEffect => {
@@ -1296,7 +1296,7 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
           }
           type Action = readonly ['error-action', ErrorHandlerAction]
           const Action = {
-            errorAction: (val: ErrorHandlerAction): Action => ['error-action', val]
+            errorAction: (arg0: ErrorHandlerAction): Action => ['error-action', arg0]
           } as const
           type StateEffect = readonly [State, Effect<Action>]
           const init = (effects: Effects): StateEffect => {
@@ -1339,8 +1339,8 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
           | readonly ['set-error', boolean]
           | readonly ['can-navigate']
 
-        const Action = { setX: (val: number): Action => ['set-x', val], setY: (val: number): Action => ['set-y', val], setError: (val: string): Action => ['set-error', val], canNavigate: (): Action => ['can-navigate'] }
-                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [noAction]
+        const Action = { setX: (arg0: number): Action => ['set-x', arg0], setY: (arg0: number): Action => ['set-y', arg0], setError: (arg0: string): Action => ['set-error', arg0], canNavigate: (): Action => ['can-navigate'] }
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [noAction]
 
         type StateEffect = readonly [State, Effect<Action>]
 
@@ -1402,9 +1402,9 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
             | readonly ['can-navigate']
 
           const Action = {
-            setX: (val: number): Action => ['set-x', val],
-            setY: (val: number): Action => ['set-y', val],
-            setError: (val: boolean): Action => ['set-error', val],
+            setX: (arg0: number): Action => ['set-x', arg0],
+            setY: (arg0: number): Action => ['set-y', arg0],
+            setError: (arg0: boolean): Action => ['set-error', arg0],
             canNavigate: (): Action => ['can-navigate']
           }
 
@@ -1464,8 +1464,8 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
           | readonly ['set-x', number]
           | readonly ['set-y', number]
         const Action = {
-          setX: (val: number): Action => ['set-x', val],
-          setY: (val: number): Action => ['set-y', val]
+          setX: (arg0: number): Action => ['set-x', arg0],
+          setY: (arg0: number): Action => ['set-y', arg0]
         }
         type StateEffect = readonly [State, Effect<Action>]
         export const init = (state: State): StateEffect => {
@@ -1495,8 +1495,8 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
             | readonly ['set-x', number]
             | readonly ['set-y', number]
           const Action = {
-            setX: (val: number): Action => ['set-x', val],
-            setY: (val: number): Action => ['set-y', val]
+            setX: (arg0: number): Action => ['set-x', arg0],
+            setY: (arg0: number): Action => ['set-y', arg0]
           }
           type StateEffect = readonly [State, Effect<Action>]
           export const init = (state: State): StateEffect => {
@@ -1516,6 +1516,283 @@ ruleTester({ types: true }).run('updates-from-actions', rule, {
           }
           const setYUpdate = (state: State, [, y]: readonly ['set-y', number]): StateEffect => {
             return [{ ...state, y }, Effect.none()]
+          }
+          export type XState = State
+          export type XAction = Action
+          export type XStateEffect = StateEffect
+        `
+      }
+    ),
+    fromFixture(
+      stripIndent`
+        // INVALID - noAction
+        type State = {
+          readonly x: number
+          readonly y: number
+        }
+        type Action =
+          | readonly ['act', number, string, boolean]
+          | readonly [tag: 'set-x', x: number]
+          | readonly [tag: 'set-y', y: number]
+          | readonly [tag: 'set-error', error: string]
+        type StateEffect = readonly [State, Effect<Action>]
+        const Action = {}
+                       ~~ [noAction]
+        const init = (state: State): StateEffect => {
+          return [state, Effect.none()]
+        }
+        const update = (state: State, action: Action): StateEffect => {
+          switch (action[0]) {
+            case 'act':
+              return actUpdate(state, action)
+            case 'set-x':
+              return setXUpdate(state, action)
+            case 'set-y':
+              return setYUpdate(state, action)
+            case 'set-error':
+              return setErrorUpdate(state, action)
+          }
+        }
+        const actUpdate = (state: State, action: readonly ['act', number, string, boolean]) => {
+          return [state, Effect.none()]
+        }
+        const setXUpdate = (state: State, [, x]: readonly [tag: 'set-x', x: number]): StateEffect => {
+          return [{ ...state, x }, Effect.none()]
+        }
+        const setYUpdate = (state: State, [, y]: readonly [tag: 'set-y', y: number]): StateEffect => {
+          return [{ ...state, y }, Effect.none()]
+        }
+        const setErrorUpdate = (state: State, [, error]: readonly [tag: 'set-error', error: string]): StateEffect => {
+          return [{ ...state, error }, Effect.none()]
+        }
+        export type XState = State
+        export type XAction = Action
+        export type XStateEffect = StateEffect
+      `,
+      {
+        output: stripIndent`
+          // INVALID - noAction
+          type State = {
+            readonly x: number
+            readonly y: number
+          }
+          type Action =
+            | readonly ['act', number, string, boolean]
+            | readonly [tag: 'set-x', x: number]
+            | readonly [tag: 'set-y', y: number]
+            | readonly [tag: 'set-error', error: string]
+          type StateEffect = readonly [State, Effect<Action>]
+          const Action = {
+            act: (arg0: number) => (arg1: string) => (arg2: boolean): Action => ['act', arg0, arg1, arg2],
+            setX: (x: number): Action => ['set-x', x],
+            setY: (y: number): Action => ['set-y', y],
+            setError: (error: string): Action => ['set-error', error]
+          }
+          const init = (state: State): StateEffect => {
+            return [state, Effect.none()]
+          }
+          const update = (state: State, action: Action): StateEffect => {
+            switch (action[0]) {
+              case 'act':
+                return actUpdate(state, action)
+              case 'set-x':
+                return setXUpdate(state, action)
+              case 'set-y':
+                return setYUpdate(state, action)
+              case 'set-error':
+                return setErrorUpdate(state, action)
+            }
+          }
+          const actUpdate = (state: State, action: readonly ['act', number, string, boolean]) => {
+            return [state, Effect.none()]
+          }
+          const setXUpdate = (state: State, [, x]: readonly [tag: 'set-x', x: number]): StateEffect => {
+            return [{ ...state, x }, Effect.none()]
+          }
+          const setYUpdate = (state: State, [, y]: readonly [tag: 'set-y', y: number]): StateEffect => {
+            return [{ ...state, y }, Effect.none()]
+          }
+          const setErrorUpdate = (state: State, [, error]: readonly [tag: 'set-error', error: string]): StateEffect => {
+            return [{ ...state, error }, Effect.none()]
+          }
+          export type XState = State
+          export type XAction = Action
+          export type XStateEffect = StateEffect
+        `
+      }
+    ),
+    fromFixture(
+      stripIndent`
+        // INVALID - noAction
+        type State = {
+          readonly x: number
+          readonly y: number
+        }
+        type Action =
+          | readonly [tag: 'act', num: number, str: string, bool: boolean]
+          | readonly [tag: 'set-x', x: number]
+          | readonly [tag: 'set-y', y: number]
+          | readonly [tag: 'set-error', error: string]
+        type StateEffect = readonly [State, Effect<Action>]
+        const Action = {}
+                       ~~ [noAction]
+        const init = (state: State): StateEffect => {
+          return [state, Effect.none()]
+        }
+        const update = (state: State, action: Action): StateEffect => {
+          switch (action[0]) {
+            case 'act':
+              return actUpdate(state, action)
+            case 'set-x':
+              return setXUpdate(state, action)
+            case 'set-y':
+              return setYUpdate(state, action)
+            case 'set-error':
+              return setErrorUpdate(state, action)
+          }
+        }
+        const actUpdate = (state: State, action: readonly [tag: 'act', num: number, str: string, bool: boolean]) => {
+          return [state, Effect.none()]
+        }
+        const setXUpdate = (state: State, [, x]: readonly [tag: 'set-x', x: number]): StateEffect => {
+          return [{ ...state, x }, Effect.none()]
+        }
+        const setYUpdate = (state: State, [, y]: readonly [tag: 'set-y', y: number]): StateEffect => {
+          return [{ ...state, y }, Effect.none()]
+        }
+        const setErrorUpdate = (state: State, [, error]: readonly [tag: 'set-error', error: string]): StateEffect => {
+          return [{ ...state, error }, Effect.none()]
+        }
+        export type XState = State
+        export type XAction = Action
+        export type XStateEffect = StateEffect
+      `,
+      {
+        output: stripIndent`
+          // INVALID - noAction
+          type State = {
+            readonly x: number
+            readonly y: number
+          }
+          type Action =
+            | readonly [tag: 'act', num: number, str: string, bool: boolean]
+            | readonly [tag: 'set-x', x: number]
+            | readonly [tag: 'set-y', y: number]
+            | readonly [tag: 'set-error', error: string]
+          type StateEffect = readonly [State, Effect<Action>]
+          const Action = {
+            act: (num: number) => (str: string) => (bool: boolean): Action => ['act', num, str, bool],
+            setX: (x: number): Action => ['set-x', x],
+            setY: (y: number): Action => ['set-y', y],
+            setError: (error: string): Action => ['set-error', error]
+          }
+          const init = (state: State): StateEffect => {
+            return [state, Effect.none()]
+          }
+          const update = (state: State, action: Action): StateEffect => {
+            switch (action[0]) {
+              case 'act':
+                return actUpdate(state, action)
+              case 'set-x':
+                return setXUpdate(state, action)
+              case 'set-y':
+                return setYUpdate(state, action)
+              case 'set-error':
+                return setErrorUpdate(state, action)
+            }
+          }
+          const actUpdate = (state: State, action: readonly [tag: 'act', num: number, str: string, bool: boolean]) => {
+            return [state, Effect.none()]
+          }
+          const setXUpdate = (state: State, [, x]: readonly [tag: 'set-x', x: number]): StateEffect => {
+            return [{ ...state, x }, Effect.none()]
+          }
+          const setYUpdate = (state: State, [, y]: readonly [tag: 'set-y', y: number]): StateEffect => {
+            return [{ ...state, y }, Effect.none()]
+          }
+          const setErrorUpdate = (state: State, [, error]: readonly [tag: 'set-error', error: string]): StateEffect => {
+            return [{ ...state, error }, Effect.none()]
+          }
+          export type XState = State
+          export type XAction = Action
+          export type XStateEffect = StateEffect
+        `
+      }
+    ),
+    fromFixture(
+      stripIndent`
+        // INVALID - noUpdate
+        import { Effect, Action } from '@ts-elmish/core'
+        import { Effects } from '../effects'
+        type State = {
+          readonly x: number
+          readonly y: number
+          readonly counters: Dict<CounterState>
+        }
+        type Action =
+          | readonly ['counters-action', string, CounterAction]
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [noUpdate]
+        const Action = {
+          countersAction: (arg0: string) => (arg1: CounterAction): Action => ['counters-action', arg0, arg1]
+        }
+        type StateEffect = readonly [State, Effect<Action>]
+        export const init = (state: State): StateEffect => {
+          return [state, Effect.none()]
+        }
+        export const update = (state: State, action: Action, effects: Effects): StateEffect => {
+          switch (action[0]) {
+            case 'counters-action':
+              return countersUpdate(state, action, effects)
+          }
+        }
+        export type XState = State
+        export type XAction = Action
+        export type XStateEffect = StateEffect
+      `,
+      {
+        output: stripIndent`
+          // INVALID - noUpdate
+          import { Effect, Action } from '@ts-elmish/core'
+          import { Effects } from '../effects'
+          type State = {
+            readonly x: number
+            readonly y: number
+            readonly counters: Dict<CounterState>
+          }
+          type Action =
+            | readonly ['counters-action', string, CounterAction]
+          const Action = {
+            countersAction: (arg0: string) => (arg1: CounterAction): Action => ['counters-action', arg0, arg1]
+          }
+          type StateEffect = readonly [State, Effect<Action>]
+          export const init = (state: State): StateEffect => {
+            return [state, Effect.none()]
+          }
+          const countersUpdate = (
+            state: State,
+            [, id, action]: readonly ['counters-action', string, CounterAction],
+            effects: Effects
+          ): StateEffect => {
+            const { counters } = state
+            const prevState = counters[id]
+
+            if (prevState === undefined) {
+              return [state, Effect.none()]
+            }
+
+            const [nextState, effect] = CounterState.update(prevState, action)
+
+            return [
+              { ...state, counters: Dict.put(counters, id, nextState) },
+              Effect.map(Action.countersAction(id), effect)
+            ]
+          }
+
+          export const update = (state: State, action: Action, effects: Effects): StateEffect => {
+            switch (action[0]) {
+              case 'counters-action':
+                return countersUpdate(state, action, effects)
+            }
           }
           export type XState = State
           export type XAction = Action

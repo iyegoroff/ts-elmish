@@ -3,15 +3,12 @@
   "version": "0.0.73",
   "private": false,
   "description": "Eslint-based codegen",
-  "main": "src/index.ts",
-  "publishConfig": {
-    "main": "dist/index.js",
-    "types": "dist/index.d.ts"
-  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "update-version": "npm version",
-    "build:dts": "tsc -p ./source -d true --emitDeclarationOnly true --removeComments false",
-    "build:esnext": "tsc -p ./source",
+    "build:dts": "tsc -p ./src -d true --emitDeclarationOnly true --removeComments false",
+    "build:esnext": "tsc -p ./src",
     "build": "rm -rf dist && mkdir dist && npm run build:dts && npm run build:esnext",
     "test": "mocha -r ts-node/register -t 7500 tests/**/*.ts"
   },
@@ -34,19 +31,18 @@
   "author": "iyegoroff <iegoroff@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@typescript-eslint/experimental-utils": "^4.6.0",
-    "@typescript-eslint/parser": "^4.6.0",
-    "change-case": "^4.1.1",
-    "eslint-etc": "^4.0.0",
-    "requireindex": "^1.2.0",
+    "@typescript-eslint/experimental-utils": "^4.11.1",
+    "@typescript-eslint/parser": "^4.11.1",
+    "change-case": "^4.1.2",
+    "eslint-etc": "^4.0.1",
     "ts-is-defined": "^1.0.0"
   },
   "devDependencies": {
     "@types/common-tags": "^1.8.0",
-    "@types/mocha": "^8.0.3",
-    "@types/node": "^14.14.6",
+    "@types/mocha": "^8.2.0",
+    "@types/node": "^14.14.17",
     "common-tags": "^1.8.0",
-    "mocha": "^8.2.0",
-    "ts-node": "^9.0.0"
+    "mocha": "^8.2.1",
+    "ts-node": "^9.1.1"
   }
 }

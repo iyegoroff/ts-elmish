@@ -13,6 +13,12 @@ export const runProgram = <State, Action>({
   readonly view: (state: State, hasEffects: boolean) => void
 }) => {
   let [state, effects] = init()
+  let isRunning = true
+
+  const stop = () => {
+    isRunning = false
+    effects = []
+  }
 
   const run = () => {
     const effect = effects.shift()
@@ -25,7 +31,7 @@ export const runProgram = <State, Action>({
   }
 
   const dispatch: Dispatch<Action | ElmishIdleAction> = (action) => {
-    if (action !== ElmishIdleAction) {
+    if (action !== ElmishIdleAction && isRunning) {
       const [nextState, nextEffect] = update(state, action)
       state = nextState
       effects.push(...nextEffect)
@@ -38,5 +44,5 @@ export const runProgram = <State, Action>({
 
   run()
 
-  return [state, dispatch] as const
+  return [state, dispatch, stop] as const
 }

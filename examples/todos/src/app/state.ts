@@ -50,7 +50,9 @@ export const updateApp = (state: State, action: Action): StateEffect => {
       const [, id, counterAct] = action
       const counter = counters[id]
 
-      assertIsDefined(counter, `invalid counter id - ${id}`)
+      if (counter === undefined) {
+        return [state, Effect.none()]
+      }
 
       const [nextCounterState, nextCounterEffect] = updateCounter(counter, counterAct)
 

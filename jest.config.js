@@ -2,7 +2,7 @@ const projects = [
   'packages/core',
   'packages/basic-effects',
   'packages/railway-effects',
-  'examples/todos'
+  'examples/counters'
 ]
 
 const config = {

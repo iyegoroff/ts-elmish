@@ -1,0 +1,30 @@
+{
+  "name": "counters",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "start:native": "react-native start",
+    "build:native": "tsc -p ./src/main/tsconfig.native.json",
+    "start": "haul start"
+  },
+  "dependencies": {
+    "@ts-elmish/core": "workspace:*",
+    "@ts-elmish/react": "workspace:*",
+    "react": "16.13.1",
+    "react-native": "0.63.4",
+    "ts-micro-dict": "^2.1.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/runtime": "^7.12.5",
+    "@haul-bundler/babel-preset-react-native": "^0.16.0",
+    "@haul-bundler/cli": "^0.22.1",
+    "@haul-bundler/preset-0.60": "^0.18.0",
+    "@react-native-community/cli-platform-android": "^4.13.0",
+    "metro": "^0.65.0",
+    "metro-react-native-babel-preset": "^0.64.0",
+    "webpack": "4"
+  }
+}

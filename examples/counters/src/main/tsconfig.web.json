@@ -1,0 +1,12 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "jsx": "react",
+    "outDir": "../../build/web",
+    "lib": ["es2016", "dom"]
+  },
+  "include": [
+    "index.web.tsx",
+    "../**/*.web.ts*"
+  ]
+}
