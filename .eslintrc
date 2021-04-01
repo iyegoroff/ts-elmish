@@ -11,8 +11,7 @@
       "./packages/railway-effects/src/tsconfig.test.json",
       "./packages/mithril/src/tsconfig.json",
       "./packages/react/src/tsconfig.json",
-      "./packages/eslint-plugin/src/tsconfig.json",
-      "./examples/counters/src/tsconfig.json"
+      "./packages/eslint-plugin/src/tsconfig.json"
     ]
   },
   "plugins": ["@typescript-eslint", "prettier", "no-null"],
@@ -22,9 +21,6 @@
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
     "prettier",
-    "prettier/@typescript-eslint",
-    "prettier/standard",
-    "prettier/react",
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking"

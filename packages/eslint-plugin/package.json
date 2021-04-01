@@ -31,18 +31,18 @@
   "author": "iyegoroff <iegoroff@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@typescript-eslint/experimental-utils": "^4.11.1",
-    "@typescript-eslint/parser": "^4.11.1",
+    "@typescript-eslint/experimental-utils": "^4.20.0",
+    "@typescript-eslint/parser": "^4.20.0",
     "change-case": "^4.1.2",
-    "eslint-etc": "^4.0.1",
+    "eslint-etc": "^4.0.4",
     "ts-is-defined": "^1.0.0"
   },
   "devDependencies": {
     "@types/common-tags": "^1.8.0",
-    "@types/mocha": "^8.2.0",
-    "@types/node": "^14.14.17",
+    "@types/mocha": "^8.2.2",
+    "@types/node": "^14.14.37",
     "common-tags": "^1.8.0",
-    "mocha": "^8.2.1",
+    "mocha": "^8.3.2",
     "ts-node": "^9.1.1"
   }
 }

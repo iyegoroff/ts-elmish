@@ -1,9 +1,0 @@
-{
-  "extends": "../../../tsconfig.json",
-  "compilerOptions": {
-    "allowJs": true,
-    "jsx": "react",
-    "noUncheckedIndexedAccess": true,
-    "lib": ["es2016", "dom"]
-  }
-}

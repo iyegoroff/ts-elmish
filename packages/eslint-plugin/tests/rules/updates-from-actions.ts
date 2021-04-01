@@ -5,7 +5,7 @@ import rule from '../../src/rules/updates-from-actions'
 
 ruleTester({ types: true }).run('updates-from-actions', rule.rule, {
   valid: [
-    fromFixture<string, never[]>(
+    fromFixture(
       stripIndent`
         // VALID
         import { Effect, Action } from '@ts-elmish/core'

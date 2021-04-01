@@ -1,8 +1,8 @@
 const projects = [
   'packages/core',
   'packages/basic-effects',
-  'packages/railway-effects',
-  'examples/counters'
+  'packages/railway-effects'
+  // 'examples/counters'
 ]
 
 const config = {

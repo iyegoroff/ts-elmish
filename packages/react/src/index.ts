@@ -2,8 +2,6 @@ import React, { useEffect, useRef, useState } from 'react'
 import { runProgram, Dispatch, ElmishEffect as Effect } from '@ts-elmish/core'
 import shallowEqual from './shallowEqual'
 
-Re
-
 type AssertDispatch<T> = T extends { readonly dispatch: unknown } ? never : T
 export type ElmishProps<State, Action> = Readonly<AssertDispatch<State>> & {
   readonly dispatch: Dispatch<Action>
@@ -24,18 +22,21 @@ export const createElmishComponent = <Props extends Record<string, unknown>, Sta
     const [state, setState] = useState<AssertDispatch<State>>()
     const dispatchRef = useRef<Dispatch<Action>>()
 
-    useEffect(() => {
-      const [initialState, dispatch, stop] = runProgram({
-        init: () => init(props),
-        update,
-        view: setState
-      })
+    useEffect(
+      () => {
+        const [initialState, dispatch, stop] = runProgram({
+          init: () => init(props),
+          update,
+          view: setState
+        })
 
-      setState(initialState)
-      dispatchRef.current = dispatch
+        setState(initialState)
+        dispatchRef.current = dispatch
 
-      return stop
-    }, [])
+        return stop
+      },
+      Object.keys(props).map((key) => props[key])
+    )
 
     return state !== undefined && dispatchRef.current !== undefined
       ? React.createElement(View, { ...state, dispatch: dispatchRef.current })
