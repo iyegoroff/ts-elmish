@@ -1,0 +1,25 @@
+{
+  "name": "mithril-ts-template",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "@ts-elmish/basic-effects": "workspace:*",
+    "@ts-elmish/core": "workspace:*",
+    "@ts-elmish/mithril": "workspace:*",
+    "mithril": "^2.0.4",
+    "ts-micro-dict": "^2.1.0"
+  },
+  "devDependencies": {
+    "@types/mithril": "^2.0.7",
+    "serve": "^11.3.2",
+    "ts-loader": "^8.1.0",
+    "webpack": "^5.33.2",
+    "webpack-cli": "^4.6.0"
+  },
+  "scripts": {
+    "watch": "webpack -w --mode development",
+    "serve": "serve -s public",
+    "clean": "rm -rf public/build",
+    "build": "webpack --mode production"
+  }
+}

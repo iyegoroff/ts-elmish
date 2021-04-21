@@ -35,7 +35,8 @@ export const createElmishComponent = <Props extends Record<string, unknown>, Sta
 
         return stop
       },
-      Object.keys(props).map((key) => props[key])
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      Object.keys(props ?? {}).map((key) => props[key])
     )
 
     return state !== undefined && dispatchRef.current !== undefined

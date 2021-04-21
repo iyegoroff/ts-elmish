@@ -31,8 +31,8 @@
   "author": "iyegoroff <iegoroff@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@typescript-eslint/experimental-utils": "^4.20.0",
-    "@typescript-eslint/parser": "^4.20.0",
+    "@typescript-eslint/experimental-utils": "^4.21.0",
+    "@typescript-eslint/parser": "^4.21.0",
     "change-case": "^4.1.2",
     "eslint-etc": "^4.0.4",
     "ts-is-defined": "^1.0.0"

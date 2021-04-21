@@ -1,4 +1,5 @@
-import m, { Component, Vnode } from 'mithril'
+import m, { Component } from 'mithril'
+import { useEffect, useRef, useState, withHooks } from 'mithril-hooks'
 import { runProgram, Dispatch, ElmishEffect as Effect } from '@ts-elmish/core'
 
 type AssertDispatch<T> = T extends { readonly dispatch: unknown } ? never : T
@@ -14,17 +15,30 @@ export const createElmishComponent = <Attrs extends Record<string, unknown>, Sta
   ) => readonly [AssertDispatch<State>, Effect<Action>],
   View: Component<ElmishAttrs<State, Action>>
 ) =>
-  function ElmishComponent(vnode: Vnode<Attrs>) {
-    let [state, dispatch] = runProgram({
-      init: () => init(vnode.attrs),
-      update,
-      view: (nextState) => {
-        state = nextState
-        m.redraw()
-      }
-    })
+  withHooks((attrs: Attrs) => {
+    const [state, setState] = useState<AssertDispatch<State>>()
+    const dispatchRef = useRef<Dispatch<Action>>()
 
-    return {
-      view: () => m(View, { ...state, dispatch })
-    }
-  }
+    useEffect(
+      () => {
+        const [initialState, dispatch, stop] = runProgram({
+          init: () => init(attrs),
+          update,
+          view: setState
+        })
+
+        setState(initialState)
+        dispatchRef.current = dispatch
+
+        return stop
+      },
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      Object.keys(attrs ?? {})
+        .filter((key) => key !== 'vnode' && key !== 'children')
+        .map((key) => attrs[key])
+    )
+
+    return state !== undefined && dispatchRef.current !== undefined
+      ? m(View, { ...state, dispatch: dispatchRef.current })
+      : undefined
+  })

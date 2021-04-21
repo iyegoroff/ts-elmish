@@ -1,8 +1,8 @@
 const projects = [
   'packages/core',
   'packages/basic-effects',
-  'packages/railway-effects'
-  // 'examples/counters'
+  'packages/railway-effects',
+  'examples/counters-mithril'
 ]
 
 const config = {
@@ -17,7 +17,7 @@ const config = {
   },
   globals: {
     'ts-jest': {
-      tsconfig: '<rootDir>/src/tsconfig.test.json'
+      tsconfig: '<rootDir>/src/tsconfig.json'
     }
   }
 }
