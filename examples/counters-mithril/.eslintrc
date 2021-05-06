@@ -2,6 +2,7 @@
   "plugins": ["functional"],
   "extends": ["plugin:functional/external-recommended", "plugin:functional/recommended"],
   "rules": {
+    "@typescript-eslint/explicit-function-return-type": "off",
     "functional/functional-parameters": "off",
     "functional/no-conditional-statement": [
       "error",

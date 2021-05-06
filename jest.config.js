@@ -2,13 +2,14 @@ const projects = [
   'packages/core',
   'packages/basic-effects',
   'packages/railway-effects',
-  'examples/counters-mithril'
+  'examples/counters-mithril',
+  'examples/todos-react'
 ]
 
 const config = {
   moduleFileExtensions: ['js', 'ts'],
   moduleNameMapper: {
-    '\\./views': '<rootDir>/stub.js'
+    '^\\./(views|real-effects)$': '<rootDir>/stub.js'
   },
   testPathIgnorePatterns: ['blueprint-templates'],
   testRegex: '\\.spec\\.ts$',

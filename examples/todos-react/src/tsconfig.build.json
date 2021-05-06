@@ -1,0 +1,12 @@
+{
+  "extends": "../../../tsconfig.json",
+  "compilerOptions": {
+    "allowJs": true,
+    "noUncheckedIndexedAccess": true,
+    "lib": ["es2016", "dom"],
+    "jsx": "react"
+  },
+  "exclude": [
+    "**/*.spec.ts"
+  ]
+}

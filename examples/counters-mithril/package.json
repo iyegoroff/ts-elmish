@@ -1,5 +1,5 @@
 {
-  "name": "mithril-ts-template",
+  "name": "counters-mithril",
   "version": "1.0.0",
   "private": true,
   "dependencies": {
