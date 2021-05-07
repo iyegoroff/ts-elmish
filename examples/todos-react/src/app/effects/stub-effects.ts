@@ -22,13 +22,13 @@ const StubEffects: Effects = {
   Todos: {
     addTodo: stub('Todos.addTodo'),
     listenTodoFilterChanges: stub('Todos.listenTodoFilterChanges'),
-    listenTodoListChanges: stub('Todos.listenTodoListChanges'),
+    listenTodoDictChanges: stub('Todos.listenTodoDictChanges'),
     loadTodoFilter: stub('Todos.loadTodoFilter'),
-    loadTodoList: stub('Todos.loadTodoList'),
+    loadTodoDict: stub('Todos.loadTodoDict'),
     removeTodo: stub('Todos.removeTodo'),
     updateTodo: stub('Todos.updateTodo'),
     updateTodoFilter: stub('Todos.updateTodoFilter'),
-    updateTodoList: stub('Todos.updateTodoList')
+    updateTodoDict: stub('Todos.updateTodoDict')
   }
 }
 

@@ -1,13 +1,14 @@
 import { Effect } from '@ts-elmish/railway-effects'
-import { Todo } from '../../../domain/todos/types'
+import { Todo, TodoDict } from '../../../domain/todos/types'
 import { Effects } from '../../effects/types'
 
 type State = {
   readonly text: string
   readonly completed: boolean
   readonly isEdited: boolean
-  readonly id: string
 }
+
+type ExtendedState = readonly [keyof TodoDict, State]
 
 type Action =
   | readonly ['start-edit']
@@ -28,20 +29,20 @@ const Action = {
 
 type Command = readonly [State, Effect<Action>]
 
-const init = (id: string, todo: Todo): Command => {
-  return [{ ...todo, id, isEdited: false }, Effect.none()]
+const init = (todo: Todo): State => {
+  return { ...todo, isEdited: false }
 }
 
-const startEditUpdate = (state: State, _action: readonly ['start-edit']): Command => {
+const startEditUpdate = ([, state]: ExtendedState, _action: readonly ['start-edit']): Command => {
   return [{ ...state, isEdited: true }, Effect.none()]
 }
 
 const confirmEditUpdate = (
-  state: State,
+  [id, state]: ExtendedState,
   [, text]: readonly ['confirm-edit', string],
   { Todos: { updateTodo } }: Effects
 ): Command => {
-  const { id, completed } = state
+  const { completed } = state
 
   return [
     { ...state, text, isEdited: false },
@@ -51,30 +52,30 @@ const confirmEditUpdate = (
   ]
 }
 
-const cancelEditUpdate = (state: State, _action: readonly ['cancel-edit']): Command => {
+const cancelEditUpdate = ([, state]: ExtendedState, _action: readonly ['cancel-edit']): Command => {
   return [{ ...state, isEdited: false }, Effect.none()]
 }
 
 const removeUpdate = (
-  state: State,
+  [id, state]: ExtendedState,
   _action: readonly ['remove'],
   { Todos: { removeTodo } }: Effects
 ): Command => {
   return [
     state,
     Effect.from({
-      asyncResult: () => removeTodo(state.id)
+      asyncResult: () => removeTodo(id)
     })
   ]
 }
 
 const toggleCompletedUpdate = (
-  state: State,
+  [id, state]: ExtendedState,
   _action: readonly ['toggle-completed'],
   { Todos: { updateTodo } }: Effects
 ): Command => {
   const completed = !state.completed
-  const { id, text } = state
+  const { text } = state
 
   return [
     { ...state, completed },
@@ -85,7 +86,7 @@ const toggleCompletedUpdate = (
 }
 
 // #region update
-const update = (state: State, action: Action, effects: Effects): Command => {
+const update = (state: ExtendedState, action: Action, effects: Effects): Command => {
   switch (action[0]) {
     case 'start-edit':
       return startEditUpdate(state, action)

@@ -3,11 +3,11 @@ import { listenTodoFilterChanges, updateTodoFilter, loadTodoFilter } from './tod
 import {
   addTodo,
   updateTodo,
-  listenTodoListChanges,
+  listenTodoDictChanges,
   removeTodo,
-  loadTodoList,
-  updateTodoList
-} from './todo-list'
+  loadTodoDict,
+  updateTodoDict
+} from './todo-dict'
 
 const {
   LocalData: { listenChanges, load, update },
@@ -20,8 +20,8 @@ export const Todos = {
   listenTodoFilterChanges: listenTodoFilterChanges(listenHashChanges),
   addTodo: addTodo(load, update),
   updateTodo: updateTodo(load, update),
-  listenTodoListChanges: listenTodoListChanges(listenChanges),
+  listenTodoDictChanges: listenTodoDictChanges(listenChanges),
   removeTodo: removeTodo(load, update),
-  loadTodoList: loadTodoList(load),
-  updateTodoList: updateTodoList(update)
+  loadTodoDict: loadTodoDict(load),
+  updateTodoDict: updateTodoDict(update)
 } as const

@@ -5,4 +5,4 @@ export type Todo = {
   readonly completed: boolean
 }
 
-export type TodoList = Readonly<Record<string, Todo>>
+export type TodoDict = Readonly<Record<string, Todo>>

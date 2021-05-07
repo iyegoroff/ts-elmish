@@ -37,7 +37,7 @@
     "runtypes": "^6.3.0",
     "strict-mitt": "^2.1.2",
     "ts-is-defined": "^1.0.0",
-    "ts-micro-dict": "^6.1.0",
+    "ts-micro-dict": "^7.0.0",
     "ts-railway": "^2.0.3",
     "ts-toolbelt": "8.0.7"
   },

@@ -13,7 +13,7 @@ describe('components > footer', () => {
     const effects = stubEffects({
       Todos: {
         loadTodoFilter: () => Result.success('all'),
-        loadTodoList: successResolver({
+        loadTodoDict: successResolver({
           x: { text: '', completed: true }
         })
       }

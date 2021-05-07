@@ -1,7 +1,7 @@
 import { Effect } from '@ts-elmish/railway-effects'
 import { pipeWith } from 'pipe-ts'
 import { Dict } from 'ts-micro-dict'
-import { TodoFilter, TodoList } from '../../../domain/todos/types'
+import { TodoFilter, TodoDict } from '../../../domain/todos/types'
 import { Effects } from '../../effects/types'
 
 type State = {
@@ -11,18 +11,18 @@ type State = {
 
 type Action =
   | readonly ['set-selected-todo-filter', TodoFilter]
-  | readonly ['todo-list-changed', TodoList]
+  | readonly ['todo-dict-changed', TodoDict]
 
 // #region Action
 const Action = {
   setSelectedTodoFilter: (arg0: TodoFilter): Action => ['set-selected-todo-filter', arg0],
-  todoListChanged: (arg0: TodoList): Action => ['todo-list-changed', arg0]
+  todoDictChanged: (arg0: TodoDict): Action => ['todo-dict-changed', arg0]
 } as const
 // #endregion
 
 type Command = readonly [State, Effect<Action>]
 
-const init = ({ Todos: { loadTodoFilter, loadTodoList } }: Effects): Command => {
+const init = ({ Todos: { loadTodoFilter, loadTodoDict } }: Effects): Command => {
   return [
     {},
     Effect.batch(
@@ -31,8 +31,8 @@ const init = ({ Todos: { loadTodoFilter, loadTodoList } }: Effects): Command => 
         success: Action.setSelectedTodoFilter
       }),
       Effect.from({
-        asyncResult: loadTodoList,
-        success: Action.todoListChanged
+        asyncResult: loadTodoDict,
+        success: Action.todoDictChanged
       })
     )
   ]
@@ -45,9 +45,9 @@ const setSelectedTodoFilterUpdate = (
   return [{ ...state, selectedTodoFilter }, Effect.none()]
 }
 
-const todoListChangedUpdate = (
+const todoDictChangedUpdate = (
   state: State,
-  [, todos]: readonly ['todo-list-changed', TodoList]
+  [, todos]: readonly ['todo-dict-changed', TodoDict]
 ): Command => {
   const activeTodosAmount = pipeWith(
     todos,
@@ -64,8 +64,8 @@ const update = (state: State, action: Action): Command => {
     case 'set-selected-todo-filter':
       return setSelectedTodoFilterUpdate(state, action)
 
-    case 'todo-list-changed':
-      return todoListChangedUpdate(state, action)
+    case 'todo-dict-changed':
+      return todoDictChangedUpdate(state, action)
   }
 }
 // #endregion

@@ -8,7 +8,7 @@ import { noRender } from '../../../../util'
 import { clearCompleted, footer, todoFilter, todoFilterItem } from './footer.css'
 
 const {
-  Todos: { listenTodoFilterChanges, listenTodoListChanges }
+  Todos: { listenTodoFilterChanges, listenTodoDictChanges }
 } = Domain
 
 export const Footer: React.FunctionComponent<ElmishProps<FooterState, FooterAction>> = ElmishMemo(
@@ -23,8 +23,8 @@ export const Footer: React.FunctionComponent<ElmishProps<FooterState, FooterActi
 
     useEffect(
       () =>
-        listenTodoListChanges({
-          success: pipe(FooterAction.todoListChanged, dispatch)
+        listenTodoDictChanges({
+          success: pipe(FooterAction.todoDictChanged, dispatch)
         }),
       []
     )

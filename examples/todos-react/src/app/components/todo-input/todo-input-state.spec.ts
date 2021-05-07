@@ -13,7 +13,7 @@ describe('components > todo-input', () => {
   test('init - success', async () => {
     const effects = stubEffects({
       Todos: {
-        loadTodoList: successResolver({
+        loadTodoDict: successResolver({
           '': {
             text: 'text',
             completed: false
@@ -59,11 +59,11 @@ describe('components > todo-input', () => {
   test('set-all-todos-completed', async () => {
     const effects = stubEffects({
       Todos: {
-        loadTodoList: successResolver({
+        loadTodoDict: successResolver({
           x: { text: 'y', completed: false },
           y: { text: 'x', completed: true }
         }),
-        updateTodoList: jest.fn((todos) => {
+        updateTodoDict: jest.fn((todos) => {
           expect(todos).toEqual({
             x: { text: 'y', completed: true },
             y: { text: 'x', completed: true }
@@ -80,6 +80,6 @@ describe('components > todo-input', () => {
       allTodosCompleted: true
     })
 
-    expect(effects.Todos.updateTodoList).toHaveBeenCalled()
+    expect(effects.Todos.updateTodoDict).toHaveBeenCalled()
   })
 })

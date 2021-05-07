@@ -10,8 +10,7 @@ const testRun = createTestRun(update)
 const validState: TodoState = {
   text: 'text',
   completed: false,
-  isEdited: false,
-  id: '5'
+  isEdited: false
 }
 
 describe('components > todo', () => {

@@ -2,9 +2,9 @@ import 'ts-jest'
 import { Result } from 'ts-railway'
 import { Any } from 'ts-toolbelt'
 import { resolver } from '../../util'
-import { loadTodoList, addTodo, updateTodo, removeTodo, listenTodoListChanges } from './todo-list'
+import { loadTodoDict, addTodo, updateTodo, removeTodo, listenTodoDictChanges } from './todo-dict'
 
-type LoadTodoList = Any.PromiseType<ReturnType<ReturnType<typeof loadTodoList>>>
+type LoadTodoList = Any.PromiseType<ReturnType<ReturnType<typeof loadTodoDict>>>
 type AddTodo = Any.PromiseType<ReturnType<ReturnType<typeof addTodo>>>
 type UpdateTodo = Any.PromiseType<ReturnType<ReturnType<typeof updateTodo>>>
 type RemoveTodo = Any.PromiseType<ReturnType<ReturnType<typeof removeTodo>>>
@@ -25,14 +25,14 @@ const validTodoList: LoadTodoList['success'] = {
 }
 
 describe('domain > todos > todo-list', () => {
-  test('loadTodoList - success', async () => {
-    expect(await loadTodoList(resolver(validTodoList))()).toEqual<LoadTodoList>(
+  test('loadTodoDict - success', async () => {
+    expect(await loadTodoDict(resolver(validTodoList))()).toEqual<LoadTodoList>(
       Result.success(validTodoList)
     )
   })
 
-  test('loadTodoList - failure', async () => {
-    return await expect(loadTodoList(resolver('???'))()).rejects.toEqual(
+  test('loadTodoDict - failure', async () => {
+    return await expect(loadTodoDict(resolver('???'))()).rejects.toEqual(
       new Error('invalid todo list format')
     )
   })
@@ -77,7 +77,7 @@ describe('domain > todos > todo-list', () => {
     )
   })
 
-  test('listenTodoListChanges', () => {
-    expect(listenTodoListChanges(() => () => 1)({ success: () => 1 })).toBeDefined()
+  test('listenTodoDictChanges', () => {
+    expect(listenTodoDictChanges(() => () => 1)({ success: () => 1 })).toBeDefined()
   })
 })

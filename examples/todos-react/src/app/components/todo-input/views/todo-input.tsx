@@ -8,7 +8,7 @@ import { noRender } from '../../../../util'
 import { todoInput } from './todo-input.css'
 
 const {
-  Todos: { listenTodoListChanges }
+  Todos: { listenTodoDictChanges }
 } = Domain
 
 export const TodoInput: React.FunctionComponent<
@@ -16,8 +16,8 @@ export const TodoInput: React.FunctionComponent<
 > = ElmishMemo(function TodoInput({ dispatch, text, allTodosCompleted }) {
   useEffect(
     () =>
-      listenTodoListChanges({
-        success: pipe(TodoInputAction.todoListChanged, dispatch)
+      listenTodoDictChanges({
+        success: pipe(TodoInputAction.todoDictChanged, dispatch)
       }),
     []
   )
