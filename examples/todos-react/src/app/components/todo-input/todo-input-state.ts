@@ -65,7 +65,7 @@ const setAllTodosCompletedUpdate = (
       asyncResult: pipe(
         loadTodoDict,
         AsyncResult.map(Dict.map((todo: Todo) => ({ ...todo, completed: allTodosCompleted }))),
-        AsyncResult.map(updateTodoDict)
+        AsyncResult.flatMap(updateTodoDict)
       )
     })
   ]

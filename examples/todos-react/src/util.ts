@@ -9,9 +9,6 @@ export const successResolver = <T>(value: T) => () => Promise.resolve(Result.suc
 
 export const failureResolver = <T>(value: T) => () => Promise.resolve(Result.failure(value))
 
-export const stubFetch = (response: Partial<Response>): typeof fetch => () =>
-  Promise.resolve({ ...new Response(), ...response })
-
 export const createTestRun = <State, Action>(
   update: (state: State, action: Action, effects: Effects) => readonly [State, Effect<Action>]
 ) => (command: readonly [State, Effect<Action>], effects: Effects) =>

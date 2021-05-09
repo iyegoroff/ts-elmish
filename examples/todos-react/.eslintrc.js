@@ -7,10 +7,8 @@ module.exports = {
   },
   plugins: ['@typescript-eslint', 'prettier', 'no-null', 'functional', '@ts-elmish'],
   extends: [
-    '@react-native-community',
     'standard-with-typescript',
     'plugin:react/recommended',
-    'plugin:react-hooks/recommended',
     'prettier',
     'plugin:functional/external-recommended',
     'plugin:functional/recommended',
@@ -24,6 +22,7 @@ module.exports = {
   rules: {
     'react/prop-types': 'off',
     '@ts-elmish/updates-from-actions': 'warn',
+    '@ts-elmish/react-exhaustive-deps': 'warn',
     '@typescript-eslint/space-before-function-paren': [
       'error',
       {

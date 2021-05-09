@@ -260,6 +260,16 @@ const rule = ruleCreator({
           })
         }
 
+        const spread = (arg?: es.TypeNode): string => {
+          return arg?.type === 'TSNamedTupleMember'
+            ? spread(arg.elementType)
+            : arg?.type === 'TSTypeOperator'
+            ? spread(arg.typeAnnotation)
+            : arg?.type === 'TSTupleType'
+            ? '...'
+            : ''
+        }
+
         const argName = (arg: es.TypeNode, idx: number) =>
           arg.type === 'TSNamedTupleMember' ? arg.label.name : `arg${idx}`
 
@@ -276,7 +286,7 @@ const rule = ruleCreator({
                   ? `(): Action => `
                   : args.reduce(
                       (acc, arg, idx) =>
-                        `${acc}(${argName(arg, idx)}: ${code.getText(
+                        `${acc}(${spread(arg)}${argName(arg, idx)}: ${code.getText(
                           arg.type === 'TSNamedTupleMember' ? arg.elementType : arg
                         )})${idx === args.length - 1 ? ': Action' : ''} => `,
                       ''

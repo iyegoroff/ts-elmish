@@ -3,7 +3,7 @@ import { fromFixture } from 'eslint-etc'
 import { ruleTester } from '../utils'
 import rule from '../../src/rules/updates-from-actions'
 
-ruleTester({ types: true }).run('updates-from-actions', rule.rule, {
+ruleTester({ types: true }).run(rule.name, rule.rule, {
   valid: [
     fromFixture(
       stripIndent`
@@ -1712,6 +1712,76 @@ ruleTester({ types: true }).run('updates-from-actions', rule.rule, {
           }
           const setErrorUpdate = (state: State, [, error]: readonly [tag: 'set-error', error: string]): StateEffect => {
             return [{ ...state, error }, Effect.none()]
+          }
+          export type XState = State
+          export type XAction = Action
+          export type XStateEffect = StateEffect
+        `
+      }
+    ),
+    fromFixture(
+      stripIndent`
+        // INVALID - noAction
+        type State = {
+          readonly x: number
+        }
+        type Action =
+          | readonly ['act', readonly [number, string], boolean]
+          | readonly [tag: 'test', bar: readonly [number, string]]
+        type StateEffect = readonly [State, Effect<Action>]
+        const Action = {}
+                       ~~ [noAction]
+        const init = (state: State): StateEffect => {
+          return [state, Effect.none()]
+        }
+        const update = (state: State, action: Action): StateEffect => {
+          switch (action[0]) {
+            case 'act':
+              return actUpdate(state, action)
+            case 'test':
+              return testUpdate(state, action)
+          }
+        }
+        const actUpdate = (state: State, action: readonly ['act', readonly [number, string], boolean]) => {
+          return [state, Effect.none()]
+        }
+        const testUpdate = (state: State, action: readonly [tag: 'test', bar: readonly [number, string]]) => {
+          return [state, Effect.none()]
+        }
+        export type XState = State
+        export type XAction = Action
+        export type XStateEffect = StateEffect
+      `,
+      {
+        output: stripIndent`
+          // INVALID - noAction
+          type State = {
+            readonly x: number
+          }
+          type Action =
+            | readonly ['act', readonly [number, string], boolean]
+            | readonly [tag: 'test', bar: readonly [number, string]]
+          type StateEffect = readonly [State, Effect<Action>]
+          const Action = {
+            act: (...arg0: readonly [number, string]) => (arg1: boolean): Action => ['act', arg0, arg1],
+            test: (...bar: readonly [number, string]): Action => ['test', bar]
+          }
+          const init = (state: State): StateEffect => {
+            return [state, Effect.none()]
+          }
+          const update = (state: State, action: Action): StateEffect => {
+            switch (action[0]) {
+              case 'act':
+                return actUpdate(state, action)
+              case 'test':
+                return testUpdate(state, action)
+            }
+          }
+          const actUpdate = (state: State, action: readonly ['act', readonly [number, string], boolean]) => {
+            return [state, Effect.none()]
+          }
+          const testUpdate = (state: State, action: readonly [tag: 'test', bar: readonly [number, string]]) => {
+            return [state, Effect.none()]
           }
           export type XState = State
           export type XAction = Action

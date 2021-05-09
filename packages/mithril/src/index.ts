@@ -32,7 +32,6 @@ export const createElmishComponent = <Attrs extends Record<string, unknown>, Sta
 
         return stop
       },
-      // eslint-disable-next-line react-hooks/exhaustive-deps
       Object.keys(attrs ?? {})
         .filter((key) => key !== 'vnode' && key !== 'children')
         .map((key) => attrs[key])

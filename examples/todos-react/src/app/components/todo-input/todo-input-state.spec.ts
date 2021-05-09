@@ -44,7 +44,7 @@ describe('components > todo-input', () => {
       Todos: {
         addTodo: jest.fn((text) => {
           expect(text).toEqual(newText)
-          return successResolver({})()
+          return successResolver(undefined)()
         })
       }
     })
@@ -68,7 +68,7 @@ describe('components > todo-input', () => {
             x: { text: 'y', completed: true },
             y: { text: 'x', completed: true }
           })
-          return Promise.resolve(todos)
+          return successResolver(undefined)()
         })
       }
     })

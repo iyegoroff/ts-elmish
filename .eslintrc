@@ -20,7 +20,6 @@
   "extends": [
     "standard-with-typescript",
     "plugin:react/recommended",
-    "plugin:react-hooks/recommended",
     "prettier",
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",

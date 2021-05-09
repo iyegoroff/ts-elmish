@@ -16,20 +16,20 @@ type Action =
   | readonly ['set-todos', TodoDict]
   | readonly ['set-todo-filter', TodoFilter]
   | readonly ['start-todo-edit', TodoKey]
-  | readonly ['confirm-todo-edit', TodoKey, string]
+  | readonly ['confirm-todo-edit', readonly [TodoKey, string]]
   | readonly ['cancel-todo-edit']
   | readonly ['remove-todo', TodoKey]
-  | readonly ['toggle-completed-todo', TodoKey]
+  | readonly ['toggle-completed', TodoKey]
 
 // #region Action
 const Action = {
   setTodos: (arg0: TodoDict): Action => ['set-todos', arg0],
   setTodoFilter: (arg0: TodoFilter): Action => ['set-todo-filter', arg0],
   startTodoEdit: (arg0: TodoKey): Action => ['start-todo-edit', arg0],
-  confirmTodoEdit: (arg0: TodoKey) => (arg1: string): Action => ['confirm-todo-edit', arg0, arg1],
+  confirmTodoEdit: (...arg0: readonly [TodoKey, string]): Action => ['confirm-todo-edit', arg0],
   cancelTodoEdit: (): Action => ['cancel-todo-edit'],
   removeTodo: (arg0: TodoKey): Action => ['remove-todo', arg0],
-  toggleCompletedTodo: (arg0: TodoKey): Action => ['toggle-completed-todo', arg0]
+  toggleCompleted: (arg0: TodoKey): Action => ['toggle-completed', arg0]
 } as const
 // #endregion
 
@@ -74,7 +74,7 @@ const startTodoEditUpdate = (
 
 const confirmTodoEditUpdate = (
   state: State,
-  [, key, text]: readonly ['confirm-todo-edit', TodoKey, string],
+  [, [key, text]]: readonly ['confirm-todo-edit', readonly [TodoKey, string]],
   { Todos: { updateTodo } }: Effects
 ): Command => {
   const { todos } = state
@@ -115,9 +115,9 @@ const setTodosUpdate = (state: State, [, todos]: readonly ['set-todos', TodoDict
   return [{ ...state, todos }, Effect.none()]
 }
 
-const toggleCompletedTodoUpdate = (
+const toggleCompletedUpdate = (
   state: State,
-  [, key]: readonly ['toggle-completed-todo', TodoKey],
+  [, key]: readonly ['toggle-completed', TodoKey],
   { Todos: { updateTodo } }: Effects
 ): Command => {
   const { todos } = state
@@ -158,8 +158,8 @@ const update = (state: State, action: Action, effects: Effects): Command => {
     case 'remove-todo':
       return removeTodoUpdate(state, action, effects)
 
-    case 'toggle-completed-todo':
-      return toggleCompletedTodoUpdate(state, action, effects)
+    case 'toggle-completed':
+      return toggleCompletedUpdate(state, action, effects)
   }
 }
 // #endregion

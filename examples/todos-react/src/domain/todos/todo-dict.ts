@@ -4,7 +4,7 @@ import { pipe, pipeWith } from 'pipe-ts'
 import { Dict } from 'ts-micro-dict'
 import { LocalData } from '../../services/local-data/types'
 import { fail } from '../../util'
-import { Todo, TodoDict } from './types'
+import { Todo, TodoDict, TodoFilter } from './types'
 
 const todoDictKey = 'todo-list' as const
 
@@ -22,7 +22,7 @@ export const loadTodoDict = (load: LocalData['load']) => () =>
 
 export const updateTodoDict = (update: LocalData['update']) => (
   todoDict: Static<typeof todoDictShape>
-) => update(todoDictKey, todoDict).then(() => todoDict)
+) => update(todoDictKey, todoDict).then(Result.success)
 
 const nextTodoKey = (load: LocalData['load']) =>
   pipe(
@@ -36,7 +36,7 @@ export const removeTodo = (load: LocalData['load'], update: LocalData['update'])
   pipe(
     loadTodoDict(load),
     AsyncResult.map(Dict.omit(key)),
-    AsyncResult.mapAsync(updateTodoDict(update))
+    AsyncResult.flatMap(updateTodoDict(update))
   )()
 
 export const addTodo = (load: LocalData['load'], update: LocalData['update']) => (text: string) =>
@@ -45,7 +45,7 @@ export const addTodo = (load: LocalData['load'], update: LocalData['update']) =>
     AsyncResult.map(([todoDict, nextKey]) =>
       Dict.put(`${nextKey}`, { text, completed: false }, todoDict)
     ),
-    AsyncResult.mapAsync(updateTodoDict(update))
+    AsyncResult.flatMap(updateTodoDict(update))
   )
 
 export const updateTodo = (load: LocalData['load'], update: LocalData['update']) => (
@@ -55,9 +55,12 @@ export const updateTodo = (load: LocalData['load'], update: LocalData['update'])
   pipe(
     loadTodoDict(load),
     AsyncResult.map(Dict.put(key, todo)),
-    AsyncResult.mapAsync(updateTodoDict(update))
+    AsyncResult.flatMap(updateTodoDict(update))
   )()
 
 export const listenTodoDictChanges = (listen: LocalData['listenChanges']) => <U>(
   onChange: UnwrapResult<ReturnType<typeof assertTodoDict>, U>
 ) => listen(todoDictKey, pipe(assertTodoDict, Result.unwrap(onChange)))
+
+export const filteredTodos = (todos: TodoDict, todoFilter: TodoFilter) =>
+  Dict.filter((todo) => todoFilter === 'all' || (todoFilter === 'active') !== todo.completed, todos)
