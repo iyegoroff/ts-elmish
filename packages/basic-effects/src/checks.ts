@@ -1,5 +1,4 @@
 import { ElmishEffect } from '@ts-elmish/core'
-import 'ts-jest'
 
 const foo = (expected: unknown) =>
   jest.fn((x: unknown) => {

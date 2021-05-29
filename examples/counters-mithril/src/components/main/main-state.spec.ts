@@ -1,4 +1,3 @@
-import 'ts-jest'
 import { MainState } from './main-state'
 
 const { init, update } = MainState

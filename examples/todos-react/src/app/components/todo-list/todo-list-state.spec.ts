@@ -1,7 +1,5 @@
-import 'ts-jest'
 import { Result } from 'ts-railway'
-import { createTestRun, successResolver } from '../../../util'
-import { stubEffects } from '../../effects'
+import { createTestRun, successResolver, stubEffects } from '../../../util'
 import { TodoListAction, TodoListState } from './todo-list-state'
 
 const { init, update } = TodoListState
@@ -15,8 +13,7 @@ const todo = {
 }
 
 const validState: TodoListState = {
-  todos: { [key]: todo },
-  editedText: ''
+  todos: { [key]: todo }
 }
 
 describe('components > todo-list', () => {
@@ -44,8 +41,7 @@ describe('components > todo-list', () => {
 
     expect(await testRun(command, effects)).toEqual<TodoListState>({
       ...validState,
-      editedTodoKey: key,
-      editedText: validState.todos[key]?.text ?? ''
+      editedTodoKey: key
     })
   })
 

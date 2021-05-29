@@ -1,6 +1,4 @@
-import 'ts-jest'
-import { createTestRun, successResolver } from '../../../util'
-import { stubEffects } from '../../effects'
+import { createTestRun, successResolver, stubEffects } from '../../../util'
 import { TodoInputAction, TodoInputState } from './todo-input-state'
 
 const { init, update } = TodoInputState
@@ -54,6 +52,21 @@ describe('components > todo-input', () => {
     expect(await testRun(command, effects)).toEqual<TodoInputState>(validState)
 
     expect(effects.Todos.addTodo).toHaveBeenCalled()
+  })
+
+  test('add-todo - empty', async () => {
+    const newText = ''
+    const effects = stubEffects({
+      Todos: {
+        addTodo: jest.fn()
+      }
+    })
+
+    const command = update({ ...validState, text: newText }, TodoInputAction.addTodo(), effects)
+
+    expect(await testRun(command, effects)).toEqual<TodoInputState>(validState)
+
+    expect(effects.Todos.addTodo).not.toHaveBeenCalled()
   })
 
   test('set-all-todos-completed', async () => {

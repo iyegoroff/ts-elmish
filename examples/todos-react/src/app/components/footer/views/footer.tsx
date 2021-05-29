@@ -1,24 +1,24 @@
 import React, { useEffect } from 'react'
-import { ElmishMemo, ElmishProps } from '@ts-elmish/react'
+import { ElmishProps } from '@ts-elmish/react'
 import { pipe } from 'pipe-ts'
 import { isDefined } from 'ts-is-defined'
 import { FooterState, FooterAction } from '../footer-state'
-import { Domain } from '../../../../domain'
 import { noRender } from '../../../../util'
-import { clearCompleted, footer, todoFilter, todoFilterItem } from './footer.css'
+import { Effects } from '../../../effects'
+import { clear, footer, todoFilter, todoFilterItem } from './footer.css'
 
 const {
-  Todos: { listenTodoFilterChanges, listenTodoDictChanges }
-} = Domain
+  Todos: { listenTodoFilterChanges, listenTodoDictChanges, clearCompleted }
+} = Effects
 
-export const Footer: React.FunctionComponent<ElmishProps<FooterState, FooterAction>> = ElmishMemo(
-  function Footer({ dispatch, activeTodosAmount, selectedTodoFilter }) {
+export const Footer: React.FunctionComponent<ElmishProps<FooterState, FooterAction>> = React.memo(
+  function Footer({ dispatch, activeTodosAmount, selectedTodoFilter, hasCompletedTodos }) {
     useEffect(
       () =>
         listenTodoFilterChanges({
           success: pipe(FooterAction.setSelectedTodoFilter, dispatch)
         }),
-      []
+      [dispatch]
     )
 
     useEffect(
@@ -26,10 +26,22 @@ export const Footer: React.FunctionComponent<ElmishProps<FooterState, FooterActi
         listenTodoDictChanges({
           success: pipe(FooterAction.todoDictChanged, dispatch)
         }),
-      []
+      [dispatch]
     )
 
-    return isDefined(activeTodosAmount) && isDefined(selectedTodoFilter) ? (
+    if (
+      !(
+        isDefined(hasCompletedTodos) &&
+        isDefined(activeTodosAmount) &&
+        isDefined(selectedTodoFilter)
+      )
+    ) {
+      return noRender
+    }
+
+    console.log('render footer')
+
+    return (
       <div className={footer}>
         <div>
           {activeTodosAmount} item{activeTodosAmount === 1 ? '' : 's'} left
@@ -56,10 +68,13 @@ export const Footer: React.FunctionComponent<ElmishProps<FooterState, FooterActi
             Completed
           </a>
         </div>
-        <button className={clearCompleted}>Clear completed</button>
+        <button
+          className={clear[hasCompletedTodos ? 'visible' : 'hidden']}
+          onClick={clearCompleted}
+        >
+          Clear completed
+        </button>
       </div>
-    ) : (
-      noRender
     )
   }
 )

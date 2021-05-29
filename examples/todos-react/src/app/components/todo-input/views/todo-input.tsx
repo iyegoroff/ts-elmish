@@ -1,48 +1,50 @@
 import React, { ChangeEvent, useCallback, KeyboardEvent, useEffect } from 'react'
-import { ElmishMemo, ElmishProps } from '@ts-elmish/react'
+import { ElmishProps } from '@ts-elmish/react'
 import { pipe } from 'pipe-ts'
 import { isDefined } from 'ts-is-defined'
+import { usePipe } from 'use-pipe-ts'
 import { TodoInputState, TodoInputAction } from '../todo-input-state'
-import { Domain } from '../../../../domain'
 import { noRender } from '../../../../util'
+import { Effects } from '../../../effects'
 import { todoInput } from './todo-input.css'
 
 const {
   Todos: { listenTodoDictChanges }
-} = Domain
+} = Effects
 
-export const TodoInput: React.FunctionComponent<
-  ElmishProps<TodoInputState, TodoInputAction>
-> = ElmishMemo(function TodoInput({ dispatch, text, allTodosCompleted }) {
-  useEffect(
-    () =>
-      listenTodoDictChanges({
-        success: pipe(TodoInputAction.todoDictChanged, dispatch)
-      }),
-    []
-  )
+const changeEventValue = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => value
 
-  const onChange = useCallback(
-    ({ target: { value } }: ChangeEvent<HTMLInputElement>) =>
-      dispatch(TodoInputAction.setText(value)),
-    []
-  )
+export const TodoInput: React.FunctionComponent<ElmishProps<TodoInputState, TodoInputAction>> =
+  React.memo(function TodoInput({ dispatch, text, allTodosCompleted }) {
+    useEffect(
+      () =>
+        listenTodoDictChanges({
+          success: pipe(TodoInputAction.todoDictChanged, dispatch)
+        }),
+      [dispatch]
+    )
 
-  const onKeyPress = useCallback(
-    ({ code }: KeyboardEvent) =>
-      code === 'Enter' ? dispatch(TodoInputAction.addTodo()) : undefined,
-    []
-  )
+    const onChange = usePipe(changeEventValue, TodoInputAction.setText, dispatch)
 
-  return isDefined(allTodosCompleted) ? (
-    <input
-      className={todoInput}
-      placeholder={'What needs to be done?'}
-      value={text}
-      onChange={onChange}
-      onKeyPress={onKeyPress}
-    />
-  ) : (
-    noRender
-  )
-})
+    const onKeyPress = useCallback(
+      ({ code }: KeyboardEvent) =>
+        code === 'Enter' ? dispatch(TodoInputAction.addTodo()) : undefined,
+      [dispatch]
+    )
+
+    if (!isDefined(allTodosCompleted)) {
+      return noRender
+    }
+
+    console.log('render TodoInput')
+
+    return (
+      <input
+        className={todoInput}
+        placeholder={'What needs to be done?'}
+        value={text}
+        onChange={onChange}
+        onKeyPress={onKeyPress}
+      />
+    )
+  })

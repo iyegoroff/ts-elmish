@@ -9,7 +9,7 @@ const projects = [
 const config = {
   moduleFileExtensions: ['js', 'ts'],
   moduleNameMapper: {
-    '^\\./(views|real-effects)$': '<rootDir>/stub.js'
+    '^\\./(views)$': '<rootDir>/stub.js'
   },
   testPathIgnorePatterns: ['blueprint-templates'],
   testRegex: '\\.spec\\.ts$',

@@ -20,9 +20,9 @@ const assertTodoDict = (maybeTodoDict: unknown) =>
 export const loadTodoDict = (load: LocalData['load']) => () =>
   load(todoDictKey, defaultTodoDict).then(assertTodoDict)
 
-export const updateTodoDict = (update: LocalData['update']) => (
-  todoDict: Static<typeof todoDictShape>
-) => update(todoDictKey, todoDict).then(Result.success)
+export const updateTodoDict =
+  (update: LocalData['update']) => (todoDict: Static<typeof todoDictShape>) =>
+    update(todoDictKey, todoDict).then(Result.success)
 
 const nextTodoKey = (load: LocalData['load']) =>
   pipe(
@@ -48,19 +48,28 @@ export const addTodo = (load: LocalData['load'], update: LocalData['update']) =>
     AsyncResult.flatMap(updateTodoDict(update))
   )
 
-export const updateTodo = (load: LocalData['load'], update: LocalData['update']) => (
-  key: string,
-  todo: Todo
-) =>
-  pipe(
-    loadTodoDict(load),
-    AsyncResult.map(Dict.put(key, todo)),
-    AsyncResult.flatMap(updateTodoDict(update))
-  )()
+export const updateTodo =
+  (load: LocalData['load'], update: LocalData['update']) => (key: string, todo: Todo) =>
+    pipe(
+      loadTodoDict(load),
+      AsyncResult.map(Dict.put(key, todo)),
+      AsyncResult.flatMap(updateTodoDict(update))
+    )()
 
-export const listenTodoDictChanges = (listen: LocalData['listenChanges']) => <U>(
-  onChange: UnwrapResult<ReturnType<typeof assertTodoDict>, U>
-) => listen(todoDictKey, pipe(assertTodoDict, Result.unwrap(onChange)))
+export const listenTodoDictChanges =
+  (listen: LocalData['listenChanges']) =>
+  <U>(onChange: UnwrapResult<ReturnType<typeof assertTodoDict>, U>) =>
+    listen(todoDictKey, pipe(assertTodoDict, Result.unwrap(onChange)))
 
 export const filteredTodos = (todos: TodoDict, todoFilter: TodoFilter) =>
   Dict.filter((todo) => todoFilter === 'all' || (todoFilter === 'active') !== todo.completed, todos)
+
+export const clearCompleted = (load: LocalData['load'], update: LocalData['update']) =>
+  pipe(
+    loadTodoDict(load),
+    AsyncResult.map(Dict.filter(({ completed }: Todo) => !completed)),
+    AsyncResult.flatMap(updateTodoDict(update))
+  )
+
+export const compareTodos = (first: Todo, second: Todo) =>
+  first === second || (first.text === second.text && first.completed === second.completed)

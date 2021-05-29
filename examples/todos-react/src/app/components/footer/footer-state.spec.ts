@@ -1,7 +1,5 @@
-import 'ts-jest'
 import { Result } from 'ts-railway'
-import { createTestRun, successResolver } from '../../../util'
-import { stubEffects } from '../../effects'
+import { createTestRun, successResolver, stubEffects } from '../../../util'
 import { FooterState } from './footer-state'
 
 const { init, update } = FooterState
@@ -23,6 +21,7 @@ describe('components > footer', () => {
 
     expect(await testRun(command, effects)).toEqual<FooterState>({
       activeTodosAmount: 0,
+      hasCompletedTodos: true,
       selectedTodoFilter: 'all'
     })
   })

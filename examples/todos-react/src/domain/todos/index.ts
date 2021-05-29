@@ -1,4 +1,3 @@
-import { Services } from '../../services'
 import { listenTodoFilterChanges, updateTodoFilter, loadTodoFilter } from './todo-filter'
 import {
   addTodo,
@@ -6,22 +5,23 @@ import {
   listenTodoDictChanges,
   removeTodo,
   loadTodoDict,
-  updateTodoDict
+  updateTodoDict,
+  filteredTodos,
+  clearCompleted,
+  compareTodos
 } from './todo-dict'
 
-const {
-  LocalData: { listenChanges, load, update },
-  HashLocation: { listenChanges: listenHashChanges, change, current }
-} = Services
-
 export const Todos = {
-  updateTodoFilter: updateTodoFilter(change),
-  loadTodoFilter: loadTodoFilter(current),
-  listenTodoFilterChanges: listenTodoFilterChanges(listenHashChanges),
-  addTodo: addTodo(load, update),
-  updateTodo: updateTodo(load, update),
-  listenTodoDictChanges: listenTodoDictChanges(listenChanges),
-  removeTodo: removeTodo(load, update),
-  loadTodoDict: loadTodoDict(load),
-  updateTodoDict: updateTodoDict(update)
+  updateTodoFilter,
+  loadTodoFilter,
+  listenTodoFilterChanges,
+  addTodo,
+  updateTodo,
+  listenTodoDictChanges,
+  removeTodo,
+  loadTodoDict,
+  updateTodoDict,
+  clearCompleted,
+  filteredTodos,
+  compareTodos
 } as const

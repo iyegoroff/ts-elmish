@@ -1,4 +1,4 @@
-import 'ts-jest'
+
 import { createTestRun } from '../../../util'
 import { stubEffects } from '../../effects'
 import { MainState } from './main-state'

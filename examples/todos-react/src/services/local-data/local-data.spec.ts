@@ -1,5 +1,5 @@
 /* eslint-disable no-null/no-null */
-import 'ts-jest'
+
 import { Any } from 'ts-toolbelt'
 import { resolver } from '../../util'
 import { load, listenChanges, update } from './local-data'

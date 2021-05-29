@@ -1,4 +1,3 @@
-import 'ts-jest'
 import { Result } from 'ts-railway'
 import { Any } from 'ts-toolbelt'
 import { resolver } from '../../util'
@@ -8,7 +7,8 @@ import {
   updateTodo,
   removeTodo,
   listenTodoDictChanges,
-  filteredTodos
+  filteredTodos,
+  clearCompleted
 } from './todo-dict'
 import { TodoDict } from './types'
 
@@ -16,6 +16,7 @@ type LoadTodoDict = Any.PromiseType<ReturnType<ReturnType<typeof loadTodoDict>>>
 type AddTodo = Any.PromiseType<ReturnType<ReturnType<typeof addTodo>>>
 type UpdateTodo = Any.PromiseType<ReturnType<ReturnType<typeof updateTodo>>>
 type RemoveTodo = Any.PromiseType<ReturnType<ReturnType<typeof removeTodo>>>
+type ClearCompleted = Any.PromiseType<ReturnType<ReturnType<typeof clearCompleted>>>
 
 const validTodoDict: LoadTodoDict['success'] = {
   '5': {
@@ -114,5 +115,20 @@ describe('domain > todos > todo-list', () => {
     expect(filteredTodos(todos, 'all')).toEqual(todos)
     expect(filteredTodos(todos, 'active')).toEqual({ y })
     expect(filteredTodos(todos, 'completed')).toEqual({ x })
+  })
+
+  test('filteredTodos', async () => {
+    const { x, '10': _, ...expected } = validTodoDict
+    const update = jest.fn((_k: string, data: unknown) => {
+      expect(data).toEqual(expected)
+
+      return Promise.resolve(undefined)
+    })
+
+    expect(await clearCompleted(resolver(validTodoDict), update)()).toEqual<ClearCompleted>(
+      Result.success(undefined)
+    )
+
+    expect(update).toHaveBeenCalled()
   })
 })

@@ -1,4 +1,3 @@
-import 'ts-jest'
 import { ElmishIdleAction } from '@ts-elmish/idle-action'
 import { Record, String } from 'runtypes'
 import { Effect } from './index'
@@ -95,9 +94,10 @@ describe('effects', () => {
     const mapped = Effect.map((x: number) => ['action', x] as const, [(dispatch) => dispatch(1)])
     checkEffect(mapped, ['action', 1])
 
-    const mappedIdle = Effect.map((x) => ['action', x] as const, [
-      (dispatch) => dispatch(ElmishIdleAction)
-    ])
+    const mappedIdle = Effect.map(
+      (x) => ['action', x] as const,
+      [(dispatch) => dispatch(ElmishIdleAction)]
+    )
     checkEffect(mappedIdle, ElmishIdleAction)
   })
 

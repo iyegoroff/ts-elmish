@@ -7,6 +7,7 @@ module.exports = {
   },
   plugins: ['@typescript-eslint', 'prettier', 'no-null', 'functional', '@ts-elmish'],
   extends: [
+    'plugin:react-hooks/recommended',
     'standard-with-typescript',
     'plugin:react/recommended',
     'prettier',
@@ -22,7 +23,6 @@ module.exports = {
   rules: {
     'react/prop-types': 'off',
     '@ts-elmish/updates-from-actions': 'warn',
-    '@ts-elmish/react-exhaustive-deps': 'warn',
     '@typescript-eslint/space-before-function-paren': [
       'error',
       {
@@ -80,16 +80,16 @@ module.exports = {
       {
         zones: [
           {
-            target: './src/services',
-            from: './src/app'
+            target: './examples/todos-react/src/services',
+            from: './examples/todos-react/src/app'
           },
           {
-            target: './src/services',
-            from: './src/domain'
+            target: './examples/todos-react/src/services',
+            from: './examples/todos-react/src/domain'
           },
           {
-            target: './src/domain',
-            from: './src/app'
+            target: './examples/todos-react/src/domain',
+            from: './examples/todos-react/src/app'
           }
         ]
       }
@@ -97,7 +97,7 @@ module.exports = {
   },
   settings: {
     react: {
-      version: '16.11.0'
+      version: 'detect'
     }
   }
 }

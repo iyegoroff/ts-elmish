@@ -48,9 +48,11 @@ const addTodoUpdate = (
 ): Command => {
   return [
     { ...state, text: '' },
-    Effect.from({
-      asyncResult: () => addTodo(text)
-    })
+    text === ''
+      ? Effect.none()
+      : Effect.from({
+          asyncResult: () => addTodo(text)
+        })
   ]
 }
 
@@ -76,7 +78,10 @@ const todoDictChangedUpdate = (
   [, todoDict]: readonly ['todo-dict-changed', TodoDict]
 ): Command => {
   const allTodosCompleted = Dict.every(({ completed }) => completed, todoDict)
-  return [{ ...state, allTodosCompleted }, Effect.none()]
+  return [
+    allTodosCompleted !== state.allTodosCompleted ? { ...state, allTodosCompleted } : state,
+    Effect.none()
+  ]
 }
 
 // #region update

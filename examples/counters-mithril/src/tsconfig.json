@@ -1,3 +1,8 @@
 {
-  "extends": "./tsconfig.build.json"
+  "extends": "./tsconfig.build.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "types": ["jest"]
+  },
+  "exclude": []
 }

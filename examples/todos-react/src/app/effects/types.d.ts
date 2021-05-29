@@ -1,1 +1,1 @@
-export type Effects = typeof import('./real-effects').Effects
+export type Effects = typeof import('./effects').Effects

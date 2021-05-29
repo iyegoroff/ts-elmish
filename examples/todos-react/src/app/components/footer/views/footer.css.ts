@@ -57,7 +57,7 @@ export const todoFilterItem = styleVariants({
   }
 })
 
-export const clearCompleted = style({
+const clearCommon: StyleRule = {
   margin: 0,
   padding: 0,
   border: 0,
@@ -68,9 +68,16 @@ export const clearCompleted = style({
   fontWeight: 'inherit',
   color: 'inherit',
   appearance: 'none',
-  WebkitAppearance: 'none',
-  cursor: 'pointer',
-  ':hover': {
-    textDecoration: 'underline'
-  }
+  WebkitAppearance: 'none'
+}
+
+export const clear = styleVariants({
+  visible: {
+    ...clearCommon,
+    cursor: 'pointer',
+    ':hover': {
+      textDecoration: 'underline'
+    }
+  },
+  hidden: { ...clearCommon, opacity: 0, pointerEvents: 'none' }
 })

@@ -1,4 +1,3 @@
-import 'ts-jest'
 import { Result } from 'ts-railway'
 import { loadTodoFilter, updateTodoFilter, listenTodoFilterChanges } from './todo-filter'
 

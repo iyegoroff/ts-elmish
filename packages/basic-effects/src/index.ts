@@ -16,8 +16,8 @@ function map<Action0, Action1>(
   func: (a: Action0) => Action1,
   effect: Effect<Action0 | ElmishIdleAction>
 ): Effect<Action1 | ElmishIdleAction> {
-  return effect.map((g) => (dispatch) =>
-    g((a) => dispatch(a === ElmishIdleAction ? ElmishIdleAction : func(a)))
+  return effect.map(
+    (g) => (dispatch) => g((a) => dispatch(a === ElmishIdleAction ? ElmishIdleAction : func(a)))
   )
 }
 

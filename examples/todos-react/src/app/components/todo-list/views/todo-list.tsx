@@ -1,31 +1,76 @@
 import React, { useEffect } from 'react'
-import { ElmishMemo, ElmishProps } from '@ts-elmish/react'
+import { ElmishProps } from '@ts-elmish/react'
 import { pipe } from 'pipe-ts'
+import { isDefined } from 'ts-is-defined'
+import { Dict } from 'ts-micro-dict'
+import { usePipe } from 'use-pipe-ts'
 import { TodoListState, TodoListAction } from '../todo-list-state'
 import { Domain } from '../../../../domain'
+import { noRender } from '../../../../util'
+import { Effects } from '../../../effects'
+import { TodoItem } from './todo-item'
+
+const {
+  Todos: { filteredTodos }
+} = Domain
 
 const {
   Todos: { listenTodoDictChanges, listenTodoFilterChanges }
-} = Domain
+} = Effects
 
-export const TodoList: React.FunctionComponent<
-  ElmishProps<TodoListState, TodoListAction>
-> = ElmishMemo(function TodoList({ dispatch }) {
-  useEffect(
-    () =>
-      listenTodoDictChanges({
-        success: pipe(TodoListAction.setTodos, dispatch)
-      }),
-    []
-  )
+export const TodoList: React.FunctionComponent<ElmishProps<TodoListState, TodoListAction>> =
+  React.memo(function TodoList({ dispatch, todos, todoFilter, editedTodoKey }) {
+    useEffect(
+      () =>
+        listenTodoDictChanges({
+          success: pipe(TodoListAction.setTodos, dispatch)
+        }),
+      [dispatch]
+    )
 
-  useEffect(
-    () =>
-      listenTodoFilterChanges({
-        success: pipe(TodoListAction.setTodoFilter, dispatch)
-      }),
-    []
-  )
+    useEffect(
+      () =>
+        listenTodoFilterChanges({
+          success: pipe(TodoListAction.setTodoFilter, dispatch)
+        }),
+      [dispatch]
+    )
 
-  return <div>TodoList</div>
-})
+    const removeTodo = usePipe(TodoListAction.removeTodo, dispatch)
+
+    const toggleCompletedTodo = usePipe(TodoListAction.toggleCompleted, dispatch)
+
+    const startTodoEdit = usePipe(TodoListAction.startTodoEdit, dispatch)
+
+    const cancelTodoEdit = usePipe(TodoListAction.cancelTodoEdit, dispatch)
+
+    const confirmTodoEdit = usePipe(TodoListAction.confirmTodoEdit, dispatch)
+
+    if (!isDefined(todoFilter)) {
+      return noRender
+    }
+
+    console.log('render TodoList')
+
+    return (
+      <div>
+        {Dict.toArray(
+          (todo, key) => (
+            <React.Fragment key={key}>
+              <TodoItem
+                {...todo}
+                id={key}
+                isEdited={editedTodoKey === key}
+                onRemove={removeTodo}
+                onToggleCompleted={toggleCompletedTodo}
+                onStartEdit={startTodoEdit}
+                onCancelEdit={cancelTodoEdit}
+                onConfirmEdit={confirmTodoEdit}
+              />
+            </React.Fragment>
+          ),
+          filteredTodos(todos, todoFilter)
+        )}
+      </div>
+    )
+  })

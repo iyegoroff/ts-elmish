@@ -1,14 +1,18 @@
 import { Effect } from '@ts-elmish/railway-effects'
 import { Dict } from 'ts-micro-dict'
+import { Domain } from '../../../domain'
 import { TodoFilter, TodoDict } from '../../../domain/todos/types'
 import { Effects } from '../../effects/types'
+
+const {
+  Todos: { compareTodos }
+} = Domain
 
 type TodoKey = keyof TodoDict
 
 type State = {
   readonly todos: TodoDict
   readonly editedTodoKey?: TodoKey
-  readonly editedText: string
   readonly todoFilter?: TodoFilter
 }
 
@@ -16,7 +20,7 @@ type Action =
   | readonly ['set-todos', TodoDict]
   | readonly ['set-todo-filter', TodoFilter]
   | readonly ['start-todo-edit', TodoKey]
-  | readonly ['confirm-todo-edit', readonly [TodoKey, string]]
+  | readonly ['confirm-todo-edit', TodoKey, string]
   | readonly ['cancel-todo-edit']
   | readonly ['remove-todo', TodoKey]
   | readonly ['toggle-completed', TodoKey]
@@ -26,7 +30,7 @@ const Action = {
   setTodos: (arg0: TodoDict): Action => ['set-todos', arg0],
   setTodoFilter: (arg0: TodoFilter): Action => ['set-todo-filter', arg0],
   startTodoEdit: (arg0: TodoKey): Action => ['start-todo-edit', arg0],
-  confirmTodoEdit: (...arg0: readonly [TodoKey, string]): Action => ['confirm-todo-edit', arg0],
+  confirmTodoEdit: (arg0: TodoKey, arg1: string): Action => ['confirm-todo-edit', arg0, arg1],
   cancelTodoEdit: (): Action => ['cancel-todo-edit'],
   removeTodo: (arg0: TodoKey): Action => ['remove-todo', arg0],
   toggleCompleted: (arg0: TodoKey): Action => ['toggle-completed', arg0]
@@ -37,7 +41,7 @@ type Command = readonly [State, Effect<Action>]
 
 const init = ({ Todos: { loadTodoDict, loadTodoFilter } }: Effects): Command => {
   return [
-    { todos: {}, editedText: '' },
+    { todos: {} },
     Effect.batch(
       Effect.from({
         result: loadTodoFilter,
@@ -69,12 +73,12 @@ const startTodoEditUpdate = (
     return [state, Effect.none()]
   }
 
-  return [{ ...state, editedText: todo.text, editedTodoKey: key }, Effect.none()]
+  return [{ ...state, editedTodoKey: key }, Effect.none()]
 }
 
 const confirmTodoEditUpdate = (
   state: State,
-  [, [key, text]]: readonly ['confirm-todo-edit', readonly [TodoKey, string]],
+  [, key, text]: readonly ['confirm-todo-edit', TodoKey, string],
   { Todos: { updateTodo } }: Effects
 ): Command => {
   const { todos } = state
@@ -112,7 +116,10 @@ const removeTodoUpdate = (
 }
 
 const setTodosUpdate = (state: State, [, todos]: readonly ['set-todos', TodoDict]): Command => {
-  return [{ ...state, todos }, Effect.none()]
+  return [
+    Dict.isEqual(state.todos, todos, compareTodos) ? state : { ...state, todos },
+    Effect.none()
+  ]
 }
 
 const toggleCompletedUpdate = (

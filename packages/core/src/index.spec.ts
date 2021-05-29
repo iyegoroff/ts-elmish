@@ -1,4 +1,3 @@
-import 'ts-jest'
 import { ElmishIdleAction } from '@ts-elmish/idle-action'
 import { runProgram } from './index'
 

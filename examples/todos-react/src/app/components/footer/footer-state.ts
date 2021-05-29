@@ -6,6 +6,7 @@ import { Effects } from '../../effects/types'
 
 type State = {
   readonly activeTodosAmount?: number
+  readonly hasCompletedTodos?: boolean
   readonly selectedTodoFilter?: TodoFilter
 }
 
@@ -55,7 +56,14 @@ const todoDictChangedUpdate = (
     Dict.length
   )
 
-  return [{ ...state, activeTodosAmount }, Effect.none()]
+  const hasCompletedTodos = Dict.length(todos) - activeTodosAmount > 0
+
+  return [
+    hasCompletedTodos !== state.hasCompletedTodos || activeTodosAmount !== state.activeTodosAmount
+      ? { ...state, activeTodosAmount, hasCompletedTodos }
+      : state,
+    Effect.none()
+  ]
 }
 
 // #region update

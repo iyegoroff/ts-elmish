@@ -17,6 +17,7 @@ export const loadTodoFilter = (current: HashLocation['current']) => () =>
 export const updateTodoFilter = (change: HashLocation['change']) => (todoFilter: TodoFilter) =>
   Result.success(change(todoFilter))
 
-export const listenTodoFilterChanges = (listen: HashLocation['listenChanges']) => <U>(
-  onChange: UnwrapResult<ReturnType<typeof todoFilterToDomain>, U>
-) => listen(pipe(todoFilterToDomain, Result.unwrap(onChange)))
+export const listenTodoFilterChanges =
+  (listen: HashLocation['listenChanges']) =>
+  <U>(onChange: UnwrapResult<ReturnType<typeof todoFilterToDomain>, U>) =>
+    listen(pipe(todoFilterToDomain, Result.unwrap(onChange)))

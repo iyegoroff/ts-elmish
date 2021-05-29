@@ -1,4 +1,3 @@
-import 'ts-jest'
 import { CounterState } from './counter-state'
 
 const { init, update } = CounterState
