@@ -7,10 +7,8 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const ReactRefreshTypeScript = require('react-refresh-typescript').default
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 
-const isDevelopment = process.env.NODE_ENV !== 'production'
-
-module.exports = {
-  mode: isDevelopment ? 'development' : 'production',
+module.exports = (env) => ({
+  mode: env.production ? 'production' : 'development',
   entry: {
     main: './src/index.tsx'
   },
@@ -33,7 +31,7 @@ module.exports = {
               ],
               plugins: [
                 '@vanilla-extract/babel-plugin',
-                isDevelopment && 'react-refresh/babel'
+                env.development && 'react-refresh/babel'
               ].filter(Boolean)
             }
           }
@@ -46,8 +44,8 @@ module.exports = {
     ]
   },
   plugins: [
-    isDevelopment && new webpack.HotModuleReplacementPlugin(),
-    isDevelopment && new ReactRefreshWebpackPlugin(),
+    env.development && new webpack.HotModuleReplacementPlugin(),
+    env.development && new ReactRefreshWebpackPlugin(),
     new HtmlWebpackPlugin({
       filename: './index.html',
       template: './public/index.html'
@@ -75,4 +73,4 @@ module.exports = {
       react: path.resolve(__dirname, 'node_modules/react')
     }
   }
-}
+})
