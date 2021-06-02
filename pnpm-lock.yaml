@@ -83,8 +83,8 @@ importers:
       '@ts-elmish/eslint-plugin': workspace:*
       '@ts-elmish/railway-effects': workspace:*
       '@ts-elmish/react': workspace:*
-      '@types/react': 17.0.4
-      '@types/react-dom': 17.0.3
+      '@types/react': ^17.0.9
+      '@types/react-dom': ^17.0.6
       '@vanilla-extract/babel-plugin': ^0.4.2
       '@vanilla-extract/css': ^0.4.4
       '@vanilla-extract/webpack-plugin': ^0.3.1
@@ -138,8 +138,8 @@ importers:
       '@babel/preset-typescript': 7.13.0
       '@pmmmwh/react-refresh-webpack-plugin': 0.4.3_648faccd195d4e32e43ee0c548c995bd
       '@ts-elmish/eslint-plugin': link:../../packages/eslint-plugin
-      '@types/react': 17.0.4
-      '@types/react-dom': 17.0.3
+      '@types/react': 17.0.9
+      '@types/react-dom': 17.0.6
       '@vanilla-extract/babel-plugin': 0.4.2
       '@vanilla-extract/css': 0.4.4
       '@vanilla-extract/webpack-plugin': 0.3.1_webpack@5.38.1
@@ -228,10 +228,10 @@ importers:
   packages/react:
     specifiers:
       '@ts-elmish/core': workspace:*
-      '@types/react': 17.0.4
+      '@types/react': ^17.0.9
     devDependencies:
       '@ts-elmish/core': link:../core
-      '@types/react': 17.0.4
+      '@types/react': 17.0.9
 
 packages:
 
@@ -1876,14 +1876,14 @@ packages:
     resolution: {integrity: sha512-KfRL3PuHmqQLOG+2tGpRO26Ctg+Cq1E01D2DMriKEATHgWLfeNDmq9e29Q9WIky0dQ3NPkd1mzYH8Lm936Z9qw==}
     dev: true
 
-  /@types/react-dom/17.0.3:
-    resolution: {integrity: sha512-4NnJbCeWE+8YBzupn/YrJxZ8VnjcJq5iR1laqQ1vkpQgBiA7bwk0Rp24fxsdNinzJY2U+HHS4dJJDPdoMjdJ7w==}
+  /@types/react-dom/17.0.6:
+    resolution: {integrity: sha512-MGTI+TudxAnGTj8aco8mogaPSJGK2Whje7OZh1CxNLRyhJpTZg/pGQpIbCT0eCVFQyH7UFpdvCqQEThHIp/gsA==}
     dependencies:
-      '@types/react': 17.0.4
+      '@types/react': 17.0.9
     dev: true
 
-  /@types/react/17.0.4:
-    resolution: {integrity: sha512-onz2BqScSFMoTRdJUZUDD/7xrusM8hBA2Fktk2qgaTYPCgPvWnDEgkrOs8hhPUf2jfcIXkJ5yK6VfYormJS3Jw==}
+  /@types/react/17.0.9:
+    resolution: {integrity: sha512-2Cw7FvevpJxQrCb+k5t6GH1KIvmadj5uBbjPaLlJB/nZWUj56e1ZqcD6zsoMFB47MsJUTFl9RJ132A7hb3QFJA==}
     dependencies:
       '@types/prop-types': 15.7.3
       '@types/scheduler': 0.16.1

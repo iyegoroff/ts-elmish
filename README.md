@@ -6,13 +6,43 @@
 [![Type Coverage](https://img.shields.io/badge/dynamic/json.svg?label=type-coverage&prefix=%E2%89%A5&suffix=%&query=$.typeCoverage.atLeast&uri=https%3A%2F%2Fraw.githubusercontent.com%2Fiyegoroff%2Fts-elmish%2Fmaster%2Fpackage.json)](https://github.com/plantain-00/type-coverage)
 [![npm](https://img.shields.io/npm/l/@ts-elmish/core.svg?t=1495378566925)](https://www.npmjs.com/package/@ts-elmish/core)
 
+---
+
 Elmish architecture in Typescript
 
-|                 |                                                                                                                                                                                    |                                                                                                                                                                                                      |
-| --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| core            | [![Dependency Status](https://img.shields.io/david/iyegoroff/ts-elmish?path=packages%2Fcore)](https://david-dm.org/iyegoroff/ts-elmish?path=packages%2Fcore)                       | [![devDependencies Status](https://img.shields.io/david/dev/iyegoroff/ts-elmish)](https://david-dm.org/iyegoroff/ts-elmish?type=dev)                                                                 |
-| basic-effects   | [![Dependency Status](https://img.shields.io/david/iyegoroff/ts-elmish?path=packages%2Fbasic-effects)](https://david-dm.org/iyegoroff/ts-elmish?path=packages%2Fbasic-effects)     | [![devDependencies Status](https://img.shields.io/david/dev/iyegoroff/ts-elmish?path=packages%2Fbasic-effects)](https://david-dm.org/iyegoroff/ts-elmish?path=packages%2Fbasic-effects&type=dev)     |
-| railway-effects | [![Dependency Status](https://img.shields.io/david/iyegoroff/ts-elmish?path=packages%2Frailway-effects)](https://david-dm.org/iyegoroff/ts-elmish?path=packages%2Frailway-effects) | [![devDependencies Status](https://img.shields.io/david/dev/iyegoroff/ts-elmish?path=packages%2Frailway-effects)](https://david-dm.org/iyegoroff/ts-elmish?path=packages%2Frailway-effects&type=dev) |
-| eslint-plugin   | [![Dependency Status](https://img.shields.io/david/iyegoroff/ts-elmish?path=packages%2Feslint-plugin)](https://david-dm.org/iyegoroff/ts-elmish?path=packages%2Feslint-plugin)     | [![devDependencies Status](https://img.shields.io/david/dev/iyegoroff/ts-elmish?path=packages%2Feslint-plugin)](https://david-dm.org/iyegoroff/ts-elmish?path=packages%2Feslint-plugin&type=dev)     |
-| react           | [![Dependency Status](https://img.shields.io/david/iyegoroff/ts-elmish?path=packages%2Freact)](https://david-dm.org/iyegoroff/ts-elmish?path=packages%2Freact)                     | [![devDependencies Status](https://img.shields.io/david/dev/iyegoroff/ts-elmish?path=packages%2Freact)](https://david-dm.org/iyegoroff/ts-elmish?path=packages%2Freact&type=dev)                     |
-| mithril         | [![Dependency Status](https://img.shields.io/david/iyegoroff/ts-elmish?path=packages%2Fmithril)](https://david-dm.org/iyegoroff/ts-elmish?path=packages%2Fmithril)                 | [![devDependencies Status](https://img.shields.io/david/dev/iyegoroff/ts-elmish?path=packages%2Fmithril)](https://david-dm.org/iyegoroff/ts-elmish?path=packages%2Fmithril&type=dev)                 |
+---
+
+<table>
+   <tbody>
+      <tr>
+         <td>core</td>
+         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/core" title="dependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Fcore"/></a></td>
+         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?type=dev" title="devDependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?type=dev"/></a></td>
+      </tr>
+      <tr>
+         <td>basic-effects</td>
+         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/basic-effects" title="dependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Fbasic-effects"/></a></td>
+         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/basic-effects&type=dev" title="devDependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Fbasic-effects&type=dev"/></a></td>
+      </tr>
+      <tr>
+         <td>railway-effects</td>
+         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/railway-effects" title="dependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Frailway-effects"/></a></td>
+         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/railway-effects&type=dev" title="devDependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Frailway-effects&type=dev"/></a></td>
+      </tr>
+      <tr>
+         <td>eslint-plugin</td>
+         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/eslint-plugin" title="dependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Feslint-plugin"/></a></td>
+         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/eslint-plugin&type=dev" title="devDependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Feslint-plugin&type=dev"/></a></td>
+      </tr>
+      <tr>
+         <td>react</td>
+         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/react" title="dependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Freact"/></a></td>
+         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/react&type=dev" title="devDependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Freact&type=dev"/></a></td>
+      </tr>
+      <tr>
+         <td>mithril</td>
+         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/mithril" title="dependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Fmithril"/></a></td>
+         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/mithril&type=dev" title="devDependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Fmithril&type=dev"/></a></td>
+      </tr>
+   </tbody>
+</table>
