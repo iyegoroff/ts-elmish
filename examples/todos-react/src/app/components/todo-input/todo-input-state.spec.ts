@@ -1,3 +1,4 @@
+import { TodoDict } from '../../../domain/todos/types'
 import { createTestRun, successResolver, stubEffects } from '../../../util'
 import { TodoInputAction, TodoInputState } from './todo-input-state'
 
@@ -36,7 +37,7 @@ describe('components > todo-input', () => {
     const newText = '123'
     const effects = stubEffects({
       Todos: {
-        addTodo: jest.fn((text) => {
+        addTodo: jest.fn((text: string) => {
           expect(text).toEqual(newText)
           return successResolver(undefined)()
         })
@@ -72,7 +73,7 @@ describe('components > todo-input', () => {
           x: { text: 'y', completed: false },
           y: { text: 'x', completed: true }
         }),
-        updateTodoDict: jest.fn((todos) => {
+        updateTodoDict: jest.fn((todos: TodoDict) => {
           expect(todos).toEqual({
             x: { text: 'y', completed: true },
             y: { text: 'x', completed: true }

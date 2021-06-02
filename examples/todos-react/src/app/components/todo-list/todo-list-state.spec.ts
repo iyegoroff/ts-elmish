@@ -1,3 +1,4 @@
+import { Todo } from '../../../domain/todos/types'
 import { createTestRun, successResolver, stubEffects } from '../../../util'
 import { TodoListAction, TodoListState } from './todo-list-state'
 
@@ -48,7 +49,7 @@ describe('components > todo-list', () => {
     const text = '123'
     const effects = stubEffects({
       Todos: {
-        updateTodo: jest.fn((k, t) => {
+        updateTodo: jest.fn((k: string, t: Todo) => {
           expect(k).toEqual(key)
           expect(t).toEqual({
             ...todo,
@@ -101,7 +102,7 @@ describe('components > todo-list', () => {
   test('remove-todo', async () => {
     const effects = stubEffects({
       Todos: {
-        removeTodo: jest.fn((k) => {
+        removeTodo: jest.fn((k: string) => {
           expect(k).toEqual(key)
 
           return successResolver(undefined)()
@@ -127,7 +128,7 @@ describe('components > todo-list', () => {
 
     const effects = stubEffects({
       Todos: {
-        updateTodo: jest.fn((k, t) => {
+        updateTodo: jest.fn((k: string, t: Todo) => {
           expect(k).toEqual(key)
           expect(t).toEqual(expectedTodo)
 

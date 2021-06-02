@@ -1,5 +1,6 @@
 import { merge } from 'merge-anything'
 import { Result } from 'ts-railway'
+import { TodoFilter } from '../../../domain/todos/types'
 import { createTestRun, stubEffects, successResolver } from '../../../util'
 import { FooterAction } from '../footer'
 import { TodoInputAction } from '../todo-input'
@@ -97,7 +98,7 @@ describe('components > main', () => {
       Todos: {
         loadTodoFilter: () => Result.success('all'),
         loadTodoDict: successResolver(todos),
-        updateTodoFilter: jest.fn((filter) => {
+        updateTodoFilter: jest.fn((filter: TodoFilter) => {
           expect(filter).toEqual('all')
           return Result.success(filter)
         })
