@@ -17,6 +17,43 @@ Elmish architecture in Typescript
 - <b>modular</b>, supports different view layers and effect handling strategies
 - <b>testable</b>, encourages markup/logic/effect separation
 
+## Maintenance
+
+<table>
+   <tbody>
+      <tr>
+         <td>core</td>
+         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/core" title="dependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Fcore"/></a></td>
+         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?type=dev" title="devDependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?type=dev"/></a></td>
+      </tr>
+      <tr>
+         <td>basic-effects</td>
+         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/basic-effects" title="dependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Fbasic-effects"/></a></td>
+         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/basic-effects&type=dev" title="devDependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Fbasic-effects&type=dev"/></a></td>
+      </tr>
+      <tr>
+         <td>railway-effects</td>
+         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/railway-effects" title="dependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Frailway-effects"/></a></td>
+         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/railway-effects&type=dev" title="devDependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Frailway-effects&type=dev"/></a></td>
+      </tr>
+      <!-- <tr>
+         <td>eslint-plugin</td>
+         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/eslint-plugin" title="dependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Feslint-plugin"/></a></td>
+         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/eslint-plugin&type=dev" title="devDependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Feslint-plugin&type=dev"/></a></td>
+      </tr> -->
+      <tr>
+         <td>react</td>
+         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/react" title="dependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Freact"/></a></td>
+         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/react&type=dev" title="devDependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Freact&type=dev"/></a></td>
+      </tr>
+      <tr>
+         <td>mithril</td>
+         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/mithril" title="dependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Fmithril"/></a></td>
+         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/mithril&type=dev" title="devDependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Fmithril&type=dev"/></a></td>
+      </tr>
+   </tbody>
+</table>
+
 ## Getting started
 
 At first you have to choose an effect handling strategy - currently there are two options:
@@ -107,40 +144,3 @@ m.mount(document.body, {
 - [Elmish docs](https://elmish.github.io/elmish/) and [The Elmish Book](https://zaid-ajaj.github.io/the-elmish-book/#/) - useful sources for learning <i>elmish ideology</i>. Almost everything applies for `ts-elmish` too, the main difference is that [subscriptions](https://elmish.github.io/elmish/subscriptions.html) are out of scope for `ts-elmish` - just use view layer capabilities for listening to events (e.g. `useEffect` hook in `react`).
 - [Railway oriented programming](https://fsharpforfunandprofit.com/posts/recipe-part2/) - introduction to ROP.
 - [Against Railway-Oriented Programming](https://fsharpforfunandprofit.com/posts/against-railway-oriented-programming/) - ROP downsides.
-
-## Maintenance
-
-<table>
-   <tbody>
-      <tr>
-         <td>core</td>
-         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/core" title="dependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Fcore"/></a></td>
-         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?type=dev" title="devDependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?type=dev"/></a></td>
-      </tr>
-      <tr>
-         <td>basic-effects</td>
-         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/basic-effects" title="dependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Fbasic-effects"/></a></td>
-         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/basic-effects&type=dev" title="devDependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Fbasic-effects&type=dev"/></a></td>
-      </tr>
-      <tr>
-         <td>railway-effects</td>
-         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/railway-effects" title="dependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Frailway-effects"/></a></td>
-         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/railway-effects&type=dev" title="devDependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Frailway-effects&type=dev"/></a></td>
-      </tr>
-      <!-- <tr>
-         <td>eslint-plugin</td>
-         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/eslint-plugin" title="dependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Feslint-plugin"/></a></td>
-         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/eslint-plugin&type=dev" title="devDependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Feslint-plugin&type=dev"/></a></td>
-      </tr> -->
-      <tr>
-         <td>react</td>
-         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/react" title="dependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Freact"/></a></td>
-         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/react&type=dev" title="devDependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Freact&type=dev"/></a></td>
-      </tr>
-      <tr>
-         <td>mithril</td>
-         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/mithril" title="dependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Fmithril"/></a></td>
-         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/mithril&type=dev" title="devDependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Fmithril&type=dev"/></a></td>
-      </tr>
-   </tbody>
-</table>
