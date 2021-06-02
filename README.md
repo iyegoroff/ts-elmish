@@ -8,8 +8,6 @@
 
 Elmish architecture in Typescript
 
----
-
 <table>
    <tbody>
       <tr>
