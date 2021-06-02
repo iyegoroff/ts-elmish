@@ -46,7 +46,7 @@
     "use-pipe-ts": "^0.0.1"
   },
   "scripts": {
-    "start": "webpack serve --open --hot",
+    "serve": "webpack serve --open --hot",
     "check": "tsc -p ./src/tsconfig.json --noEmit true && tsc -p ./src/tsconfig.build.json --noEmit true"
   }
 }
