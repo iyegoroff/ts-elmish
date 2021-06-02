@@ -1,22 +1,36 @@
 import { Effect } from '@ts-elmish/railway-effects'
+import { AsyncResult } from 'ts-railway'
+import { assertIsDefined } from 'ts-is-defined'
 import { Effects } from '../../effects/types'
 import { TodoInputAction, TodoInputState } from '../todo-input'
 import { FooterAction, FooterState } from '../footer'
 import { TodoListAction, TodoListState } from '../todo-list'
+import { TodoDict, TodoFilter, TodoFilterLoadError } from '../../../domain/todos/types'
 
-type State = {
-  readonly todoInput: TodoInputState
-  readonly footer: FooterState
-  readonly todoList: TodoListState
-}
+type State =
+  | undefined
+  | {
+      readonly todoInput: TodoInputState
+      readonly footer: FooterState
+      readonly todoList: TodoListState
+    }
 
 type Action =
+  | readonly ['load-data']
+  | readonly ['data-loaded', readonly [TodoDict, TodoFilter]]
+  | readonly ['handle-todo-filter-load-error', TodoFilterLoadError]
   | readonly ['todo-input-action', TodoInputAction]
   | readonly ['footer-action', FooterAction]
   | readonly ['todo-list-action', TodoListAction]
 
 // #region Action
 const Action = {
+  loadData: (): Action => ['load-data'],
+  dataLoaded: (arg0: readonly [TodoDict, TodoFilter]): Action => ['data-loaded', arg0],
+  handleTodoFilterLoadError: (arg0: TodoFilterLoadError): Action => [
+    'handle-todo-filter-load-error',
+    arg0
+  ],
   todoInputAction: (arg0: TodoInputAction): Action => ['todo-input-action', arg0],
   footerAction: (arg0: FooterAction): Action => ['footer-action', arg0],
   todoListAction: (arg0: TodoListAction): Action => ['todo-list-action', arg0]
@@ -25,17 +39,39 @@ const Action = {
 
 type Command = readonly [State, Effect<Action>]
 
-const init = (effects: Effects): Command => {
-  const [todoInput, todoInputEffect] = TodoInputState.init(effects)
-  const [footer, footerEffect] = FooterState.init(effects)
-  const [todoList, todoListEffect] = TodoListState.init(effects)
+const init = (): Command => {
+  return [undefined, Effect.from({ action: ['load-data'] })]
+}
+
+const loadDataUpdate = (
+  state: State,
+  _action: readonly ['load-data'],
+  { Todos: { loadTodoDict, loadTodoFilter } }: Effects
+): Command => {
+  return [
+    state,
+    Effect.from({
+      asyncResult: () => AsyncResult.combine(loadTodoDict(), loadTodoFilter()),
+      success: Action.dataLoaded,
+      failure: Action.handleTodoFilterLoadError
+    })
+  ]
+}
+
+const dataLoadedUpdate = (
+  state: State,
+  [, [todos, todoFilter]]: readonly ['data-loaded', readonly [TodoDict, TodoFilter]]
+): Command => {
+  if (state !== undefined) {
+    return [state, Effect.none()]
+  }
+
+  const [todoInput, todoInputEffect] = TodoInputState.init(todos)
+  const [footer, footerEffect] = FooterState.init(todos, todoFilter)
+  const [todoList, todoListEffect] = TodoListState.init(todos, todoFilter)
 
   return [
-    {
-      todoInput,
-      footer,
-      todoList
-    },
+    { todoInput, footer, todoList },
     Effect.batch(
       Effect.map(Action.todoInputAction, todoInputEffect),
       Effect.map(Action.footerAction, footerEffect),
@@ -49,6 +85,8 @@ const todoInputUpdate = (
   [, action]: readonly ['todo-input-action', TodoInputAction],
   effects: Effects
 ): Command => {
+  assertIsDefined(state, 'MainState should be defined')
+
   const [todoInput, todoInputEffect] = TodoInputState.update(state.todoInput, action, effects)
 
   return [{ ...state, todoInput }, Effect.map(Action.todoInputAction, todoInputEffect)]
@@ -59,6 +97,8 @@ const todoListUpdate = (
   [, action]: readonly ['todo-list-action', TodoListAction],
   effects: Effects
 ): Command => {
+  assertIsDefined(state, 'MainState should be defined')
+
   const [todoList, todoListEffect] = TodoListState.update(state.todoList, action, effects)
 
   return [{ ...state, todoList }, Effect.map(Action.todoListAction, todoListEffect)]
@@ -66,21 +106,51 @@ const todoListUpdate = (
 
 const footerUpdate = (
   state: State,
-  [, action]: readonly ['footer-action', FooterAction]
+  [, action]: readonly ['footer-action', FooterAction],
+  effects: Effects
 ): Command => {
-  const [footer, footerEffect] = FooterState.update(state.footer, action)
+  assertIsDefined(state, 'MainState should be defined')
+
+  const [footer, footerEffect] = FooterState.update(state.footer, action, effects)
 
   return [{ ...state, footer }, Effect.map(Action.footerAction, footerEffect)]
+}
+
+const handleTodoFilterLoadErrorUpdate = (
+  state: State,
+  [, message]: readonly ['handle-todo-filter-load-error', TodoFilterLoadError],
+  { Alert: { showAlert }, Todos: { updateTodoFilter } }: Effects
+): Command => {
+  return [
+    state,
+    Effect.from({
+      asyncResult: () =>
+        AsyncResult.flatMap(
+          () => updateTodoFilter('all'),
+          showAlert('Error', `${message}<br/>Switching to default`, 'error')
+        ),
+      success: Action.loadData
+    })
+  ]
 }
 
 // #region update
 const update = (state: State, action: Action, effects: Effects): Command => {
   switch (action[0]) {
+    case 'load-data':
+      return loadDataUpdate(state, action, effects)
+
+    case 'data-loaded':
+      return dataLoadedUpdate(state, action)
+
+    case 'handle-todo-filter-load-error':
+      return handleTodoFilterLoadErrorUpdate(state, action, effects)
+
     case 'todo-input-action':
       return todoInputUpdate(state, action, effects)
 
     case 'footer-action':
-      return footerUpdate(state, action)
+      return footerUpdate(state, action, effects)
 
     case 'todo-list-action':
       return todoListUpdate(state, action, effects)

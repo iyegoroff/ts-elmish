@@ -1,4 +1,3 @@
-import { Result } from 'ts-railway'
 import { createTestRun, successResolver, stubEffects } from '../../../util'
 import { TodoListAction, TodoListState } from './todo-list-state'
 
@@ -13,25 +12,17 @@ const todo = {
 }
 
 const validState: TodoListState = {
-  todos: { [key]: todo }
+  todos: { [key]: todo },
+  todoFilter: 'all'
 }
 
 describe('components > todo-list', () => {
   test('init - success', async () => {
-    const todoFilter = 'all'
-    const effects = stubEffects({
-      Todos: {
-        loadTodoFilter: () => Result.success(todoFilter),
-        loadTodoDict: successResolver(validState.todos)
-      }
-    })
+    const effects = stubEffects()
 
-    const command = init(effects)
+    const command = init(validState.todos, validState.todoFilter)
 
-    expect(await testRun(command, effects)).toEqual<TodoListState>({
-      ...validState,
-      todoFilter
-    })
+    expect(await testRun(command, effects)).toEqual<TodoListState>(validState)
   })
 
   test('start-todo-edit - todo found', async () => {
@@ -50,7 +41,7 @@ describe('components > todo-list', () => {
 
     const command = update(validState, TodoListAction.startTodoEdit('y'), effects)
 
-    expect(await testRun(command, effects)).toEqual<TodoListState>(validState)
+    expect(await testRun(command, effects)).toBe<TodoListState>(validState)
   })
 
   test('confirm-todo-edit - todo found', async () => {
@@ -89,7 +80,7 @@ describe('components > todo-list', () => {
 
     const command = update(validState, TodoListAction.confirmTodoEdit('y', 'text'), effects)
 
-    expect(await testRun(command, effects)).toEqual<TodoListState>(validState)
+    expect(await testRun(command, effects)).toBe<TodoListState>(validState)
   })
 
   test('cancel-todo-edit', async () => {
@@ -162,6 +153,66 @@ describe('components > todo-list', () => {
 
     const command = update(validState, TodoListAction.toggleCompleted('y'), effects)
 
-    expect(await testRun(command, effects)).toEqual<TodoListState>(validState)
+    expect(await testRun(command, effects)).toBe<TodoListState>(validState)
+  })
+
+  test('set-todos', async () => {
+    const effects = stubEffects()
+
+    const command = update(validState, TodoListAction.setTodos({}), effects)
+
+    expect(await testRun(command, effects)).toEqual<TodoListState>({ ...validState, todos: {} })
+  })
+
+  test('set-todos - same state', async () => {
+    const effects = stubEffects()
+
+    const command = update(validState, TodoListAction.setTodos({ ...validState.todos }), effects)
+
+    expect(await testRun(command, effects)).toBe<TodoListState>(validState)
+  })
+
+  test('set-todo-filter', async () => {
+    const todoFilter = 'active' as const
+    const effects = stubEffects()
+
+    const command = update(validState, TodoListAction.setTodoFilter(todoFilter), effects)
+
+    expect(await testRun(command, effects)).toEqual<TodoListState>({ ...validState, todoFilter })
+  })
+
+  test('set-todo-filter - same state', async () => {
+    const todoFilter = 'all' as const
+    const effects = stubEffects()
+
+    const command = update(validState, TodoListAction.setTodoFilter(todoFilter), effects)
+
+    expect(await testRun(command, effects)).toBe<TodoListState>(validState)
+  })
+
+  test('show-todo-filter-alert', async () => {
+    const todoFilterLoadError = `Invalid todo filter - what?` as const
+
+    const effects = stubEffects({
+      Alert: {
+        showAlert: jest.fn((title?: string, message?: string, icon?: string) => {
+          expect(title).toEqual('Error')
+          expect(message).toEqual(todoFilterLoadError)
+          expect(icon).toEqual('error')
+
+          return successResolver({ isConfirmed: true, isDenied: true, isDismissed: true })()
+        })
+      }
+    })
+
+    const command = update(
+      validState,
+      TodoListAction.showTodoFilterAlert(todoFilterLoadError),
+      effects
+    )
+
+    expect(await testRun(command, effects)).toBe<TodoListState>(validState)
+
+    expect(effects.Alert.showAlert).toHaveBeenCalled()
   })
 })

@@ -7,34 +7,30 @@ import { Effects } from '../../effects/types'
 
 type State = {
   readonly text: string
-  readonly allTodosCompleted?: boolean
+  readonly allTodosCompleted: boolean
 }
 
 type Action =
   | readonly ['set-text', string]
   | readonly ['add-todo']
-  | readonly ['set-all-todos-completed', boolean]
+  | readonly ['toggle-all-todos-completed']
   | readonly ['todo-dict-changed', TodoDict]
 
 // #region Action
 const Action = {
   setText: (arg0: string): Action => ['set-text', arg0],
   addTodo: (): Action => ['add-todo'],
-  setAllTodosCompleted: (arg0: boolean): Action => ['set-all-todos-completed', arg0],
+  toggleAllTodosCompleted: (): Action => ['toggle-all-todos-completed'],
   todoDictChanged: (arg0: TodoDict): Action => ['todo-dict-changed', arg0]
 } as const
 // #endregion
 
 type Command = readonly [State, Effect<Action>]
 
-const init = ({ Todos: { loadTodoDict } }: Effects): Command => {
-  return [
-    { text: '' },
-    Effect.from({
-      asyncResult: loadTodoDict,
-      success: Action.todoDictChanged
-    })
-  ]
+const allCompleted = Dict.every<Todo>(({ completed }) => completed)
+
+const init = (todos: TodoDict): Command => {
+  return [{ text: '', allTodosCompleted: allCompleted(todos) }, Effect.none()]
 }
 
 const setTextUpdate = (state: State, [, text]: readonly ['set-text', string]): Command => {
@@ -56,11 +52,13 @@ const addTodoUpdate = (
   ]
 }
 
-const setAllTodosCompletedUpdate = (
+const toggleAllTodosCompletedUpdate = (
   state: State,
-  [, allTodosCompleted]: readonly ['set-all-todos-completed', boolean],
+  _action: readonly ['toggle-all-todos-completed'],
   { Todos: { loadTodoDict, updateTodoDict } }: Effects
 ): Command => {
+  const allTodosCompleted = !state.allTodosCompleted
+
   return [
     { ...state, allTodosCompleted },
     Effect.from({
@@ -75,9 +73,10 @@ const setAllTodosCompletedUpdate = (
 
 const todoDictChangedUpdate = (
   state: State,
-  [, todoDict]: readonly ['todo-dict-changed', TodoDict]
+  [, todos]: readonly ['todo-dict-changed', TodoDict]
 ): Command => {
-  const allTodosCompleted = Dict.every(({ completed }) => completed, todoDict)
+  const allTodosCompleted = allCompleted(todos)
+
   return [
     allTodosCompleted !== state.allTodosCompleted ? { ...state, allTodosCompleted } : state,
     Effect.none()
@@ -93,8 +92,8 @@ const update = (state: State, action: Action, effects: Effects): Command => {
     case 'add-todo':
       return addTodoUpdate(state, action, effects)
 
-    case 'set-all-todos-completed':
-      return setAllTodosCompletedUpdate(state, action, effects)
+    case 'toggle-all-todos-completed':
+      return toggleAllTodosCompletedUpdate(state, action, effects)
 
     case 'todo-dict-changed':
       return todoDictChangedUpdate(state, action)

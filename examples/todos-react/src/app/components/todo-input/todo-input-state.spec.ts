@@ -9,18 +9,14 @@ const validState: TodoInputState = { text: '', allTodosCompleted: false }
 
 describe('components > todo-input', () => {
   test('init - success', async () => {
-    const effects = stubEffects({
-      Todos: {
-        loadTodoDict: successResolver({
-          '': {
-            text: 'text',
-            completed: false
-          }
-        })
+    const effects = stubEffects()
+
+    const command = init({
+      '': {
+        text: 'text',
+        completed: false
       }
     })
-
-    const command = init(effects)
 
     expect(await testRun(command, effects)).toEqual<TodoInputState>(validState)
   })
@@ -86,7 +82,7 @@ describe('components > todo-input', () => {
       }
     })
 
-    const command = update(validState, TodoInputAction.setAllTodosCompleted(true), effects)
+    const command = update(validState, TodoInputAction.toggleAllTodosCompleted(), effects)
 
     expect(await testRun(command, effects)).toEqual<TodoInputState>({
       ...validState,
@@ -94,5 +90,32 @@ describe('components > todo-input', () => {
     })
 
     expect(effects.Todos.updateTodoDict).toHaveBeenCalled()
+  })
+
+  test('todo-dict-changed - same state', async () => {
+    const effects = stubEffects()
+
+    const command = update(
+      validState,
+      TodoInputAction.todoDictChanged({ x: { text: '', completed: false } }),
+      effects
+    )
+
+    expect(await testRun(command, effects)).toBe<TodoInputState>(validState)
+  })
+
+  test('todo-dict-changed', async () => {
+    const effects = stubEffects()
+
+    const command = update(
+      validState,
+      TodoInputAction.todoDictChanged({ x: { text: '', completed: true } }),
+      effects
+    )
+
+    expect(await testRun(command, effects)).toEqual<TodoInputState>({
+      ...validState,
+      allTodosCompleted: true
+    })
   })
 })

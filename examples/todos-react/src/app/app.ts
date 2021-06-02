@@ -5,7 +5,7 @@ import { Main, MainState } from './components'
 const { init, update } = MainState
 
 export const App = createElmishComponent(
-  () => init(Effects),
+  init,
   (state, action) => update(state, action, Effects),
   Main
 )

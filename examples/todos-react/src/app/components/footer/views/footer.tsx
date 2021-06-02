@@ -1,9 +1,7 @@
 import React, { useEffect } from 'react'
 import { ElmishProps } from '@ts-elmish/react'
 import { pipe } from 'pipe-ts'
-import { isDefined } from 'ts-is-defined'
 import { FooterState, FooterAction } from '../footer-state'
-import { noRender } from '../../../../util'
 import { Effects } from '../../../effects'
 import { clear, footer, todoFilter, todoFilterItem } from './footer.css'
 
@@ -12,11 +10,17 @@ const {
 } = Effects
 
 export const Footer: React.FunctionComponent<ElmishProps<FooterState, FooterAction>> = React.memo(
-  function Footer({ dispatch, activeTodosAmount, selectedTodoFilter, hasCompletedTodos }) {
+  function Footer({
+    dispatch,
+    activeTodosAmount,
+    todoFilter: selectedTodoFilter,
+    hasCompletedTodos
+  }) {
     useEffect(
       () =>
         listenTodoFilterChanges({
-          success: pipe(FooterAction.setSelectedTodoFilter, dispatch)
+          success: pipe(FooterAction.setTodoFilter, dispatch),
+          failure: pipe(FooterAction.handleTodoFilterAlert, dispatch)
         }),
       [dispatch]
     )
@@ -28,16 +32,6 @@ export const Footer: React.FunctionComponent<ElmishProps<FooterState, FooterActi
         }),
       [dispatch]
     )
-
-    if (
-      !(
-        isDefined(hasCompletedTodos) &&
-        isDefined(activeTodosAmount) &&
-        isDefined(selectedTodoFilter)
-      )
-    ) {
-      return noRender
-    }
 
     console.log('render footer')
 

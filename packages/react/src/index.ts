@@ -1,12 +1,21 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { runProgram, Dispatch, ElmishEffect as Effect } from '@ts-elmish/core'
 
-type AssertDispatch<T> = T extends { readonly dispatch: unknown } ? never : T
-export type ElmishProps<State, Action> = Readonly<AssertDispatch<State>> & {
+type AssertDispatch<T> = T extends { readonly dispatch: unknown }
+  ? never
+  : T extends undefined
+  ? T
+  : Readonly<T>
+
+export type ElmishProps<State, Action> = AssertDispatch<State> & {
   readonly dispatch: Dispatch<Action>
 }
 
-export const createElmishComponent = <Props extends Record<string, unknown>, State, Action>(
+export const createElmishComponent = <
+  Props extends Record<string, unknown>,
+  State extends Record<string, unknown> | undefined,
+  Action
+>(
   init: (props: Props) => readonly [AssertDispatch<State>, Effect<Action>],
   update: (
     state: AssertDispatch<State>,

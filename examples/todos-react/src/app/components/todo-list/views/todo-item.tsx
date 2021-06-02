@@ -2,7 +2,7 @@ import React, { KeyboardEvent, useCallback } from 'react'
 import { usePipe } from 'use-pipe-ts'
 import { Todo } from '../../../../domain/todos/types'
 import { useNullRef } from '../../../../util'
-import { destroy, label, todoItem, toggle } from './todo-item.css'
+import { destroy, label, todoInput, todoItem, toggle } from './todo-item.css'
 
 type TodoItemProps = Todo & {
   readonly id: string
@@ -58,7 +58,15 @@ export const TodoItem = React.memo(function TodoItem({
   )
 
   const edited = (
-    <input key={'edited'} defaultValue={text} onKeyDown={processEdit} ref={editInput} />
+    <input
+      key={'edited'}
+      className={todoInput}
+      defaultValue={text}
+      onKeyDown={processEdit}
+      ref={editInput}
+      autoFocus={true}
+      onBlur={onCancelEdit}
+    />
   )
 
   console.log(`render TodoItem ${text}`)

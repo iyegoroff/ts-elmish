@@ -105,6 +105,7 @@ importers:
       react-refresh-typescript: ^2.0.0
       runtypes: ^6.3.0
       strict-mitt: ^2.1.2
+      sweetalert2: ^11.0.16
       ts-is-defined: ^1.0.0
       ts-loader: ^9.0.2
       ts-micro-dict: ^7.1.1
@@ -127,6 +128,7 @@ importers:
       react-dom: 17.0.2_react@17.0.2
       runtypes: 6.3.0
       strict-mitt: 2.1.2
+      sweetalert2: 11.0.16
       ts-is-defined: 1.0.0
       ts-micro-dict: 7.1.1
       ts-railway: 2.0.3
@@ -2325,7 +2327,7 @@ packages:
       webpack-cli: 4.x.x
     dependencies:
       envinfo: 7.8.1
-      webpack-cli: 4.6.0_webpack@5.33.2
+      webpack-cli: 4.6.0_66846cbaca9dc7de430d1cef305cccfa
     dev: true
 
   /@webpack-cli/serve/1.3.1_54d831f953b37a50bc8cda89801ae0f8:
@@ -8411,6 +8413,10 @@ packages:
       has-flag: 4.0.0
       supports-color: 7.2.0
     dev: true
+
+  /sweetalert2/11.0.16:
+    resolution: {integrity: sha512-9XStCZJMQpLQBAT/jr/4qZuA5Xwoupi/x5FagZYM1qGnyRqYecaJTPD1Cb5gc7G+9B5muH/JaDaBQGrvLpCmvQ==}
+    dev: false
 
   /symbol-tree/3.2.4:
     resolution: {integrity: sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw==}

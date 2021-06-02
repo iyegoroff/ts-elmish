@@ -1,3 +1,6 @@
+import { FailureOf } from 'ts-railway'
+import { loadTodoFilter } from './todo-filter'
+
 export type TodoFilter = 'all' | 'completed' | 'active'
 
 export type Todo = {
@@ -6,3 +9,5 @@ export type Todo = {
 }
 
 export type TodoDict = Readonly<Record<string, Todo>>
+
+export type TodoFilterLoadError = FailureOf<ReturnType<ReturnType<typeof loadTodoFilter>>>

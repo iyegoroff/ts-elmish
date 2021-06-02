@@ -8,6 +8,9 @@ describe('domain > todos > todo-filter', () => {
   test('loadTodoFilter', () => {
     expect(loadTodoFilter(() => 'active')()).toEqual<LoadTodoFilter>(Result.success('active'))
     expect(loadTodoFilter(() => '')()).toEqual<LoadTodoFilter>(Result.success('all'))
+    expect(loadTodoFilter(() => 'what?')()).toEqual<LoadTodoFilter>(
+      Result.failure('Invalid todo filter - what?')
+    )
   })
 
   test('updateTodoFilter', () => {
@@ -15,6 +18,8 @@ describe('domain > todos > todo-filter', () => {
   })
 
   test('listenTodoFilterChanges', () => {
-    expect(listenTodoFilterChanges(() => () => 1)({ success: () => 1 })).toBeDefined()
+    expect(
+      listenTodoFilterChanges(() => () => 1)({ success: () => 1, failure: () => 1 })
+    ).toBeDefined()
   })
 })

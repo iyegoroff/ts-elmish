@@ -15,10 +15,10 @@ export const successResolver =
   () =>
     Promise.resolve(Result.success(value))
 
-export const failureResolver =
-  <T>(value: T) =>
-  () =>
-    Promise.resolve(Result.failure(value))
+// export const failureResolver =
+//   <T>(value: T) =>
+//   () =>
+//     Promise.resolve(Result.failure(value))
 
 export const createTestRun =
   <State, Action>(
@@ -41,8 +41,10 @@ export const fail = (message: string) => {
 // eslint-disable-next-line no-null/no-null
 export const noRender = null
 
+/* istanbul ignore next */
 // eslint-disable-next-line no-null/no-null
 export const useNullRef = <T>() => useRef<T>(null)
 
+/* istanbul ignore next */
 export const stubEffects = (effects?: DeepPartial<Effects>) =>
   deepStub(effects, (path) => `stubEffects: ${path.join('.')} needs to be defined`)

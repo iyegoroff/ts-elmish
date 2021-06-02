@@ -8,9 +8,10 @@ import {
   removeTodo,
   listenTodoDictChanges,
   filteredTodos,
-  clearCompleted
+  clearCompleted,
+  compareTodos
 } from './todo-dict'
-import { TodoDict } from './types'
+import { Todo, TodoDict } from './types'
 
 type LoadTodoDict = Any.PromiseType<ReturnType<ReturnType<typeof loadTodoDict>>>
 type AddTodo = Any.PromiseType<ReturnType<ReturnType<typeof addTodo>>>
@@ -130,5 +131,23 @@ describe('domain > todos > todo-list', () => {
     )
 
     expect(update).toHaveBeenCalled()
+  })
+
+  test('compareTodos - same object', () => {
+    const todo: Todo = { text: 'test', completed: false }
+
+    expect(compareTodos(todo, todo)).toEqual(true)
+  })
+
+  test('compareTodos - equal', () => {
+    expect(
+      compareTodos({ text: 'test', completed: true }, { text: 'test', completed: true })
+    ).toEqual(true)
+  })
+
+  test('compareTodos - not equal', () => {
+    expect(
+      compareTodos({ text: 'text', completed: true }, { text: 'test', completed: true })
+    ).toEqual(false)
   })
 })

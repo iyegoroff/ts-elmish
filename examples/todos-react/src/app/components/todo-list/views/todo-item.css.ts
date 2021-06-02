@@ -71,3 +71,24 @@ export const destroy = style({
   marginBottom: '11px',
   transition: 'color 0.2s ease-out'
 })
+
+export const todoInput = style({
+  outline: 'none',
+  position: 'relative',
+  margin: 0,
+  width: '100%',
+  fontSize: '24px',
+  fontFamily: 'inherit',
+  fontWeight: 'inherit',
+  color: 'inherit',
+  boxSizing: 'border-box',
+  padding: '13px 15px 13px 60px',
+  border: '1px solid #999',
+  background: 'rgba(0, 0, 0, 0.003)',
+  boxShadow: 'inset 0 -1px 5px 0 rgba(0, 0, 0, 0.2)',
+  '::placeholder': {
+    fontStyle: 'italic',
+    fontWeight: 300,
+    color: '#e6e6e6'
+  }
+})

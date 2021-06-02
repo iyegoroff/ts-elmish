@@ -1,12 +1,10 @@
 import React, { ChangeEvent, useCallback, KeyboardEvent, useEffect } from 'react'
 import { ElmishProps } from '@ts-elmish/react'
 import { pipe } from 'pipe-ts'
-import { isDefined } from 'ts-is-defined'
 import { usePipe } from 'use-pipe-ts'
 import { TodoInputState, TodoInputAction } from '../todo-input-state'
-import { noRender } from '../../../../util'
 import { Effects } from '../../../effects'
-import { todoInput } from './todo-input.css'
+import { container, todoInput, toggleAll, toggleLabel } from './todo-input.css'
 
 const {
   Todos: { listenTodoDictChanges }
@@ -24,6 +22,8 @@ export const TodoInput: React.FunctionComponent<ElmishProps<TodoInputState, Todo
       [dispatch]
     )
 
+    const onToggleAll = usePipe(TodoInputAction.toggleAllTodosCompleted, dispatch)
+
     const onChange = usePipe(changeEventValue, TodoInputAction.setText, dispatch)
 
     const onKeyPress = useCallback(
@@ -32,19 +32,20 @@ export const TodoInput: React.FunctionComponent<ElmishProps<TodoInputState, Todo
       [dispatch]
     )
 
-    if (!isDefined(allTodosCompleted)) {
-      return noRender
-    }
-
     console.log('render TodoInput')
 
     return (
-      <input
-        className={todoInput}
-        placeholder={'What needs to be done?'}
-        value={text}
-        onChange={onChange}
-        onKeyPress={onKeyPress}
-      />
+      <div className={container}>
+        <button className={toggleAll} onClick={onToggleAll}>
+          <div className={toggleLabel[allTodosCompleted ? 'selected' : 'unselected']}>❯</div>
+        </button>
+        <input
+          className={todoInput}
+          placeholder={'What needs to be done?'}
+          value={text}
+          onChange={onChange}
+          onKeyPress={onKeyPress}
+        />
+      </div>
     )
   })

@@ -1,12 +1,10 @@
 import React, { useEffect } from 'react'
 import { ElmishProps } from '@ts-elmish/react'
 import { pipe } from 'pipe-ts'
-import { isDefined } from 'ts-is-defined'
 import { Dict } from 'ts-micro-dict'
 import { usePipe } from 'use-pipe-ts'
 import { TodoListState, TodoListAction } from '../todo-list-state'
 import { Domain } from '../../../../domain'
-import { noRender } from '../../../../util'
 import { Effects } from '../../../effects'
 import { TodoItem } from './todo-item'
 
@@ -31,7 +29,8 @@ export const TodoList: React.FunctionComponent<ElmishProps<TodoListState, TodoLi
     useEffect(
       () =>
         listenTodoFilterChanges({
-          success: pipe(TodoListAction.setTodoFilter, dispatch)
+          success: pipe(TodoListAction.setTodoFilter, dispatch),
+          failure: pipe(TodoListAction.showTodoFilterAlert, dispatch)
         }),
       [dispatch]
     )
@@ -45,10 +44,6 @@ export const TodoList: React.FunctionComponent<ElmishProps<TodoListState, TodoLi
     const cancelTodoEdit = usePipe(TodoListAction.cancelTodoEdit, dispatch)
 
     const confirmTodoEdit = usePipe(TodoListAction.confirmTodoEdit, dispatch)
-
-    if (!isDefined(todoFilter)) {
-      return noRender
-    }
 
     console.log('render TodoList')
 

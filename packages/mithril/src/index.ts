@@ -2,12 +2,21 @@ import m, { Component } from 'mithril'
 import { useEffect, useRef, useState, withHooks } from 'mithril-hooks'
 import { runProgram, Dispatch, ElmishEffect as Effect } from '@ts-elmish/core'
 
-type AssertDispatch<T> = T extends { readonly dispatch: unknown } ? never : T
-export type ElmishAttrs<State, Action> = Readonly<AssertDispatch<State>> & {
+type AssertDispatch<T> = T extends { readonly dispatch: unknown }
+  ? never
+  : T extends undefined
+  ? T
+  : Readonly<T>
+
+export type ElmishAttrs<State, Action> = AssertDispatch<State> & {
   readonly dispatch: Dispatch<Action>
 }
 
-export const createElmishComponent = <Attrs extends Record<string, unknown>, State, Action>(
+export const createElmishComponent = <
+  Attrs extends Record<string, unknown>,
+  State extends Record<string, unknown> | undefined,
+  Action
+>(
   init: (attrs: Attrs) => readonly [AssertDispatch<State>, Effect<Action>],
   update: (
     state: AssertDispatch<State>,

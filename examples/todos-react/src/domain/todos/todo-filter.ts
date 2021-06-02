@@ -4,12 +4,12 @@ import { Result, UnwrapResult } from 'ts-railway'
 import { HashLocation } from '../../services/hash-location/types'
 import { TodoFilter } from './types'
 
-const defaultTodoFilter: TodoFilter = 'all'
-
-const todoFilterShape = Union(Literal('all'), Literal('active'), Literal('completed'))
+const todoFilterShape = Union(Literal(''), Literal('all'), Literal('active'), Literal('completed'))
 
 const todoFilterToDomain = (maybeTodoFilter: unknown) =>
-  Result.success(todoFilterShape.guard(maybeTodoFilter) ? maybeTodoFilter : defaultTodoFilter)
+  todoFilterShape.guard(maybeTodoFilter)
+    ? Result.success(maybeTodoFilter === '' ? 'all' : maybeTodoFilter)
+    : Result.failure(`Invalid todo filter - ${String(maybeTodoFilter)}` as const)
 
 export const loadTodoFilter = (current: HashLocation['current']) => () =>
   todoFilterToDomain(current())

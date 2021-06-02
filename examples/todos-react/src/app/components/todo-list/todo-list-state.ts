@@ -1,7 +1,7 @@
 import { Effect } from '@ts-elmish/railway-effects'
 import { Dict } from 'ts-micro-dict'
 import { Domain } from '../../../domain'
-import { TodoFilter, TodoDict } from '../../../domain/todos/types'
+import { TodoFilter, TodoDict, TodoFilterLoadError } from '../../../domain/todos/types'
 import { Effects } from '../../effects/types'
 
 const {
@@ -13,7 +13,7 @@ type TodoKey = keyof TodoDict
 type State = {
   readonly todos: TodoDict
   readonly editedTodoKey?: TodoKey
-  readonly todoFilter?: TodoFilter
+  readonly todoFilter: TodoFilter
 }
 
 type Action =
@@ -24,6 +24,7 @@ type Action =
   | readonly ['cancel-todo-edit']
   | readonly ['remove-todo', TodoKey]
   | readonly ['toggle-completed', TodoKey]
+  | readonly ['show-todo-filter-alert', TodoFilterLoadError]
 
 // #region Action
 const Action = {
@@ -33,33 +34,22 @@ const Action = {
   confirmTodoEdit: (arg0: TodoKey, arg1: string): Action => ['confirm-todo-edit', arg0, arg1],
   cancelTodoEdit: (): Action => ['cancel-todo-edit'],
   removeTodo: (arg0: TodoKey): Action => ['remove-todo', arg0],
-  toggleCompleted: (arg0: TodoKey): Action => ['toggle-completed', arg0]
+  toggleCompleted: (arg0: TodoKey): Action => ['toggle-completed', arg0],
+  showTodoFilterAlert: (arg0: TodoFilterLoadError): Action => ['show-todo-filter-alert', arg0]
 } as const
 // #endregion
 
 type Command = readonly [State, Effect<Action>]
 
-const init = ({ Todos: { loadTodoDict, loadTodoFilter } }: Effects): Command => {
-  return [
-    { todos: {} },
-    Effect.batch(
-      Effect.from({
-        result: loadTodoFilter,
-        success: Action.setTodoFilter
-      }),
-      Effect.from({
-        asyncResult: loadTodoDict,
-        success: Action.setTodos
-      })
-    )
-  ]
+const init = (todos: TodoDict, todoFilter: TodoFilter): Command => {
+  return [{ todos, todoFilter }, Effect.none()]
 }
 
 const setTodoFilterUpdate = (
   state: State,
   [, todoFilter]: readonly ['set-todo-filter', TodoFilter]
 ): Command => {
-  return [{ ...state, todoFilter }, Effect.none()]
+  return [state.todoFilter === todoFilter ? state : { ...state, todoFilter }, Effect.none()]
 }
 
 const startTodoEditUpdate = (
@@ -144,6 +134,14 @@ const toggleCompletedUpdate = (
   ]
 }
 
+const showTodoFilterAlertUpdate = (
+  state: State,
+  [, message]: readonly ['show-todo-filter-alert', TodoFilterLoadError],
+  { Alert: { showAlert } }: Effects
+): Command => {
+  return [state, Effect.from({ asyncResult: () => showAlert('Error', message, 'error') })]
+}
+
 // #region update
 const update = (state: State, action: Action, effects: Effects): Command => {
   switch (action[0]) {
@@ -167,6 +165,9 @@ const update = (state: State, action: Action, effects: Effects): Command => {
 
     case 'toggle-completed':
       return toggleCompletedUpdate(state, action, effects)
+
+    case 'show-todo-filter-alert':
+      return showTodoFilterAlertUpdate(state, action, effects)
   }
 }
 // #endregion
