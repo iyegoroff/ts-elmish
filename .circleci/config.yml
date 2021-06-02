@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:12.16.1
+      - image: circleci/node:16.1.0
     working_directory: ~/repo
     steps:
       - checkout
@@ -22,7 +22,7 @@ jobs:
 
   publish:
     docker:
-      - image: circleci/node:12.16.1
+      - image: circleci/node:16.1.0
     steps:
       - checkout
       - attach_workspace:
