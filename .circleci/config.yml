@@ -7,7 +7,7 @@ jobs:
     steps:
       - checkout
 
-      - run: sudo npm i -g pnpm@5.10.1
+      - run: sudo npm i -g pnpm@6.3.0
       - run: pnpm i
       - run: pnpm run lint
       - run: pnpm run build -r
