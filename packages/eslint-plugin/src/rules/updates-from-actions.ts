@@ -59,7 +59,7 @@ const rule = ruleCreator({
     return {
       Program: (node: es.Program) => {
         let hasInvalidUpdate = false
-        let state: es.TSTypeLiteral | undefined
+        let state: es.TSTypeLiteral | es.TSUnionType | undefined
         let action: es.TSTypeAliasDeclaration | undefined
         let actionsObject: es.ObjectExpression | undefined
         let updateNode: es.Node | undefined
@@ -129,7 +129,8 @@ const rule = ruleCreator({
           if (
             val.type === 'TSTypeAliasDeclaration' &&
             code.getText(val.id) === 'State' &&
-            val.typeAnnotation.type === 'TSTypeLiteral'
+            (val.typeAnnotation.type === 'TSTypeLiteral' ||
+              val.typeAnnotation.type === 'TSUnionType')
           ) {
             state = val.typeAnnotation
           }
@@ -349,14 +350,16 @@ const rule = ruleCreator({
               act.typeAnnotation?.type === 'TSTupleType' &&
               act.typeAnnotation.elementTypes.length === 2
 
-            const isStateless = !(
-              state?.members.some(
-                (member) =>
-                  member.type === 'TSPropertySignature' &&
-                  member.key.type === 'Identifier' &&
-                  member.key.name === name
-              ) ?? false
-            )
+            const isStateless =
+              state?.type === 'TSUnionType' ||
+              !(
+                state?.members.some(
+                  (member) =>
+                    member.type === 'TSPropertySignature' &&
+                    member.key.type === 'Identifier' &&
+                    member.key.name === name
+                ) ?? false
+              )
 
             const restUpdateParams = defUpdate.params
               .slice(2)

@@ -334,7 +334,7 @@ ruleTester({ types: true }).run(rule.name, rule.rule, {
       stripIndent`
         // INVALID - noUpdate
         import { Effect, Action } from '@ts-elmish/core'
-        type State = {
+        type State = undefined | {
           readonly x: number
           readonly y: number
         }
@@ -376,7 +376,7 @@ ruleTester({ types: true }).run(rule.name, rule.rule, {
         output: stripIndent`
           // INVALID - noUpdate
           import { Effect, Action } from '@ts-elmish/core'
-          type State = {
+          type State = undefined | {
             readonly x: number
             readonly y: number
           }
