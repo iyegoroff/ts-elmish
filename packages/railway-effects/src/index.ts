@@ -31,8 +31,10 @@ type AsyncResultArgsNoFailure<Action, Success, ResultLike extends AsyncResult<Su
   readonly success?: (value: SuccessOf<ResultLike>) => Action
 }
 
+/** Create effect from action */
 function from<Action>(args: ActionArgs<Action>): Effect<Action>
 
+/** Create effect from a function that returns Result<Success, Failure> */
 function from<
   Action,
   Success,
@@ -40,10 +42,12 @@ function from<
   ResultLike extends Result<Success, Failure> = Result<Success, Failure>
 >(args: ResultArgs<Action, Success, Failure, ResultLike>): Effect<Action>
 
+/** Create effect from a function that returns Result<Success, never> */
 function from<Action, Success, ResultLike extends Result<Success, never> = Result<Success, never>>(
   args: ResultArgsNoFailure<Action, Success, ResultLike>
 ): Effect<Action>
 
+/** Create effect from a function that returns AsyncResult<Success, Failure> */
 function from<
   Action,
   Success,
@@ -51,6 +55,7 @@ function from<
   ResultLike extends AsyncResult<Success, Failure> = AsyncResult<Success, Failure>
 >(args: AsyncResultArgs<Action, Success, Failure, ResultLike>): Effect<Action>
 
+/** Create effect from a function that returns AsyncResult<Success, never> */
 function from<
   Action,
   Success,

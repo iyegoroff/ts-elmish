@@ -7,10 +7,20 @@ type AssertDispatch<T> = T extends { readonly dispatch: unknown }
   ? T
   : Readonly<T>
 
+/** Props for elmish-driven react component */
 export type ElmishProps<State, Action> = AssertDispatch<State> & {
   readonly dispatch: Dispatch<Action>
 }
 
+/**
+ * Creates elmish-driven react component.
+ * When component props are updated the elmish runtime is restated.
+ *
+ * @param init Function that returns initial state & effect
+ * @param update Function that returns next state & effect for each dispatched action
+ * @param View React component
+ * @returns Root elmish react component
+ */
 export const createElmishComponent = <
   Props extends Record<string, unknown>,
   State extends Record<string, unknown> | undefined,

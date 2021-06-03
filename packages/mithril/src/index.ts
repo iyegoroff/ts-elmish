@@ -8,10 +8,20 @@ type AssertDispatch<T> = T extends { readonly dispatch: unknown }
   ? T
   : Readonly<T>
 
+/** Attrs for elmish-driven mithril component */
 export type ElmishAttrs<State, Action> = AssertDispatch<State> & {
   readonly dispatch: Dispatch<Action>
 }
 
+/**
+ * Creates elmish-driven mithril component.
+ * When component attrs are updated the elmish runtime is restated.
+ *
+ * @param init Function that returns initial state & effect
+ * @param update Function that returns next state & effect for each dispatched action
+ * @param View Mithril component
+ * @returns Root elmish mithril component
+ */
 export const createElmishComponent = <
   Attrs extends Record<string, unknown>,
   State extends Record<string, unknown> | undefined,

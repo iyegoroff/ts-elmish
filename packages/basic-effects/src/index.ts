@@ -5,8 +5,10 @@ export type Effect<Action> = ElmishEffect<Action>
 
 const empty: Effect<never> = []
 
+/** Empty effect creator */
 const none = <Action>(): Effect<Action> => empty
 
+/** Create effect that maps one action to another */
 function map<Action0, Action1>(
   func: (a: Action0) => Action1,
   effect: Effect<Action0>
@@ -21,6 +23,7 @@ function map<Action0, Action1>(
   )
 }
 
+/** Create effect that combines multiple effect creators */
 const batch = <Action>(...actions: ReadonlyArray<Effect<Action>>): Effect<Action> =>
   ([] as Effect<Action>).concat(...actions)
 
@@ -38,10 +41,13 @@ export type PromiseArgs<Action, Success> = {
   readonly error?: (error: unknown) => Action
 }
 
+/** Create effect from action */
 function from<Action>(args: ActionArgs<Action>): Effect<Action>
 
+/** Create effect from any function */
 function from<Action, Success = unknown>(args: FunctionArgs<Action, Success>): Effect<Action>
 
+/** Create effect from a function that returns a promise */
 function from<Action, Success = unknown>(args: PromiseArgs<Action, Success>): Effect<Action>
 
 function from<Action, Success = unknown>(
@@ -58,7 +64,7 @@ function from<Action, Success = unknown>(
           try {
             const value = func()
             return dispatch(typeof done === 'function' ? done(value) : ElmishIdleAction)
-          } catch (err) {
+          } catch (err: unknown) {
             return dispatch(error(err))
           }
         } else {
@@ -76,7 +82,7 @@ function from<Action, Success = unknown>(
           try {
             const value = await promise()
             return dispatch(typeof then === 'function' ? then(value) : ElmishIdleAction)
-          } catch (err) {
+          } catch (err: unknown) {
             return dispatch(error(err))
           }
         } else {
