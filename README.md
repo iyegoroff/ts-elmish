@@ -66,24 +66,24 @@ Then just add `ts-elmish` packages to your project:
 - `basic-effects` with `react`/`react-native`:
 
   ```
-  $ npm i @ts-elmish/core @ts-elmish/react @ts-elmish/basic-effects
+  npm i @ts-elmish/core @ts-elmish/react @ts-elmish/basic-effects
   ```
 
 - `railway-effects` with `react`/`react-native`:
 
   ```
-  $ npm i @ts-elmish/core @ts-elmish/react @ts-elmish/railway-effects ts-railway
+  npm i @ts-elmish/core @ts-elmish/react @ts-elmish/railway-effects ts-railway
   ```
 
 - `basic-effects` with `mithril`:
 
   ```
-  $ npm i @ts-elmish/core @ts-elmish/mithril @ts-elmish/basic-effects
+  npm i @ts-elmish/core @ts-elmish/mithril @ts-elmish/basic-effects
   ```
 
 - `railway-effects` with `mithril`:
   ```
-  $ npm i @ts-elmish/core @ts-elmish/mithril @ts-elmish/railway-effects ts-railway
+  npm i @ts-elmish/core @ts-elmish/mithril @ts-elmish/railway-effects ts-railway
   ```
 
 Useful generic purpose modules:

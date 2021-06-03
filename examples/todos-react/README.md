@@ -6,17 +6,17 @@ Running the example:
 
 - Install [`pnpm`](https://pnpm.io/) package manager if you don't have it:
   ```
-  $ npm i pnpm -g
+  npm i pnpm -g
   ```
 - Clone the whole repo:
   ```
-  $ git clone git@github.com:iyegoroff/ts-elmish.git
+  git clone git@github.com:iyegoroff/ts-elmish.git
   ```
 - Install dependencies and build packages:
   ```
-  $ pnpm i && pnpm build -r
+  pnpm i && pnpm build -r
   ```
 - Start this example:
   ```
-  $ cd examples/todos-react && pnpm serve
+  cd examples/todos-react && pnpm serve
   ```
