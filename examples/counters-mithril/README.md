@@ -1,6 +1,6 @@
 ## counters-mithril
 
-This is basic example - it shows effectless parent-child composition.
+This is basic example - it shows <i>effectless</i> parent-child composition.
 
 Running the example:
 
