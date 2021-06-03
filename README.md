@@ -59,7 +59,7 @@ Elmish architecture in Typescript
 At first you have to choose an effect handling strategy - currently there are two options:
 
 - [`basic-effects`](/packages/basic-effects) - effects are created from functions and promises just like in original `Elmish`, all errors have `unknown` type. Success and failure handlers are both optional, if failure handler is provided an error will be caught with `try/catch` statement.
-- [`railway-effects`](/packages/railway-effects) - this approach embraces [result type](https://en.wikipedia.org/wiki/Result_type) and [railway oriented programming](https://fsharpforfunandprofit.com/posts/recipe-part2/), effects are created from functions that return values of `Result` or `AsyncResult` types provided by [ts-railway](https://github.com/iyegoroff/ts-railway) package, all errors are properly typed. Success handler is optional, but failure hanlder is either required or prohibited (when result error type is `never`). Despite I found this approach quite handy for enforcing domain error handling, it has its [downsides](https://fsharpforfunandprofit.com/posts/against-railway-oriented-programming/) too.
+- [`railway-effects`](/packages/railway-effects) - this approach embraces [result type](https://en.wikipedia.org/wiki/Result_type) and [railway oriented programming](https://fsharpforfunandprofit.com/posts/recipe-part2/), effects are created from functions that return values of `Result` or `AsyncResult` types provided by [ts-railway](https://github.com/iyegoroff/ts-railway) package, all errors are properly typed. Success handler is optional, but failure hanlder is either required or prohibited (when result error type is `never`). Despite this approach is quite handy for enforcing domain error handling, it has its [downsides](https://fsharpforfunandprofit.com/posts/against-railway-oriented-programming/) too.
 
 Then just add `ts-elmish` packages to your project:
 
@@ -86,7 +86,7 @@ Then just add `ts-elmish` packages to your project:
   $ npm i @ts-elmish/core @ts-elmish/mithril @ts-elmish/railway-effects ts-railway
   ```
 
-Optional but useful generic purpose modules:
+Useful generic purpose modules:
 
 - [pipe-ts](https://github.com/unsplash/pipe-ts) - handy for combining multiple result-returning functions into one
 - [eslint-plugin-functional](https://github.com/jonaskello/eslint-plugin-functional) - an essential eslint plugin for writing `typescript` in functional and immutable way
