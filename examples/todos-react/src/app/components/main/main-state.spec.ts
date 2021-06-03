@@ -32,6 +32,8 @@ const validState: MainState = {
   }
 }
 
+const loadingState: MainState = { loading: true }
+
 describe('components > main', () => {
   test('init - success', async () => {
     const effects = stubEffects({
@@ -61,6 +63,19 @@ describe('components > main', () => {
     )
   })
 
+  test('todo-input-action - loading', async () => {
+    const text = '???'
+    const effects = stubEffects()
+
+    const command = update(
+      loadingState,
+      MainAction.todoInputAction(TodoInputAction.setText(text)),
+      effects
+    )
+
+    expect(await testRun(command, effects)).toBe<MainState>(loadingState)
+  })
+
   test('todo-list-action', async () => {
     const editedTodoKey = 'x'
     const effects = stubEffects()
@@ -76,6 +91,19 @@ describe('components > main', () => {
     )
   })
 
+  test('todo-list-action - loading', async () => {
+    const editedTodoKey = 'x'
+    const effects = stubEffects()
+
+    const command = update(
+      loadingState,
+      MainAction.todoListAction(TodoListAction.startTodoEdit(editedTodoKey)),
+      effects
+    )
+
+    expect(await testRun(command, effects)).toBe<MainState>(loadingState)
+  })
+
   test('footer-action', async () => {
     const nextTodoFilter = 'active' as const
     const effects = stubEffects()
@@ -89,6 +117,19 @@ describe('components > main', () => {
     expect(await testRun(command, effects)).toEqual<MainState>(
       merge(validState, { footer: { todoFilter: nextTodoFilter } })
     )
+  })
+
+  test('footer-action - loading', async () => {
+    const nextTodoFilter = 'active' as const
+    const effects = stubEffects()
+
+    const command = update(
+      loadingState,
+      MainAction.footerAction(FooterAction.setTodoFilter(nextTodoFilter)),
+      effects
+    )
+
+    expect(await testRun(command, effects)).toBe<MainState>(loadingState)
   })
 
   test('handle-todo-filter-load-error - failure', async () => {

@@ -5,15 +5,22 @@ import { MainState, MainAction } from '../main-state'
 import { Footer } from '../../footer'
 import { TodoInput } from '../../todo-input'
 import { TodoList } from '../../todo-list'
+import { noRender } from '../../../../util'
 import { header, main } from './main.css'
 
 export const Main: React.FunctionComponent<ElmishProps<MainState, MainAction>> = React.memo(
-  function Main({ dispatch, footer, todoInput, todoList }) {
+  function Main({ dispatch, ...state }) {
     const todoInputDispatch = usePipe(MainAction.todoInputAction, dispatch)
 
     const todoListDispatch = usePipe(MainAction.todoListAction, dispatch)
 
     const footerDispatch = usePipe(MainAction.footerAction, dispatch)
+
+    if ('loading' in state) {
+      return noRender
+    }
+
+    const { todoInput, todoList, footer } = state
 
     console.log('render main')
 

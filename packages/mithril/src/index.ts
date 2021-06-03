@@ -2,11 +2,7 @@ import m, { Component } from 'mithril'
 import { useEffect, useRef, useState, withHooks } from 'mithril-hooks'
 import { runProgram, Dispatch, ElmishEffect as Effect } from '@ts-elmish/core'
 
-type AssertDispatch<T> = T extends { readonly dispatch: unknown }
-  ? never
-  : T extends undefined
-  ? T
-  : Readonly<T>
+type AssertDispatch<T> = T extends { readonly dispatch: unknown } ? never : Readonly<T>
 
 /** Attrs for elmish-driven mithril component */
 export type ElmishAttrs<State, Action> = AssertDispatch<State> & {
@@ -24,7 +20,7 @@ export type ElmishAttrs<State, Action> = AssertDispatch<State> & {
  */
 export const createElmishComponent = <
   Attrs extends Record<string, unknown>,
-  State extends Record<string, unknown> | undefined,
+  State extends Record<string, unknown>,
   Action
 >(
   init: (attrs: Attrs) => readonly [AssertDispatch<State>, Effect<Action>],

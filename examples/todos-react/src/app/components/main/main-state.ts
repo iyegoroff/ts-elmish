@@ -1,6 +1,5 @@
 import { Effect } from '@ts-elmish/railway-effects'
 import { AsyncResult } from 'ts-railway'
-import { assertIsDefined } from 'ts-is-defined'
 import { Effects } from '../../effects/types'
 import { TodoInputAction, TodoInputState } from '../todo-input'
 import { FooterAction, FooterState } from '../footer'
@@ -8,7 +7,7 @@ import { TodoListAction, TodoListState } from '../todo-list'
 import { TodoDict, TodoFilter, TodoFilterLoadError } from '../../../domain/todos/types'
 
 type State =
-  | undefined
+  | { readonly loading: true }
   | {
       readonly todoInput: TodoInputState
       readonly footer: FooterState
@@ -40,7 +39,7 @@ const Action = {
 type Command = readonly [State, Effect<Action>]
 
 const init = (): Command => {
-  return [undefined, Effect.from({ action: ['load-data'] })]
+  return [{ loading: true }, Effect.from({ action: ['load-data'] })]
 }
 
 const loadDataUpdate = (
@@ -62,7 +61,7 @@ const dataLoadedUpdate = (
   state: State,
   [, [todos, todoFilter]]: readonly ['data-loaded', readonly [TodoDict, TodoFilter]]
 ): Command => {
-  if (state !== undefined) {
+  if (!('loading' in state)) {
     return [state, Effect.none()]
   }
 
@@ -85,7 +84,9 @@ const todoInputUpdate = (
   [, action]: readonly ['todo-input-action', TodoInputAction],
   effects: Effects
 ): Command => {
-  assertIsDefined(state, 'MainState should be defined')
+  if ('loading' in state) {
+    return [state, Effect.none()]
+  }
 
   const [todoInput, todoInputEffect] = TodoInputState.update(state.todoInput, action, effects)
 
@@ -97,7 +98,9 @@ const todoListUpdate = (
   [, action]: readonly ['todo-list-action', TodoListAction],
   effects: Effects
 ): Command => {
-  assertIsDefined(state, 'MainState should be defined')
+  if ('loading' in state) {
+    return [state, Effect.none()]
+  }
 
   const [todoList, todoListEffect] = TodoListState.update(state.todoList, action, effects)
 
@@ -109,7 +112,9 @@ const footerUpdate = (
   [, action]: readonly ['footer-action', FooterAction],
   effects: Effects
 ): Command => {
-  assertIsDefined(state, 'MainState should be defined')
+  if ('loading' in state) {
+    return [state, Effect.none()]
+  }
 
   const [footer, footerEffect] = FooterState.update(state.footer, action, effects)
 
