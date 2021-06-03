@@ -70,16 +70,13 @@ const todoDictChangedUpdate = (
 const handleTodoFilterAlertUpdate = (
   state: State,
   [, message]: readonly ['handle-todo-filter-alert', TodoFilterLoadError],
-  { Alert: { showAlert }, Todos: { updateTodoFilter } }: Effects
+  { Alert: { showError }, Todos: { updateTodoFilter } }: Effects
 ): Command => {
   return [
     state,
     Effect.from({
       asyncResult: () =>
-        AsyncResult.flatMap(
-          () => updateTodoFilter(state.todoFilter),
-          showAlert('Error', message, 'error')
-        )
+        AsyncResult.flatMap(() => updateTodoFilter(state.todoFilter), showError(message))
     })
   ]
 }

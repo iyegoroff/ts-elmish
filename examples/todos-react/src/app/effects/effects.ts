@@ -4,7 +4,7 @@ import { Services } from '../../services'
 const {
   LocalData: { listenChanges, load, update },
   HashLocation: { listenChanges: listenHashChanges, change, current },
-  Alert: { showAlert }
+  Alert: { showError }
 } = Services
 
 const {
@@ -36,6 +36,6 @@ export const Effects = {
     updateTodoFilter: updateTodoFilter(change)
   },
   Alert: {
-    showAlert
+    showError
   }
 } as const

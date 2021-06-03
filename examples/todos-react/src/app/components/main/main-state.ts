@@ -119,7 +119,7 @@ const footerUpdate = (
 const handleTodoFilterLoadErrorUpdate = (
   state: State,
   [, message]: readonly ['handle-todo-filter-load-error', TodoFilterLoadError],
-  { Alert: { showAlert }, Todos: { updateTodoFilter } }: Effects
+  { Alert: { showError }, Todos: { updateTodoFilter } }: Effects
 ): Command => {
   return [
     state,
@@ -127,7 +127,7 @@ const handleTodoFilterLoadErrorUpdate = (
       asyncResult: () =>
         AsyncResult.flatMap(
           () => updateTodoFilter('all'),
-          showAlert('Error', `${message}<br/>Switching to default`, 'error')
+          showError(`${message}<br/>Switching to default`)
         ),
       success: Action.loadData
     })

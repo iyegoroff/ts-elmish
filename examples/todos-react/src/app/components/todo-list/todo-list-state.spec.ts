@@ -196,10 +196,8 @@ describe('components > todo-list', () => {
 
     const effects = stubEffects({
       Alert: {
-        showAlert: jest.fn((title?: string, message?: string, icon?: string) => {
-          expect(title).toEqual('Error')
-          expect(message).toEqual(todoFilterLoadError)
-          expect(icon).toEqual('error')
+        showError: jest.fn((error: string) => {
+          expect(error).toEqual(todoFilterLoadError)
 
           return successResolver({ isConfirmed: true, isDenied: true, isDismissed: true })()
         })
@@ -214,6 +212,6 @@ describe('components > todo-list', () => {
 
     expect(await testRun(command, effects)).toBe<TodoListState>(validState)
 
-    expect(effects.Alert.showAlert).toHaveBeenCalled()
+    expect(effects.Alert.showError).toHaveBeenCalled()
   })
 })

@@ -104,10 +104,8 @@ describe('components > main', () => {
         })
       },
       Alert: {
-        showAlert: jest.fn((title?: string, message?: string, icon?: string) => {
-          expect(title).toEqual('Error')
-          expect(message).toEqual(`${todoFilterLoadError}<br/>Switching to default`)
-          expect(icon).toEqual('error')
+        showError: jest.fn((error: string) => {
+          expect(error).toEqual(`${todoFilterLoadError}<br/>Switching to default`)
 
           return successResolver({ isConfirmed: true, isDenied: true, isDismissed: true })()
         })
@@ -123,6 +121,6 @@ describe('components > main', () => {
     expect(await testRun(command, effects)).toEqual<MainState>(validState)
 
     expect(effects.Todos.updateTodoFilter).toHaveBeenCalled()
-    expect(effects.Alert.showAlert).toHaveBeenCalled()
+    expect(effects.Alert.showError).toHaveBeenCalled()
   })
 })

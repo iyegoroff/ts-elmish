@@ -1,6 +1,6 @@
 import { Result } from 'ts-railway'
 import { TodoFilter } from '../../../domain/todos/types'
-import { createTestRun, stubEffects } from '../../../util'
+import { createTestRun, stubEffects, successResolver } from '../../../util'
 import { FooterAction, FooterState } from './footer-state'
 
 const { init, update } = FooterState
@@ -87,14 +87,10 @@ describe('components > footer', () => {
         })
       },
       Alert: {
-        showAlert: jest.fn((title?: string, message?: string, icon?: string) => {
-          expect(title).toEqual('Error')
-          expect(message).toEqual(todoFilterLoadError)
-          expect(icon).toEqual('error')
+        showError: jest.fn((error: string) => {
+          expect(error).toEqual(todoFilterLoadError)
 
-          return Promise.resolve(
-            Result.success({ isConfirmed: true, isDenied: true, isDismissed: true })
-          )
+          return successResolver({ isConfirmed: true, isDenied: true, isDismissed: true })()
         })
       }
     })
@@ -108,6 +104,6 @@ describe('components > footer', () => {
     expect(await testRun(command, effects)).toBe<FooterState>(validState)
 
     expect(effects.Todos.updateTodoFilter).toHaveBeenCalled()
-    expect(effects.Alert.showAlert).toHaveBeenCalled()
+    expect(effects.Alert.showError).toHaveBeenCalled()
   })
 })

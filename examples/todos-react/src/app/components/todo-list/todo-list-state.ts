@@ -137,9 +137,9 @@ const toggleCompletedUpdate = (
 const showTodoFilterAlertUpdate = (
   state: State,
   [, message]: readonly ['show-todo-filter-alert', TodoFilterLoadError],
-  { Alert: { showAlert } }: Effects
+  { Alert: { showError } }: Effects
 ): Command => {
-  return [state, Effect.from({ asyncResult: () => showAlert('Error', message, 'error') })]
+  return [state, Effect.from({ asyncResult: () => showError(message) })]
 }
 
 // #region update
