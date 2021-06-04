@@ -115,12 +115,12 @@ declare function from<
 
 export declare const Effect: {
   readonly from: typeof from
-  readonly none: <Action>() => BasicEffect<Action>
+  readonly none: <Action>() => Effect<Action>
   readonly map: <Action0, Action1>(
     func: (a: Action0) => Action1,
-    effect: BasicEffect<Action0>
-  ) => BasicEffect<Action1>
-  readonly batch: <Action_1>(...actions: readonly BasicEffect<Action_1>[]) => BasicEffect<Action_1>
+    effect: Effect<Action0>
+  ) => Effect<Action1>
+  readonly batch: <Action_1>(...actions: readonly Effect<Action_1>[]) => Effect<Action_1>
 }
 ```
 
