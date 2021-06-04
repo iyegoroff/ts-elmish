@@ -14,7 +14,7 @@ Running the example:
   ```
 - Install dependencies and build packages:
   ```
-  pnpm i && pnpm build -r
+  cd ts-elmish && pnpm i && pnpm build -r
   ```
 - Start this example:
   ```
