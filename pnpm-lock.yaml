@@ -2263,7 +2263,7 @@ packages:
       webpack-cli: 4.x.x
     dependencies:
       webpack: 5.38.1_webpack-cli@4.7.0
-      webpack-cli: 4.7.0_4f38b4f344caeae135cc7debc9aac51b
+      webpack-cli: 4.7.0_webpack@5.38.1
     dev: true
 
   /@webpack-cli/info/1.2.4_webpack-cli@4.7.0:
@@ -2272,7 +2272,7 @@ packages:
       webpack-cli: 4.x.x
     dependencies:
       envinfo: 7.8.1
-      webpack-cli: 4.7.0_4f38b4f344caeae135cc7debc9aac51b
+      webpack-cli: 4.7.0_webpack@5.38.1
     dev: true
 
   /@webpack-cli/serve/1.4.0_7cbb6369db867e7782bcc6ed9d7442a1:
@@ -9125,7 +9125,7 @@ packages:
       tapable: 2.2.0
       terser-webpack-plugin: 5.1.3_webpack@5.38.1
       watchpack: 2.2.0
-      webpack-cli: 4.7.0_4f38b4f344caeae135cc7debc9aac51b
+      webpack-cli: 4.7.0_webpack@5.38.1
       webpack-sources: 2.3.0
     dev: true
 

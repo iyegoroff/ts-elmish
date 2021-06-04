@@ -5,7 +5,7 @@ describe('runProgram', () => {
   test('run', () => {
     const states: number[] = []
     const effects: boolean[] = []
-    const [initial, dispatch, stop] = runProgram<number, 'inc'>({
+    const { initialState, dispatch, stop } = runProgram<number, 'inc'>({
       init: () => [1, [(d) => d('inc')]],
       update: (state, action) => {
         switch (action) {
@@ -21,7 +21,7 @@ describe('runProgram', () => {
 
     dispatch('inc')
 
-    expect(initial).toEqual(4)
+    expect(initialState).toEqual(4)
     expect(states).toEqual([4, 4, 4, 4, 5])
     expect(effects).toEqual([false, true, true, true, false])
 

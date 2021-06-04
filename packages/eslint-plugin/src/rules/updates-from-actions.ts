@@ -366,12 +366,15 @@ const rule = ruleCreator({
               .map((p) => code.getText(p).replace(/(\w+)(: \w+)/, ', $1'))
               .join('')
 
+            const val = actionCase(raw)
+            const field = actionCase(raw.replace(/'set-([\w-]+)'/, '$1'))
+
             const upd = `const ${updateName} = (\n${defUpdate.params
               .map((p) =>
                 `  ${code.getText(p)}`.replace(
                   /(\w+)(: Action)/,
                   isSetter
-                    ? `[, ${actionCase(raw.replace(/'set-([\w-]+)'/, '$1'))}]$2`
+                    ? `[, ${field}]$2`
                     : isAction
                     ? `[, action]$2`
                     : isDictAction
@@ -384,40 +387,22 @@ const rule = ruleCreator({
               !isDefined(state)
                 ? ` => {\n  return Effect.none()\n}\n\n`
                 : isDictAction
-                ? ` => {\n  const { ${actionCase(raw)} } = state\n  const prevState = ${actionCase(
-                    raw
-                  )}[id]\n\n  if (prevState === undefined) {\n    return [state, Effect.none()]\n  }\n\n  const [nextState, effect] = ${stateType(
+                ? ` => {\n  const { ${val} } = state\n  const prevState = ${val}[id]\n\n  if (prevState === undefined) {\n    return [state, Effect.none()]\n  }\n\n  const [nextState, effect] = ${stateType(
                     raw,
                     act
-                  )}.update(prevState, action)\n\n  return [\n    { ...state, ${actionCase(
-                    raw
-                  )}: Dict.put(${actionCase(
-                    raw
-                  )}, id, nextState) },\n    Effect.map(Action.${actionCase(
-                    raw
-                  )}Action(id), effect)\n  ]\n}\n\n`
+                  )}.update(prevState, action)\n\n  return [\n    { ...state, ${val}: Dict.put(${val}, id, nextState) },\n    Effect.map(Action.${val}Action(id), effect)\n  ]\n}\n\n`
                 : isAction
                 ? isStateless
-                  ? ` => {\n  const ${actionCase(raw)}Effect = ${stateType(
+                  ? ` => {\n  const ${val}Effect = ${stateType(
                       raw,
                       act
-                    )}.update(action${restUpdateParams})\n\n  return [state, Effect.map(Action.${actionCase(
-                      raw
-                    )}Action, ${actionCase(raw)}Effect)]\n}\n\n`
-                  : ` => {\n  const [${actionCase(raw)}, ${actionCase(raw)}Effect] = ${stateType(
+                    )}.update(action${restUpdateParams})\n\n  return [state, Effect.map(Action.${val}Action, ${val}Effect)]\n}\n\n`
+                  : ` => {\n  const [${val}, ${val}Effect] = ${stateType(
                       raw,
                       act
-                    )}.update(state.${actionCase(
-                      raw
-                    )}, action${restUpdateParams})\n\n  return [{ ...state, ${actionCase(
-                      raw
-                    )} }, Effect.map(Action.${actionCase(raw)}Action, ${actionCase(
-                      raw
-                    )}Effect)]\n}\n\n`
+                    )}.update(state.${val}, action${restUpdateParams})\n\n  return [{ ...state, ${val} }, Effect.map(Action.${val}Action, ${val}Effect)]\n}\n\n`
                 : ` => {\n  return [${
-                    isSetter
-                      ? `{ ...state, ${actionCase(raw.replace(/'set-([\w-]+)'/, '$1'))} }`
-                      : 'state'
+                    isSetter ? `{ ...state, ${field} }` : 'state'
                   }, Effect.none()]\n}\n\n`
             }`
 

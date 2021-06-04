@@ -36,7 +36,7 @@ export const createElmishComponent = <
 
     useEffect(
       () => {
-        const [initialState, dispatch, stop] = runProgram({
+        const { initialState, dispatch, stop } = runProgram({
           init: () => init(attrs),
           update,
           view: setState

@@ -44,5 +44,5 @@ export const runProgram = <State, Action>({
 
   run()
 
-  return [state, dispatch, stop] as const
+  return { initialState: state, dispatch, stop } as const
 }
