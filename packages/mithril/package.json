@@ -1,6 +1,6 @@
 {
   "name": "@ts-elmish/mithril",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "private": false,
   "description": "Mithril renderer for ts-elmish",
   "main": "src/index.ts",
