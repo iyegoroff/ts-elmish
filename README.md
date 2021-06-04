@@ -139,6 +139,10 @@ m.mount(document.body, {
 })
 ```
 
+## Learning `ts-elmish`
+
+Due to small size ([core](packages/core/src/index.ts) - 37 sloc, [basic-effects](packages/basic-effects/src/index.ts) - 86 sloc, [railway-effects](packages/railway-effects/src/index.ts) - 87 sloc, [react](packages/react/src/index.ts) - 49 sloc, [mithril](packages/mithril/src/index.ts) - 51 sloc) it is worth to just review the code. Also there is a [reference](reference.md), [basic](examples/counters-mithril) and [advanced](examples/todos-react) examples.
+
 ## Links
 
 - [Elmish docs](https://elmish.github.io/elmish/) and [The Elmish Book](https://zaid-ajaj.github.io/the-elmish-book/#/) - useful sources for learning <i>elmish ideology</i>. Almost everything applies for `ts-elmish` too, the main difference is that [subscriptions](https://elmish.github.io/elmish/subscriptions.html) are out of scope for `ts-elmish` - just use view layer capabilities for listening to events (e.g. `useEffect` hook in `react`).
