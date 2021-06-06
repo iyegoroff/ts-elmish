@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react'
 import { ElmishProps } from '@ts-elmish/react'
 import { pipe } from 'pipe-ts'
+import { usePipe } from 'use-pipe-ts'
 import { FooterState, FooterAction } from '../footer-state'
 import { Effects } from '../../../effects'
 import { clear, footer, todoFilter, todoFilterItem } from './footer.css'
 
 const {
-  Todos: { listenTodoFilterChanges, listenTodoDictChanges, clearCompleted }
+  Todos: { listenTodoFilterChanges, listenTodoDictChanges }
 } = Effects
 
 export const Footer: React.FunctionComponent<ElmishProps<FooterState, FooterAction>> = React.memo(
@@ -16,6 +17,8 @@ export const Footer: React.FunctionComponent<ElmishProps<FooterState, FooterActi
     todoFilter: selectedTodoFilter,
     hasCompletedTodos
   }) {
+    const clearCompleted = usePipe(FooterAction.clearCompletedTodos, dispatch)
+
     useEffect(
       () =>
         listenTodoFilterChanges({

@@ -106,4 +106,18 @@ describe('components > footer', () => {
     expect(effects.Todos.updateTodoFilter).toHaveBeenCalled()
     expect(effects.Alert.showError).toHaveBeenCalled()
   })
+
+  test('clear-completed-todos', async () => {
+    const effects = stubEffects({
+      Todos: {
+        clearCompleted: jest.fn(successResolver(undefined))
+      }
+    })
+
+    const command = update(validState, FooterAction.clearCompletedTodos(), effects)
+
+    expect(await testRun(command, effects)).toBe<FooterState>(validState)
+
+    expect(effects.Todos.clearCompleted).toHaveBeenCalled()
+  })
 })

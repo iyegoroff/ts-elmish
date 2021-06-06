@@ -14,12 +14,14 @@ type State = {
 type Action =
   | readonly ['set-todo-filter', TodoFilter]
   | readonly ['todo-dict-changed', TodoDict]
+  | readonly ['clear-completed-todos']
   | readonly ['handle-todo-filter-alert', TodoFilterLoadError]
 
 // #region Action
 const Action = {
   setTodoFilter: (arg0: TodoFilter): Action => ['set-todo-filter', arg0],
   todoDictChanged: (arg0: TodoDict): Action => ['todo-dict-changed', arg0],
+  clearCompletedTodos: (): Action => ['clear-completed-todos'],
   handleTodoFilterAlert: (arg0: TodoFilterLoadError): Action => ['handle-todo-filter-alert', arg0]
 } as const
 // #endregion
@@ -81,6 +83,14 @@ const handleTodoFilterAlertUpdate = (
   ]
 }
 
+const clearCompletedTodosUpdate = (
+  state: State,
+  _action: readonly ['clear-completed-todos'],
+  { Todos: { clearCompleted } }: Effects
+): Command => {
+  return [state, Effect.from({ asyncResult: clearCompleted })]
+}
+
 // #region update
 const update = (state: State, action: Action, effects: Effects): Command => {
   switch (action[0]) {
@@ -89,6 +99,9 @@ const update = (state: State, action: Action, effects: Effects): Command => {
 
     case 'todo-dict-changed':
       return todoDictChangedUpdate(state, action)
+
+    case 'clear-completed-todos':
+      return clearCompletedTodosUpdate(state, action, effects)
 
     case 'handle-todo-filter-alert':
       return handleTodoFilterAlertUpdate(state, action, effects)
