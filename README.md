@@ -5,6 +5,7 @@
 [![codecov](https://codecov.io/gh/iyegoroff/ts-elmish/branch/master/graph/badge.svg?t=1520230083925)](https://codecov.io/gh/iyegoroff/ts-elmish)
 [![Type Coverage](https://img.shields.io/badge/dynamic/json.svg?label=type-coverage&prefix=%E2%89%A5&suffix=%&query=$.typeCoverage.atLeast&uri=https%3A%2F%2Fraw.githubusercontent.com%2Fiyegoroff%2Fts-elmish%2Fmaster%2Fpackage.json)](https://github.com/plantain-00/type-coverage)
 [![npm](https://img.shields.io/npm/l/@ts-elmish/core.svg?t=1495378566925)](https://www.npmjs.com/package/@ts-elmish/core)
+[![devDependencies Status](https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?type=dev)](https://david-dm.org/iyegoroff/ts-elmish?type=dev)
 
 Elmish architecture in Typescript
 
@@ -24,7 +25,7 @@ Elmish architecture in Typescript
       <tr>
          <td>core</td>
          <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/core" title="dependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Fcore"/></a></td>
-         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?type=dev" title="devDependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?type=dev"/></a></td>
+         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/core&type=dev" title="devDependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Fcore&type=dev"/></a></td>
       </tr>
       <tr>
          <td>basic-effects</td>
