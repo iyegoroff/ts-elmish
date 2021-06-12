@@ -7,10 +7,9 @@ type Change = {
   readonly value: unknown
 }
 
-const emitter =
-  mitt<{
-    readonly change: Change
-  }>()
+const emitter = mitt<{
+  readonly change: Change
+}>()
 
 export const load =
   (getItem: DataAccess['getItem']) =>

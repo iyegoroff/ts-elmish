@@ -205,12 +205,14 @@ importers:
     specifiers:
       '@ts-elmish/core': workspace:*
       '@types/mithril': ^2.0.7
-      mithril-hooks: ^0.7.1
+      '@types/shallowequal': ^1.1.1
+      shallowequal: ^1.1.0
     dependencies:
-      mithril-hooks: 0.7.1
+      shallowequal: 1.1.0
     devDependencies:
       '@ts-elmish/core': link:../core
       '@types/mithril': 2.0.7
+      '@types/shallowequal': 1.1.1
 
   packages/railway-effects:
     specifiers:
@@ -1892,6 +1894,10 @@ packages:
 
   /@types/scheduler/0.16.1:
     resolution: {integrity: sha512-EaCxbanVeyxDRTQBkdLb3Bvl/HK7PBK6UJjsSixB0iHKoWxE5uu2Q/DgtpOhPIojN0Zl1whvOd7PoHs2P0s5eA==}
+    dev: true
+
+  /@types/shallowequal/1.1.1:
+    resolution: {integrity: sha512-Lhni3aX80zbpdxRuWhnuYPm8j8UQaa571lHP/xI4W+7BAFhSIhRReXnqjEgT/XzPoXZTJkCqstFMJ8CZTK6IlQ==}
     dev: true
 
   /@types/stack-utils/2.0.0:
@@ -4579,6 +4585,7 @@ packages:
 
   /flatted/3.1.1:
     resolution: {integrity: sha512-zAoAQiudy+r5SvnSw3KJy5os/oRJYHzrzja/tBDqrZtNhUw8bt6y8OBzMWcjWr+8liV8Eb6yOhw8WZ7VFZ5ZzA==}
+    dev: true
 
   /follow-redirects/1.14.1_debug@4.3.1:
     resolution: {integrity: sha512-HWqDgT7ZEkqRzBvc2s64vSZ/hfOceEol3ac/7tKwzuvEyWx3/4UegXh5oBOIotkGsObyk3xznnSRVADBgWSQVg==}
@@ -6449,14 +6456,6 @@ packages:
     resolution: {integrity: sha512-FM9nNUYrRBAELZQT3xeZQ7fmMOBg6nWNmJKTcgsJeaLstP/UODVpGsr5OhXhhXg6f+qtJ8uiZ+PUxkDWcgIXLw==}
     dev: true
 
-  /mithril-hooks/0.7.1:
-    resolution: {integrity: sha512-or7NAYGSWiCSbPQ+W7SGqkB74b6L0QYVR7NfBBT7cVqkIO3FNi6OTpmQo7AI2oARh9NyzZRyGQbt24TvYTiHYA==}
-    peerDependencies:
-      mithril: ^2.0.4
-    dependencies:
-      flatted: 3.1.1
-    dev: false
-
   /mithril/2.0.4:
     resolution: {integrity: sha512-mgw+DMZlhMS4PpprF6dl7ZoeZq5GGcAuWnrg5e12MvaGauc4jzWsDZtVGRCktsiQczOEUr2K5teKbE5k44RlOg==}
     hasBin: true
@@ -7862,6 +7861,10 @@ packages:
     dependencies:
       kind-of: 6.0.3
     dev: true
+
+  /shallowequal/1.1.0:
+    resolution: {integrity: sha512-y0m1JoUZSlPAjXVtPPW70aZWfIL/dSP7AFkRnniLCrK/8MDKog3TySTBmckD+RObVxH0v4Tox67+F14PdED2oQ==}
+    dev: false
 
   /shebang-command/1.2.0:
     resolution: {integrity: sha1-RKrGW2lbAzmJaMOfNj/uXer98eo=}

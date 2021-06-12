@@ -1,5 +1,6 @@
-import m, { Component } from 'mithril'
-import { useEffect, useRef, useState, withHooks } from 'mithril-hooks'
+/* eslint-disable prefer-const */
+import m, { Component, ClosureComponent } from 'mithril'
+import shallowequal from 'shallowequal'
 import { runProgram, Dispatch, ElmishEffect as Effect } from '@ts-elmish/core'
 
 type AssertDispatch<T> = T extends { readonly dispatch: unknown } ? never : Readonly<T>
@@ -29,30 +30,35 @@ export const createElmishComponent = <
     action: Action
   ) => readonly [AssertDispatch<State>, Effect<Action>],
   View: Component<ElmishAttrs<State, Action>>
-) =>
-  withHooks((attrs: Attrs) => {
-    const [state, setState] = useState<AssertDispatch<State>>()
-    const dispatchRef = useRef<Dispatch<Action>>()
+): ClosureComponent<Attrs> =>
+  function ElmishComponent(vnode) {
+    let prevAttrs = vnode.attrs
+    let state: AssertDispatch<State> | undefined
 
-    useEffect(
-      () => {
-        const { initialState, dispatch, stop } = runProgram({
-          init: () => init(attrs),
-          update,
-          view: setState
-        })
+    const run = (attrs: Attrs) =>
+      runProgram({
+        init: () => init(attrs),
+        update,
+        view: (nextState) => {
+          state = nextState
+          m.redraw()
+        }
+      })
 
-        setState(initialState)
-        dispatchRef.current = dispatch
+    let program = run(prevAttrs)
+    state = program.initialState
 
-        return stop
-      },
-      Object.keys(attrs ?? {})
-        .filter((key) => key !== 'vnode' && key !== 'children')
-        .map((key) => attrs[key])
-    )
+    return {
+      view: ({ attrs }) => {
+        if (!shallowequal(prevAttrs, attrs)) {
+          program.stop()
 
-    return state !== undefined && dispatchRef.current !== undefined
-      ? m(View, { ...state, dispatch: dispatchRef.current })
-      : undefined
-  })
+          program = run(attrs)
+          state = program.initialState
+          prevAttrs = attrs
+        }
+
+        return state !== undefined ? m(View, { ...state, dispatch: program.dispatch }) : undefined
+      }
+    }
+  }
