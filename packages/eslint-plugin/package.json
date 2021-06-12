@@ -1,6 +1,6 @@
 {
   "name": "@ts-elmish/eslint-plugin",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "private": false,
   "description": "Eslint-based codegen",
   "main": "dist/index.js",
