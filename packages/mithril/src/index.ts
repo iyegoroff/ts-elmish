@@ -40,8 +40,10 @@ export const createElmishComponent = <
         init: () => init(attrs),
         update,
         view: (nextState) => {
-          state = nextState
-          m.redraw()
+          if (state !== nextState) {
+            state = nextState
+            m.redraw()
+          }
         }
       })
 

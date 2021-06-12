@@ -57,7 +57,7 @@ importers:
       mithril: ^2.0.4
       serve: ^11.3.2
       ts-loader: ^8.3.0
-      ts-micro-dict: ^2.1.0
+      ts-micro-dict: ^7.1.1
       webpack: ^5.38.1
       webpack-cli: ^4.7.2
     dependencies:
@@ -65,7 +65,7 @@ importers:
       '@ts-elmish/core': link:../../packages/core
       '@ts-elmish/mithril': link:../../packages/mithril
       mithril: 2.0.4
-      ts-micro-dict: 2.1.0
+      ts-micro-dict: 7.1.1
     devDependencies:
       '@types/mithril': 2.0.7
       serve: 11.3.2
@@ -8599,10 +8599,6 @@ packages:
       semver: 7.3.5
       webpack: 5.38.1_webpack-cli@4.7.2
     dev: true
-
-  /ts-micro-dict/2.1.0:
-    resolution: {integrity: sha512-+lPKVbPLUn+IaL4exAylyAkWAdXXOnvT8weaCkYQSWOzNUgP4QeEgKG676+TdBFxeOMzxVso2eJVYdlz2N6JSg==}
-    dev: false
 
   /ts-micro-dict/7.1.1:
     resolution: {integrity: sha512-EVeBkYGY+pgVHI1cGA6q4zgeVe9n9s/I0KjqrLQRviKXB9+VUJt8Mcg5JAWP5PYvJ863MQYd1RTFn5MOucpMVQ==}

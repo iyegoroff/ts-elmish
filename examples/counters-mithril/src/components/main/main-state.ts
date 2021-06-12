@@ -26,14 +26,14 @@ const update = ({ counters, nextCounterId, title }: State, action: Action): Stat
   switch (action[0]) {
     case 'add-counter':
       return {
-        counters: Dict.put(counters, `${nextCounterId}`, CounterState.init()),
+        counters: Dict.put(`${nextCounterId}`, CounterState.init(), counters),
         nextCounterId: nextCounterId + 1,
         title
       }
 
     case 'remove-counter': {
       const [, id] = action
-      return { nextCounterId, counters: Dict.omit(counters, id), title }
+      return { nextCounterId, counters: Dict.omit(id, counters), title }
     }
 
     case 'counters-action': {
@@ -44,7 +44,7 @@ const update = ({ counters, nextCounterId, title }: State, action: Action): Stat
         ? { nextCounterId, counters, title }
         : {
             nextCounterId,
-            counters: Dict.put(counters, id, CounterState.update(prevState, counterAction)),
+            counters: Dict.put(id, CounterState.update(prevState, counterAction), counters),
             title
           }
     }
