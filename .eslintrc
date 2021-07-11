@@ -19,7 +19,6 @@
   "plugins": ["@typescript-eslint", "prettier", "no-null"],
   "extends": [
     "standard-with-typescript",
-    "plugin:react/recommended",
     "prettier",
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
@@ -55,10 +54,5 @@
     "@typescript-eslint/switch-exhaustiveness-check": "error",
     "@typescript-eslint/consistent-type-definitions": ["error", "type"],
     "@typescript-eslint/explicit-function-return-type": "off"
-  },
-  "settings": {
-    "react": {
-      "version": "16.11.0"
-    }
   }
 }

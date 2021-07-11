@@ -3,7 +3,8 @@
     "lib": ["esnext"],
     "module": "commonjs",
     "moduleResolution": "node",
-    "target": "esnext"
+    "target": "esnext",
+    "strict": true
   },
   "files": ["file.tsx"]
 }
