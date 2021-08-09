@@ -33,6 +33,7 @@
     "@welldone-software/why-did-you-render": "^6.1.4",
     "deep-stub-object": "^0.0.7",
     "merge-anything": "^4.0.1",
+    "onetime": "^6.0.0",
     "pipe-ts": "^0.0.9",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

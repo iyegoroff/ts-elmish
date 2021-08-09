@@ -97,6 +97,7 @@ importers:
       html-webpack-plugin: ^5.3.1
       merge-anything: ^4.0.1
       mini-css-extract-plugin: ^1.6.0
+      onetime: ^6.0.0
       pipe-ts: ^0.0.9
       react: ^17.0.2
       react-dom: ^17.0.2
@@ -121,6 +122,7 @@ importers:
       '@welldone-software/why-did-you-render': 6.1.4_react@17.0.2
       deep-stub-object: 0.0.7
       merge-anything: 4.0.1
+      onetime: 6.0.0
       pipe-ts: 0.0.9
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
@@ -2361,7 +2363,7 @@ packages:
       webpack-cli: 4.x.x
     dependencies:
       webpack: 5.38.1_webpack-cli@4.7.2
-      webpack-cli: 4.7.2_webpack@5.38.1
+      webpack-cli: 4.7.2_4f38b4f344caeae135cc7debc9aac51b
     dev: true
 
   /@webpack-cli/info/1.3.0_webpack-cli@4.7.2:
@@ -2370,7 +2372,7 @@ packages:
       webpack-cli: 4.x.x
     dependencies:
       envinfo: 7.8.1
-      webpack-cli: 4.7.2_webpack@5.38.1
+      webpack-cli: 4.7.2_4f38b4f344caeae135cc7debc9aac51b
     dev: true
 
   /@webpack-cli/serve/1.5.1_8f539f003d3f73da23f531c906cfc201:
@@ -6516,6 +6518,11 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
+  /mimic-fn/4.0.0:
+    resolution: {integrity: sha512-vqiC06CuhBTUdZH+RYl8sFrL096vA45Ok5ISO6sE/Mr1jRbGH4Csnhi8f3wKVl7x8mO4Au7Ir9D3Oyv1VYMFJw==}
+    engines: {node: '>=12'}
+    dev: false
+
   /mini-css-extract-plugin/1.6.0_webpack@5.38.1:
     resolution: {integrity: sha512-nPFKI7NSy6uONUo9yn2hIfb9vyYvkFu95qki0e21DQ9uaqNKDP15DGpK0KnV6wDroWxPHtExrdEwx/yDQ8nVRw==}
     engines: {node: '>= 10.13.0'}
@@ -6868,6 +6875,13 @@ packages:
     dependencies:
       mimic-fn: 2.1.0
     dev: true
+
+  /onetime/6.0.0:
+    resolution: {integrity: sha512-1FlR+gjXK7X+AsAHso35MnyN5KqGwJRi/31ft6x0M194ht7S+rWAvd7PHss9xSKMzE0asv1pyIHaJYq+BbacAQ==}
+    engines: {node: '>=12'}
+    dependencies:
+      mimic-fn: 4.0.0
+    dev: false
 
   /opn/5.5.0:
     resolution: {integrity: sha512-PqHpggC9bLV0VeWcdKhkpxY+3JTzetLSqTCWL/z/tFIbI6G8JCjondXklT1JinczLz2Xib62sSp0T/gKT4KksA==}
@@ -9203,7 +9217,7 @@ packages:
       tapable: 2.2.0
       terser-webpack-plugin: 5.1.3_webpack@5.38.1
       watchpack: 2.2.0
-      webpack-cli: 4.7.2_webpack@5.38.1
+      webpack-cli: 4.7.2_4f38b4f344caeae135cc7debc9aac51b
       webpack-sources: 2.3.0
     dev: true
 

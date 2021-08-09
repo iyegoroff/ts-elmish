@@ -158,7 +158,11 @@ describe('components > todo-list', () => {
   })
 
   test('set-todos', async () => {
-    const effects = stubEffects()
+    const effects = stubEffects({
+      Todos: {
+        compareTodos: () => false
+      }
+    })
 
     const command = update(validState, TodoListAction.setTodos({}), effects)
 
@@ -166,7 +170,11 @@ describe('components > todo-list', () => {
   })
 
   test('set-todos - same state', async () => {
-    const effects = stubEffects()
+    const effects = stubEffects({
+      Todos: {
+        compareTodos: () => true
+      }
+    })
 
     const command = update(validState, TodoListAction.setTodos({ ...validState.todos }), effects)
 

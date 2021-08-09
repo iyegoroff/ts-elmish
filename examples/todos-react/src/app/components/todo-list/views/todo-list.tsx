@@ -4,16 +4,11 @@ import { pipe } from 'pipe-ts'
 import { Dict } from 'ts-micro-dict'
 import { usePipe } from 'use-pipe-ts'
 import { TodoListState, TodoListAction } from '../todo-list-state'
-import { Domain } from '../../../../domain'
 import { Effects } from '../../../effects'
 import { TodoItem } from './todo-item'
 
 const {
-  Todos: { filteredTodos }
-} = Domain
-
-const {
-  Todos: { listenTodoDictChanges, listenTodoFilterChanges }
+  Todos: { listenTodoDictChanges, listenTodoFilterChanges, filteredTodos }
 } = Effects
 
 export const TodoList: React.FunctionComponent<ElmishProps<TodoListState, TodoListAction>> =

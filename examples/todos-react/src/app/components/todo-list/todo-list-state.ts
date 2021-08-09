@@ -1,12 +1,7 @@
 import { Effect } from '@ts-elmish/railway-effects'
 import { Dict } from 'ts-micro-dict'
-import { Domain } from '../../../domain'
 import { TodoFilter, TodoDict, TodoFilterLoadError } from '../../../domain/todos/types'
 import { Effects } from '../../effects/types'
-
-const {
-  Todos: { compareTodos }
-} = Domain
 
 type TodoKey = keyof TodoDict
 
@@ -105,7 +100,11 @@ const removeTodoUpdate = (
   ]
 }
 
-const setTodosUpdate = (state: State, [, todos]: readonly ['set-todos', TodoDict]): Command => {
+const setTodosUpdate = (
+  state: State,
+  [, todos]: readonly ['set-todos', TodoDict],
+  { Todos: { compareTodos } }: Effects
+): Command => {
   return [
     Dict.isEqual(state.todos, todos, compareTodos) ? state : { ...state, todos },
     Effect.none()
@@ -146,7 +145,7 @@ const showTodoFilterAlertUpdate = (
 const update = (state: State, action: Action, effects: Effects): Command => {
   switch (action[0]) {
     case 'set-todos':
-      return setTodosUpdate(state, action)
+      return setTodosUpdate(state, action, effects)
 
     case 'set-todo-filter':
       return setTodoFilterUpdate(state, action)
