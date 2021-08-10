@@ -1,6 +1,6 @@
 import { Result } from 'ts-railway'
 import { Any } from 'ts-toolbelt'
-import { resolver } from '../../util'
+import { resolver } from '../../test-util'
 import {
   loadTodoDict,
   addTodo,

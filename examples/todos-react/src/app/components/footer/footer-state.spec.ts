@@ -1,6 +1,6 @@
 import { Result } from 'ts-railway'
 import { TodoFilter } from '../../../domain/todos/types'
-import { createTestRun, stubEffects, successResolver } from '../../../util'
+import { createTestRun, stubEffects, successResolver } from '../../../test-util'
 import { FooterAction, FooterState } from './footer-state'
 
 const { init, update } = FooterState

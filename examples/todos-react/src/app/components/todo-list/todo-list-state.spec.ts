@@ -1,5 +1,5 @@
 import { Todo } from '../../../domain/todos/types'
-import { createTestRun, successResolver, stubEffects } from '../../../util'
+import { createTestRun, successResolver, stubEffects } from '../../../test-util'
 import { TodoListAction, TodoListState } from './todo-list-state'
 
 const { init, update } = TodoListState

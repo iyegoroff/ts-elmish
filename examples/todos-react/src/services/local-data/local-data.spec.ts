@@ -1,7 +1,7 @@
 /* eslint-disable no-null/no-null */
 
 import { Any } from 'ts-toolbelt'
-import { resolver } from '../../util'
+import { resolver } from '../../test-util'
 import { load, listenChanges, update } from './local-data'
 
 type Load = Any.PromiseType<ReturnType<ReturnType<typeof load>>>

@@ -1,5 +1,5 @@
 import { TodoDict } from '../../../domain/todos/types'
-import { createTestRun, successResolver, stubEffects } from '../../../util'
+import { createTestRun, successResolver, stubEffects } from '../../../test-util'
 import { TodoInputAction, TodoInputState } from './todo-input-state'
 
 const { init, update } = TodoInputState
