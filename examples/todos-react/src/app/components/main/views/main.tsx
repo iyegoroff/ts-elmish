@@ -5,7 +5,6 @@ import { MainState, MainAction } from '../main-state'
 import { Footer } from '../../footer'
 import { TodoInput } from '../../todo-input'
 import { TodoList } from '../../todo-list'
-import { noRender } from '../../../../util'
 import { header, main } from './main.css'
 
 export const Main: React.FunctionComponent<ElmishProps<MainState, MainAction>> = React.memo(
@@ -17,7 +16,8 @@ export const Main: React.FunctionComponent<ElmishProps<MainState, MainAction>> =
     const footerDispatch = usePipe(MainAction.footerAction, dispatch)
 
     if ('loading' in state) {
-      return noRender
+      // eslint-disable-next-line no-null/no-null
+      return null
     }
 
     const { todoInput, todoList, footer } = state

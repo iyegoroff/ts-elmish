@@ -2,7 +2,6 @@ import { runProgram } from '@ts-elmish/core'
 import { Effect } from '@ts-elmish/railway-effects'
 import { Result } from 'ts-railway'
 import { deepStub, DeepPartial } from 'deep-stub-object'
-import { useRef } from 'react'
 import { Effects } from './app/effects/types'
 
 export const resolver =
@@ -32,18 +31,6 @@ export const createTestRun =
         view: (state, hasEffects) => !hasEffects && resolve(state)
       })
     )
-
-export const fail = (message: string) => {
-  // eslint-disable-next-line functional/no-throw-statement
-  throw new Error(message)
-}
-
-// eslint-disable-next-line no-null/no-null
-export const noRender = null
-
-/* istanbul ignore next */
-// eslint-disable-next-line no-null/no-null
-export const useNullRef = <T>() => useRef<T>(null)
 
 /* istanbul ignore next */
 export const stubEffects = (effects?: DeepPartial<Effects>) =>

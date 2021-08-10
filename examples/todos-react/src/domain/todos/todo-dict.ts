@@ -3,7 +3,6 @@ import { AsyncResult, Result, UnwrapResult } from 'ts-railway'
 import { pipe, pipeWith } from 'pipe-ts'
 import { Dict } from 'ts-micro-dict'
 import { LocalData } from '../../services/local-data/types'
-import { fail } from '../../util'
 import { Todo, TodoDict, TodoFilter } from './types'
 
 const todoDictKey = 'todo-list' as const
@@ -15,7 +14,10 @@ const todoDictShape = Dictionary(Record({ text: String, completed: Boolean }).as
 const assertTodoDict = (maybeTodoDict: unknown) =>
   todoDictShape.guard(maybeTodoDict)
     ? Result.success(maybeTodoDict)
-    : fail('invalid todo dict format')
+    : (() => {
+        // eslint-disable-next-line functional/no-throw-statement
+        throw new Error('invalid todo dict format')
+      })()
 
 export const loadTodoDict = (load: LocalData['load']) => () =>
   load(todoDictKey, defaultTodoDict).then(assertTodoDict)

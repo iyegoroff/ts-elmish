@@ -1,7 +1,7 @@
 import React, { KeyboardEvent, useCallback } from 'react'
 import { usePipe } from 'use-pipe-ts'
+import { useNullRef } from 'use-null-ref'
 import { Todo } from '../../../../domain/todos/types'
-import { useNullRef } from '../../../../util'
 import { destroy, label, todoInput, todoItem, toggle } from './todo-item.css'
 
 type TodoItemProps = Todo & {
