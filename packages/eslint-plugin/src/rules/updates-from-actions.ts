@@ -11,7 +11,14 @@ type Action = {
   readonly literal: string
 }
 
+type ExternalAction = {
+  readonly name: string
+  readonly arity?: number
+}
+
 const spaces = /\s|[^\s\S]/g
+
+const arityCheck = /arity: (\d)/
 
 const actionCase = (text: string) => camelCase(text).replace(/Action$/, '')
 
@@ -65,6 +72,7 @@ const rule = ruleCreator({
         let updateNode: es.Node | undefined
         let update: es.Expression | undefined
         const requiredActions: Action[] = []
+        const requiredExternalActions: ExternalAction[] = []
         const declaredActions: string[] = []
         const declaredUpdates: string[] = []
         const declaredUpdatesParams: Record<string, es.Parameter[] | undefined> = {}
@@ -99,6 +107,13 @@ const rule = ruleCreator({
                 name: actionCase(literal)
               })
             }
+          } else if (act.type === 'TSTypeReference' && act.typeName.type === 'Identifier') {
+            const { name } = act.typeName
+            const arity = comments
+              .find(({ range }) => range[0] === act.range[1] + 1)
+              ?.value.match(arityCheck)?.[1]
+
+            requiredExternalActions.push({ name, arity: isDefined(arity) ? +arity : undefined })
           }
         }
 
@@ -212,6 +227,15 @@ const rule = ruleCreator({
                 `    case ${literal}:\n      return ${actionCase(name)}Update(${params(
                   `${name}Update`
                 ).join(', ')})\n`
+            )
+            .join('\n') +
+          `${requiredExternalActions.length > 0 ? '\n' : ''}` +
+          requiredExternalActions
+            .map(
+              ({ name, arity }) =>
+                `    case '${paramCase(name)}':\n      return ${name}.update(${params(name)
+                  .slice(0, arity)
+                  .join(', ')})\n`
             )
             .join('\n') +
           '  }\n}'

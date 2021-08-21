@@ -1799,6 +1799,266 @@ ruleTester({ types: true }).run(rule.name, rule.rule, {
           export type XStateEffect = StateEffect
         `
       }
+    ),
+    fromFixture(
+      stripIndent`
+        // INVALID - invalidUpdate
+        import { Effect, Action } from '@ts-elmish/core'
+        import { ShowError } from '../show-error'
+
+        type State = {
+          readonly x: number
+          readonly y: number
+        }
+
+        type Action =
+          | readonly ['set-x', number]
+          | readonly ['set-y', number]
+          | readonly ['set-error', string]
+          | readonly ['can-navigate']
+          | ShowError /* arity: 2 */
+
+        const Action = {
+          setX: (arg0: number): Action => ['set-x', arg0],
+          setY: (arg0: number): Action => ['set-y', arg0],
+          setError: (arg0: string): Action => ['set-error', arg0],
+          canNavigate: (): Action => ['can-navigate']
+        }
+
+        type StateEffect = readonly [State, Effect<Action>]
+
+        export const init = (state: State): StateEffect => {
+          return [state, Effect.none()]
+        }
+
+        export const update = (state: State, action: Action, effects: Effects): StateEffect => {}
+                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [invalidUpdate]
+
+        const canNavigateUpdate = (state: State, action: readonly [
+          'can-navigate'
+        ]): StateEffect => {
+          return [state, Effect.none()]
+        }
+
+        const setXUpdate = (state: State, [, x]: readonly ['set-x', number]): StateEffect => {
+          return [{ ...state, x }, Effect.none()]
+        }
+
+        const setYUpdate = (state: State, [, y]: readonly ['set-y', number]): StateEffect => {
+          return [{ ...state, y }, Effect.none()]
+        }
+
+        const setErrorUpdate = (state: State, [, error]: readonly ['set-error', string]): StateEffect => {
+          return [{ ...state, error }, Effect.none()]
+        }
+
+        export type XState = State
+        export type XAction = Action
+        export type XStateEffect = StateEffect
+      `,
+      {
+        output: stripIndent`
+          // INVALID - invalidUpdate
+          import { Effect, Action } from '@ts-elmish/core'
+          import { ShowError } from '../show-error'
+
+          type State = {
+            readonly x: number
+            readonly y: number
+          }
+
+          type Action =
+            | readonly ['set-x', number]
+            | readonly ['set-y', number]
+            | readonly ['set-error', string]
+            | readonly ['can-navigate']
+            | ShowError /* arity: 2 */
+
+          const Action = {
+            setX: (arg0: number): Action => ['set-x', arg0],
+            setY: (arg0: number): Action => ['set-y', arg0],
+            setError: (arg0: string): Action => ['set-error', arg0],
+            canNavigate: (): Action => ['can-navigate']
+          }
+
+          type StateEffect = readonly [State, Effect<Action>]
+
+          export const init = (state: State): StateEffect => {
+            return [state, Effect.none()]
+          }
+
+          export const update = (state: State, action: Action, effects: Effects): StateEffect => {
+            switch (action[0]) {
+              case 'set-x':
+                return setXUpdate(state, action)
+
+              case 'set-y':
+                return setYUpdate(state, action)
+
+              case 'set-error':
+                return setErrorUpdate(state, action)
+
+              case 'can-navigate':
+                return canNavigateUpdate(state, action)
+
+              case 'show-error':
+                return ShowError.update(state, action)
+            }
+          }
+
+          const canNavigateUpdate = (state: State, action: readonly [
+            'can-navigate'
+          ]): StateEffect => {
+            return [state, Effect.none()]
+          }
+
+          const setXUpdate = (state: State, [, x]: readonly ['set-x', number]): StateEffect => {
+            return [{ ...state, x }, Effect.none()]
+          }
+
+          const setYUpdate = (state: State, [, y]: readonly ['set-y', number]): StateEffect => {
+            return [{ ...state, y }, Effect.none()]
+          }
+
+          const setErrorUpdate = (state: State, [, error]: readonly ['set-error', string]): StateEffect => {
+            return [{ ...state, error }, Effect.none()]
+          }
+
+          export type XState = State
+          export type XAction = Action
+          export type XStateEffect = StateEffect
+        `
+      }
+    ),
+    fromFixture(
+      stripIndent`
+        // INVALID - invalidUpdate
+        import { Effect, Action } from '@ts-elmish/core'
+        import { ShowError } from '../show-error'
+
+        type State = {
+          readonly x: number
+          readonly y: number
+        }
+
+        type Action =
+          | readonly ['set-x', number]
+          | readonly ['set-y', number]
+          | readonly ['set-error', string]
+          | readonly ['can-navigate']
+          | ShowError
+
+        const Action = {
+          setX: (arg0: number): Action => ['set-x', arg0],
+          setY: (arg0: number): Action => ['set-y', arg0],
+          setError: (arg0: string): Action => ['set-error', arg0],
+          canNavigate: (): Action => ['can-navigate']
+        }
+
+        type StateEffect = readonly [State, Effect<Action>]
+
+        export const init = (state: State): StateEffect => {
+          return [state, Effect.none()]
+        }
+
+        export const update = (state: State, action: Action, effects: Effects): StateEffect => {}
+                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [invalidUpdate]
+
+        const canNavigateUpdate = (state: State, action: readonly [
+          'can-navigate'
+        ]): StateEffect => {
+          return [state, Effect.none()]
+        }
+
+        const setXUpdate = (state: State, [, x]: readonly ['set-x', number]): StateEffect => {
+          return [{ ...state, x }, Effect.none()]
+        }
+
+        const setYUpdate = (state: State, [, y]: readonly ['set-y', number]): StateEffect => {
+          return [{ ...state, y }, Effect.none()]
+        }
+
+        const setErrorUpdate = (state: State, [, error]: readonly ['set-error', string]): StateEffect => {
+          return [{ ...state, error }, Effect.none()]
+        }
+
+        export type XState = State
+        export type XAction = Action
+        export type XStateEffect = StateEffect
+      `,
+      {
+        output: stripIndent`
+          // INVALID - invalidUpdate
+          import { Effect, Action } from '@ts-elmish/core'
+          import { ShowError } from '../show-error'
+
+          type State = {
+            readonly x: number
+            readonly y: number
+          }
+
+          type Action =
+            | readonly ['set-x', number]
+            | readonly ['set-y', number]
+            | readonly ['set-error', string]
+            | readonly ['can-navigate']
+            | ShowError
+
+          const Action = {
+            setX: (arg0: number): Action => ['set-x', arg0],
+            setY: (arg0: number): Action => ['set-y', arg0],
+            setError: (arg0: string): Action => ['set-error', arg0],
+            canNavigate: (): Action => ['can-navigate']
+          }
+
+          type StateEffect = readonly [State, Effect<Action>]
+
+          export const init = (state: State): StateEffect => {
+            return [state, Effect.none()]
+          }
+
+          export const update = (state: State, action: Action, effects: Effects): StateEffect => {
+            switch (action[0]) {
+              case 'set-x':
+                return setXUpdate(state, action)
+
+              case 'set-y':
+                return setYUpdate(state, action)
+
+              case 'set-error':
+                return setErrorUpdate(state, action)
+
+              case 'can-navigate':
+                return canNavigateUpdate(state, action)
+
+              case 'show-error':
+                return ShowError.update(state, action, effects)
+            }
+          }
+
+          const canNavigateUpdate = (state: State, action: readonly [
+            'can-navigate'
+          ]): StateEffect => {
+            return [state, Effect.none()]
+          }
+
+          const setXUpdate = (state: State, [, x]: readonly ['set-x', number]): StateEffect => {
+            return [{ ...state, x }, Effect.none()]
+          }
+
+          const setYUpdate = (state: State, [, y]: readonly ['set-y', number]): StateEffect => {
+            return [{ ...state, y }, Effect.none()]
+          }
+
+          const setErrorUpdate = (state: State, [, error]: readonly ['set-error', string]): StateEffect => {
+            return [{ ...state, error }, Effect.none()]
+          }
+
+          export type XState = State
+          export type XAction = Action
+          export type XStateEffect = StateEffect
+        `
+      }
     )
   ]
 })

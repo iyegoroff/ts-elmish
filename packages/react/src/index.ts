@@ -4,7 +4,7 @@ import { runProgram, Dispatch, ElmishEffect as Effect } from '@ts-elmish/core'
 type AssertDispatch<T> = T extends { readonly dispatch: unknown } ? never : Readonly<T>
 
 /** Props for elmish-driven react component */
-export type ElmishProps<State, Action> = AssertDispatch<State> & {
+export type ElmishProps<State extends Record<string, unknown>, Action> = AssertDispatch<State> & {
   readonly dispatch: Dispatch<Action>
 }
 

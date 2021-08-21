@@ -6,7 +6,7 @@ import { runProgram, Dispatch, ElmishEffect as Effect } from '@ts-elmish/core'
 type AssertDispatch<T> = T extends { readonly dispatch: unknown } ? never : Readonly<T>
 
 /** Attrs for elmish-driven mithril component */
-export type ElmishAttrs<State, Action> = AssertDispatch<State> & {
+export type ElmishAttrs<State extends Record<string, unknown>, Action> = AssertDispatch<State> & {
   readonly dispatch: Dispatch<Action>
 }
 
