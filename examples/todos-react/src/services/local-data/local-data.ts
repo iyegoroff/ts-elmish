@@ -1,4 +1,4 @@
-import mitt from 'strict-mitt'
+import mitt from 'mitt'
 import { isDefined } from 'ts-is-defined'
 import { DataAccess } from './local-data-access'
 
