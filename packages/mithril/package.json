@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "@ts-elmish/core": "workspace:*",
-    "@types/mithril": "^2.0.7",
+    "@types/mithril": "^2.0.8",
     "@types/shallowequal": "^1.1.1"
   },
   "dependencies": {
