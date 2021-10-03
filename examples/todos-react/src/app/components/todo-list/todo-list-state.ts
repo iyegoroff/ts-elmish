@@ -78,7 +78,7 @@ const confirmTodoEditUpdate = (
   return [
     { ...state, todos: Dict.put(key, updatedTodo, todos), editedTodoKey: undefined },
     Effect.from({
-      asyncResult: () => updateTodo(key, updatedTodo)
+      result: () => updateTodo(key, updatedTodo)
     })
   ]
 }
@@ -95,7 +95,7 @@ const removeTodoUpdate = (
   return [
     { ...state, todos: Dict.omit(key, state.todos) },
     Effect.from({
-      asyncResult: () => removeTodo(key)
+      result: () => removeTodo(key)
     })
   ]
 }
@@ -127,9 +127,7 @@ const toggleCompletedUpdate = (
 
   return [
     { ...state, todos: Dict.put(key, updatedTodo, todos) },
-    Effect.from({
-      asyncResult: () => updateTodo(key, updatedTodo)
-    })
+    Effect.from({ result: () => updateTodo(key, updatedTodo) })
   ]
 }
 
@@ -138,7 +136,7 @@ const showTodoFilterAlertUpdate = (
   [, message]: readonly ['show-todo-filter-alert', TodoFilterLoadError],
   { Alert: { showError } }: Effects
 ): Command => {
-  return [state, Effect.from({ asyncResult: () => showError(message) })]
+  return [state, Effect.from({ result: () => showError(message) })]
 }
 
 // #region update

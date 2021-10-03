@@ -72,17 +72,17 @@ describe('effects', () => {
     })
 
     const fromAsyncResultNoSuccess = Effect.from({
-      asyncResult: () => Promise.resolve(foo(1, 2)),
+      result: () => Promise.resolve(foo(1, 2)),
       failure: (error) => error
     })
 
     const fromAsyncResultNoFailure = Effect.from({
-      asyncResult: () => Promise.resolve(bar(1, 2)),
+      result: () => Promise.resolve(bar(1, 2)),
       success: (value) => value
     })
 
     const fromAsyncResult = Effect.from({
-      asyncResult: () => Promise.resolve(foo(1, 2)),
+      result: () => Promise.resolve(foo(1, 2)),
       success: (value) => value.op,
       failure: (error) => error.nan
     })
@@ -114,21 +114,21 @@ describe('effects', () => {
     })
 
     const fromAsyncResultFailure = Effect.from({
-      asyncResult: () => Promise.resolve(Result.failure(new Error('message'))),
+      result: () => Promise.resolve(Result.failure(new Error('message'))),
       failure: (error) => (ErrorSchema.guard(error) ? error.message : error)
     })
 
     const fromAsyncResultFailureNoError = Effect.from({
-      asyncResult: () => Promise.resolve(Result.failure(new Error('message'))),
+      result: () => Promise.resolve(Result.failure(new Error('message'))),
       failure: (error) => (ErrorSchema.guard(error) ? error.message : error)
     })
 
     const fromAsyncResultNoFailure = Effect.from({
-      asyncResult: () => Promise.resolve(Result.success(1))
+      result: () => Promise.resolve(Result.success(1))
     })
 
     const fromAsyncResultSuccess = Effect.from({
-      asyncResult: () => Promise.resolve(Result.success(1)),
+      result: () => Promise.resolve(Result.success(1)),
       success: (value) => `${value}`
     })
 

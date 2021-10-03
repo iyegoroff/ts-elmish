@@ -50,7 +50,7 @@ const loadDataUpdate = (
   return [
     state,
     Effect.from({
-      asyncResult: () => AsyncResult.combine(loadTodoDict(), loadTodoFilter()),
+      result: () => AsyncResult.combine(loadTodoDict(), loadTodoFilter()),
       success: Action.dataLoaded,
       failure: Action.handleTodoFilterLoadError
     })
@@ -129,7 +129,7 @@ const handleTodoFilterLoadErrorUpdate = (
   return [
     state,
     Effect.from({
-      asyncResult: () =>
+      result: () =>
         AsyncResult.flatMap(
           () => updateTodoFilter('all'),
           showError(`${message}<br/>Switching to default`)

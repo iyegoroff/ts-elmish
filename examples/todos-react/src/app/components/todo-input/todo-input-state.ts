@@ -44,11 +44,7 @@ const addTodoUpdate = (
 ): Command => {
   return [
     { ...state, text: '' },
-    text === ''
-      ? Effect.none()
-      : Effect.from({
-          asyncResult: () => addTodo(text)
-        })
+    text === '' ? Effect.none() : Effect.from({ result: () => addTodo(text) })
   ]
 }
 
@@ -62,7 +58,7 @@ const toggleAllTodosCompletedUpdate = (
   return [
     { ...state, allTodosCompleted },
     Effect.from({
-      asyncResult: pipe(
+      result: pipe(
         loadTodoDict,
         AsyncResult.map(Dict.map((todo: Todo) => ({ ...todo, completed: allTodosCompleted }))),
         AsyncResult.flatMap(updateTodoDict)

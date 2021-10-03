@@ -77,7 +77,7 @@ const handleTodoFilterAlertUpdate = (
   return [
     state,
     Effect.from({
-      asyncResult: () =>
+      result: () =>
         AsyncResult.flatMap(() => updateTodoFilter(state.todoFilter), showError(message))
     })
   ]
@@ -88,7 +88,7 @@ const clearCompletedTodosUpdate = (
   _action: readonly ['clear-completed-todos'],
   { Todos: { clearCompleted } }: Effects
 ): Command => {
-  return [state, Effect.from({ asyncResult: clearCompleted })]
+  return [state, Effect.from({ result: clearCompleted })]
 }
 
 // #region update
