@@ -1,6 +1,6 @@
 {
   "name": "@ts-elmish/common",
-  "version": "1.0.5",
+  "version": "2.0.0",
   "private": false,
   "description": "Elmish internals",
   "main": "src/index.ts",
