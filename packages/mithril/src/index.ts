@@ -1,14 +1,11 @@
 /* eslint-disable prefer-const */
 import m, { Component, ClosureComponent } from 'mithril'
 import shallowequal from 'shallowequal'
-import { runProgram, Dispatch, ElmishEffect as Effect } from '@ts-elmish/core'
+import { genericProperty } from 'ts-generic-property'
+import { runProgram, ElmishEffect as Effect } from '@ts-elmish/core'
+import { AssertDispatch, ElmishProps as ElmishAttrs } from '@ts-elmish/common'
 
-type AssertDispatch<T> = T extends { readonly dispatch: unknown } ? never : Readonly<T>
-
-/** Attrs for elmish-driven mithril component */
-export type ElmishAttrs<State extends Record<string, unknown>, Action> = AssertDispatch<State> & {
-  readonly dispatch: Dispatch<Action>
-}
+export { ElmishProps as ElmishAttrs } from '@ts-elmish/common'
 
 /**
  * Creates elmish-driven mithril component.
@@ -16,24 +13,33 @@ export type ElmishAttrs<State extends Record<string, unknown>, Action> = AssertD
  *
  * @param init Function that returns initial state & effect
  * @param update Function that returns next state & effect for each dispatched action
- * @param View Mithril component
+ * @param view Mithril component
+ * @param dispatchProp Alternative dispatch prop name
  * @returns Root elmish mithril component
  */
 export const createElmishComponent = <
   Attrs extends Record<string, unknown>,
   State extends Record<string, unknown>,
-  Action
+  Action,
+  D extends string
 >(
-  init: (attrs: Attrs) => readonly [AssertDispatch<State>, Effect<Action>],
-  update: (
-    state: AssertDispatch<State>,
-    action: Action
-  ) => readonly [AssertDispatch<State>, Effect<Action>],
-  View: Component<ElmishAttrs<State, Action>>
+  {
+    init,
+    update,
+    view
+  }: {
+    init: (attrs: Attrs) => readonly [AssertDispatch<State, D>, Effect<Action>]
+    update: (
+      state: AssertDispatch<State, D>,
+      action: Action
+    ) => readonly [AssertDispatch<State, D>, Effect<Action>]
+    view: Component<ElmishAttrs<State, Action, D>>
+  },
+  dispatchProp?: D
 ): ClosureComponent<Attrs> =>
   function ElmishComponent(vnode) {
     let prevAttrs = vnode.attrs
-    let state: AssertDispatch<State> | undefined
+    let state: AssertDispatch<State, D> | undefined
 
     const run = (attrs: Attrs) =>
       runProgram({
@@ -60,7 +66,9 @@ export const createElmishComponent = <
           prevAttrs = attrs
         }
 
-        return state !== undefined ? m(View, { ...state, dispatch: program.dispatch }) : undefined
+        return state !== undefined
+          ? m(view, { ...state, ...genericProperty(dispatchProp ?? 'dispatch', program.dispatch) })
+          : undefined
       }
     }
   }

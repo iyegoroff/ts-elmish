@@ -5,7 +5,7 @@ module.exports = {
     tsconfigRootDir: __dirname,
     project: ['./src/tsconfig.json', './src/tsconfig.build.json']
   },
-  plugins: ['@typescript-eslint', 'prettier', 'no-null', 'functional', '@ts-elmish'],
+  plugins: ['@typescript-eslint', 'prettier', 'no-null', 'functional'],
   extends: [
     'plugin:react-hooks/recommended',
     'standard-with-typescript',
@@ -22,7 +22,6 @@ module.exports = {
   ],
   rules: {
     'react/prop-types': 'off',
-    '@ts-elmish/updates-from-actions': 'warn',
     '@typescript-eslint/space-before-function-paren': [
       'error',
       {

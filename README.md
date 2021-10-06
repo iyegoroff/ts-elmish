@@ -37,11 +37,6 @@ Elmish architecture in Typescript
          <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/railway-effects" title="dependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Frailway-effects"/></a></td>
          <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/railway-effects&type=dev" title="devDependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Frailway-effects&type=dev"/></a></td>
       </tr>
-      <!-- <tr>
-         <td>eslint-plugin</td>
-         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/eslint-plugin" title="dependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Feslint-plugin"/></a></td>
-         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/eslint-plugin&type=dev" title="devDependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Feslint-plugin&type=dev"/></a></td>
-      </tr> -->
       <tr>
          <td>react</td>
          <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/react" title="dependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Freact"/></a></td>
@@ -142,7 +137,7 @@ m.mount(document.body, {
 
 ## Learning `ts-elmish`
 
-Due to small size ([core](packages/core/src/index.ts) - 37 sloc, [basic-effects](packages/basic-effects/src/index.ts) - 86 sloc, [railway-effects](packages/railway-effects/src/index.ts) - 87 sloc, [react](packages/react/src/index.ts) - 49 sloc, [mithril](packages/mithril/src/index.ts) - 58 sloc) it is worth just to look at the code. Also there is a [reference](reference.md), [basic](examples/counters-mithril) and [advanced](examples/todos-react) examples.
+Due to small size it is worth just to look at the code. Also there is a [basic](examples/counters-mithril) and [advanced](examples/todos-react) examples.
 
 ## Links
 

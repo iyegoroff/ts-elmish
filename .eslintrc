@@ -11,7 +11,7 @@
       "./packages/railway-effects/src/tsconfig.json",
       "./packages/mithril/src/tsconfig.json",
       "./packages/react/src/tsconfig.json",
-      "./packages/eslint-plugin/src/tsconfig.json",
+      "./packages/common/src/tsconfig.json",
       "./examples/counters-mithril/src/tsconfig.build.json",
       "./examples/counters-mithril/src/tsconfig.json"
     ]

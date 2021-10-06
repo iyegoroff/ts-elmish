@@ -5,7 +5,7 @@
     "set-version": "git add -u && git commit -am lint || : && pnpm -r update-version",
     "postset-version": "tag=v\"$(dot-json packages/core/package.json version)\" && git commit -am \"$tag [skip ci]\" && git tag $tag && git push && git push --tags",
     "lint": "eslint .",
-    "test": "jest && cd packages/eslint-plugin && pnpm t",
+    "test": "jest",
     "coverage": "codecov",
     "type-coverage": "type-coverage --strict --detail --ignore-files **/dist/* --ignore-files **/blueprint-templates/**/* --ignore-catch"
   },
@@ -32,7 +32,7 @@
     "prettier": "^2.3.2",
     "runtypes": "^6.3.2",
     "ts-jest": "^27.0.5",
-    "type-coverage": "^2.18.0",
+    "type-coverage": "^2.18.2",
     "typescript": "^4.3.5"
   }
 }

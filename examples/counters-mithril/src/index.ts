@@ -1,12 +1,12 @@
 import m from 'mithril'
 import { createElmishComponent } from '@ts-elmish/mithril'
-import { Main, MainState, MainAction } from './components/main'
+import { Main, MainState } from './components/main'
 
-const App = createElmishComponent(
-  ({ title }: { readonly title: string }) => [MainState.init(title), []],
-  (state: MainState, action: MainAction) => [MainState.update(state, action), []],
-  Main
-)
+const App = createElmishComponent({
+  init: ({ title }: { readonly title: string }) => [MainState.init(title), []],
+  update: (state, action) => [MainState.update(state, action), []],
+  view: Main
+})
 
 // eslint-disable-next-line functional/no-expression-statement
 m.mount(document.body, {
