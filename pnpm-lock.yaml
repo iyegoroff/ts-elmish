@@ -23,7 +23,7 @@ importers:
       prettier: ^2.3.2
       runtypes: ^6.3.2
       ts-jest: ^27.0.5
-      type-coverage: ^2.18.0
+      type-coverage: ^2.18.2
       typescript: ^4.3.5
     devDependencies:
       '@types/jest': 27.0.2
