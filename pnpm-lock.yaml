@@ -189,11 +189,9 @@ importers:
       '@types/mithril': ^2.0.8
       '@types/shallowequal': ^1.1.1
       shallowequal: ^1.1.0
-      ts-generic-property: ^0.0.1
     dependencies:
       '@ts-elmish/common': link:../common
       shallowequal: 1.1.0
-      ts-generic-property: 0.0.1
     devDependencies:
       '@ts-elmish/core': link:../core
       '@types/mithril': 2.0.8
@@ -217,10 +215,8 @@ importers:
       '@ts-elmish/common': workspace:*
       '@ts-elmish/core': workspace:*
       '@types/react': ^17.0.27
-      ts-generic-property: ^0.0.1
     dependencies:
       '@ts-elmish/common': link:../common
-      ts-generic-property: 0.0.1
     devDependencies:
       '@ts-elmish/core': link:../core
       '@types/react': 17.0.27
@@ -7458,10 +7454,6 @@ packages:
     dependencies:
       punycode: 2.1.1
     dev: true
-
-  /ts-generic-property/0.0.1:
-    resolution: {integrity: sha512-44KgGO+s5/0KvxYbCky4c6LD2zz5ZfZX7moehsTi54WZ66GZcIEOpmdvjxeg/5cmPlejKb7V2Nyo664OsNsI0w==}
-    dev: false
 
   /ts-is-defined/1.0.1:
     resolution: {integrity: sha512-PoBIO4SDxTTmKd48a5sI37E5bsROr0tQnQ6xBdTfYBWnY3xrPKma9TQITA5i1GkRsM6Uptofocx0D8kzjOr8zQ==}

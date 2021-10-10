@@ -6,7 +6,6 @@ type Id = string
 type State = {
   readonly nextCounterId: number
   readonly counters: Dict<CounterState>
-  readonly title: string
 }
 
 type Action =
@@ -14,26 +13,24 @@ type Action =
   | readonly ['remove-counter', Id]
   | readonly ['counters-action', Id, CounterAction]
 
-const init = (title: string): State => {
+const init = (): State => {
   return {
     nextCounterId: 0,
-    counters: {},
-    title
+    counters: {}
   }
 }
 
-const update = ({ counters, nextCounterId, title }: State, action: Action): State => {
+const update = ({ counters, nextCounterId }: State, action: Action): State => {
   switch (action[0]) {
     case 'add-counter':
       return {
         counters: Dict.put(`${nextCounterId}`, CounterState.init(), counters),
-        nextCounterId: nextCounterId + 1,
-        title
+        nextCounterId: nextCounterId + 1
       }
 
     case 'remove-counter': {
       const [, id] = action
-      return { nextCounterId, counters: Dict.omit(id, counters), title }
+      return { nextCounterId, counters: Dict.omit(id, counters) }
     }
 
     case 'counters-action': {
@@ -41,11 +38,10 @@ const update = ({ counters, nextCounterId, title }: State, action: Action): Stat
       const prevState = counters[id]
 
       return prevState === undefined
-        ? { nextCounterId, counters, title }
+        ? { nextCounterId, counters }
         : {
             nextCounterId,
-            counters: Dict.put(id, CounterState.update(prevState, counterAction), counters),
-            title
+            counters: Dict.put(id, CounterState.update(prevState, counterAction), counters)
           }
     }
   }

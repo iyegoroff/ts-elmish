@@ -1,9 +1,9 @@
 import m from 'mithril'
 import { createElmishComponent } from '@ts-elmish/mithril'
-import { Main, MainState } from './components/main'
+import { Main, MainState, MainAttrs } from './components/main'
 
 const App = createElmishComponent({
-  init: ({ title }: { readonly title: string }) => [MainState.init(title), []],
+  init: (_: MainAttrs) => [MainState.init(), []],
   update: (state, action) => [MainState.update(state, action), []],
   view: Main
 })

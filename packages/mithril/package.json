@@ -47,7 +47,6 @@
   },
   "dependencies": {
     "@ts-elmish/common": "workspace:*",
-    "shallowequal": "^1.1.0",
-    "ts-generic-property": "^0.0.1"
+    "shallowequal": "^1.1.0"
   }
 }

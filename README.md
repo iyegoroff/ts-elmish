@@ -124,11 +124,11 @@ const Counter: Component<ElmishAttrs<State, Action>> = {
     ])
 }
 
-const App = createElmishComponent(
-  () => [init(), Effect.none<Action>()],
-  (state, action) => [update(state, action), Effect.none()],
-  Counter
-)
+const App = createElmishComponent({
+  init: () => [init(), Effect.none<Action>()],
+  update: (state, action) => [update(state, action), Effect.none()],
+  view: Counter
+})
 
 m.mount(document.body, {
   view: () => m(App, {})
