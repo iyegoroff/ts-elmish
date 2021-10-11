@@ -13,6 +13,8 @@ export type { ElmishProps as ElmishAttrs } from '@ts-elmish/common'
  * @param init Function that takes attrs and returns initial state & effect
  * @param update Function that takes state & action and returns next state & effect
  * @param view Mithril component
+ * @param skipRestartOnAttrChange Array of attr names that prevents Elmish runtime from restarting
+ *                                when specified attrs change
  * @returns Root elmish mithril component
  */
 export const createElmishComponent = <
@@ -22,15 +24,22 @@ export const createElmishComponent = <
 >({
   init,
   update,
-  view
+  view,
+  skipRestartOnAttrChange
 }: KeysIntersect<State, Attrs> extends true
   ? never
   : {
       init: (attrs: Attrs) => readonly [State, Effect<Action>]
       update: (state: State, action: Action) => readonly [State, Effect<Action>]
       view: Component<RawProps<State, Action, Attrs>>
-    }): ClosureComponent<Attrs> =>
-  function ElmishComponent(vnode) {
+      skipRestartOnAttrChange?: ReadonlyArray<keyof Attrs & string>
+    }): ClosureComponent<Attrs> => {
+  const compare: shallowequal.Customizer<unknown> | undefined =
+    skipRestartOnAttrChange === undefined
+      ? undefined
+      : (_, __, key) => (skipRestartOnAttrChange.indexOf(`${key ?? ''}`) < 0 ? true : undefined)
+
+  return function ElmishComponent(vnode) {
     let prevAttrs = vnode.attrs
     let state: State | undefined
 
@@ -51,7 +60,7 @@ export const createElmishComponent = <
 
     return {
       view: ({ attrs }) => {
-        if (!shallowequal(prevAttrs, attrs)) {
+        if (!shallowequal(prevAttrs, attrs, compare)) {
           program.stop()
 
           program = run(attrs)
@@ -69,3 +78,4 @@ export const createElmishComponent = <
       }
     }
   }
+}

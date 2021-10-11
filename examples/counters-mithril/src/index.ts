@@ -3,6 +3,7 @@ import { createElmishComponent } from '@ts-elmish/mithril'
 import { Main, MainState, MainAttrs } from './components/main'
 
 const App = createElmishComponent({
+  skipRestartOnAttrChange: ['title'],
   init: (_: MainAttrs) => [MainState.init(), []],
   update: (state, action) => [MainState.update(state, action), []],
   view: Main
