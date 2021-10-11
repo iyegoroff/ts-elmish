@@ -37,7 +37,8 @@ export const createElmishComponent = <
   const compare: shallowequal.Customizer<unknown> | undefined =
     skipRestartOnAttrChange === undefined
       ? undefined
-      : (_, __, key) => (skipRestartOnAttrChange.indexOf(`${key ?? ''}`) < 0 ? true : undefined)
+      : (_: unknown, __: unknown, key) =>
+          skipRestartOnAttrChange.indexOf(`${key ?? ''}`) < 0 ? true : undefined
 
   return function ElmishComponent(vnode) {
     let prevAttrs = vnode.attrs
