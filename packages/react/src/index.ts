@@ -12,7 +12,7 @@ export type { ElmishProps } from '@ts-elmish/common'
  * @param init Function that takes props and returns initial state & effect
  * @param update Function that takes state & action and returns next state & effect
  * @param view React component
- * @param skipRestartOnPropChange Array of prop names that prevents Elmish runtime from restarting
+ * @param skipRestartOnPropChange Array of prop names that prevents elmish runtime from restarting
  *                                when specified props change
  * @returns Root elmish react component
  */

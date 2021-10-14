@@ -25,10 +25,10 @@ export type KeysIntersect<X, Y> = Unknown extends X
 export type ElmishProps<State extends Unknown, Action, Props extends Unknown = Never> = {
   readonly dispatch: Dispatch<Action>
 } & DistributiveOmit<
-  Never extends Props ? State : State & DistributiveOmit<Props, KeysOfUnion<State>>,
+  Never extends Required<Props> ? State : State & DistributiveOmit<Props, KeysOfUnion<State>>,
   'dispatch'
 >
 
 export type RawProps<State, Action, Props> = {
   readonly dispatch: Dispatch<Action>
-} & (Never extends Props ? State : State & Props)
+} & (Never extends Required<Props> ? State : State & Props)

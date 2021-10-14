@@ -13,7 +13,7 @@ export type { ElmishProps as ElmishAttrs } from '@ts-elmish/common'
  * @param init Function that takes attrs and returns initial state & effect
  * @param update Function that takes state & action and returns next state & effect
  * @param view Mithril component
- * @param skipRestartOnAttrChange Array of attr names that prevents Elmish runtime from restarting
+ * @param skipRestartOnAttrChange Array of attr names that prevents elmish runtime from restarting
  *                                when specified attrs change
  * @returns Root elmish mithril component
  */
