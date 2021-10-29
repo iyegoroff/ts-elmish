@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "@ts-elmish/core": "workspace:*",
-    "@types/react": "^17.0.27"
+    "@types/react": "^17.0.33"
   },
   "dependencies": {
     "@ts-elmish/common": "workspace:*"
