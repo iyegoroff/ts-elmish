@@ -15,11 +15,6 @@ const config = {
   testRegex: '\\.spec\\.ts$',
   transform: {
     '^.+\\.(js|tsx?)$': 'ts-jest'
-  },
-  globals: {
-    'ts-jest': {
-      tsconfig: '<rootDir>/src/tsconfig.json'
-    }
   }
 }
 

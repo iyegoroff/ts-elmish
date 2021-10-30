@@ -16,7 +16,7 @@ export type { ElmishProps } from '@ts-elmish/common'
  *                                when specified props change
  * @returns Root elmish react component
  */
-export const createElmishComponent = <
+export const createElmishRootComponent = <
   State extends Record<string, unknown>,
   Action,
   Props extends Record<string, unknown> = Record<string, never>

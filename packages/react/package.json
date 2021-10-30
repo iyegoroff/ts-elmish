@@ -5,17 +5,26 @@
   "description": "React renderer for ts-elmish",
   "main": "src/index.ts",
   "publishConfig": {
-    "main": "dist/umd/index.js",
-    "module": "dist/index.js",
-    "browser": "dist/index.js",
-    "types": "dist/index.d.ts"
+    "main": "./dist/cjs/index.js",
+    "module": "./dist/esm/index.js",
+    "types": "./dist/dts/index.d.ts",
+    "exports": {
+      ".": {
+        "require": "./dist/cjs/index.js",
+        "import": "./dist/esm/index.js"
+      },
+      "./package.json": "./package.json"
+    }
+  },
+  "engines": {
+    "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
   },
   "scripts": {
     "update-version": "npm version",
-    "build:dts": "tsc -p ./src -d true --emitDeclarationOnly true --removeComments false",
-    "build:umd": "tsc -p ./src -m umd -t es5 --lib es5,es2015.symbol,es2015.collection --outDir ./dist/umd",
-    "build:es6": "tsc -p ./src",
-    "build": "rm -rf dist && mkdir dist && npm run build:dts && npm run build:umd && npm run build:es6"
+    "build:dts": "tsc -p node_modules/@ts-elmish/configs/tsconfig.dts.json",
+    "build:esm": "tsc -p node_modules/@ts-elmish/configs/tsconfig.esm.json",
+    "build:cjs": "tsc -p node_modules/@ts-elmish/configs/tsconfig.cjs.json",
+    "build": "rm -rf dist && mkdir dist && npm run build:dts && npm run build:esm && npm run build:cjs"
   },
   "keywords": [
     "elmish",
@@ -40,11 +49,12 @@
     "@ts-elmish/core": "workspace:*",
     "react": ">=16"
   },
-  "devDependencies": {
-    "@ts-elmish/core": "workspace:*",
-    "@types/react": "^17.0.33"
-  },
   "dependencies": {
     "@ts-elmish/common": "workspace:*"
+  },
+  "devDependencies": {
+    "@ts-elmish/core": "workspace:*",
+    "@ts-elmish/configs": "workspace:*",
+    "@types/react": "^17.0.33"
   }
 }

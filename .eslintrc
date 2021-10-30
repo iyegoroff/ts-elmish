@@ -3,15 +3,7 @@
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "project": [
-      "./packages/core/src/tsconfig.build.json",
-      "./packages/core/src/tsconfig.json",
-      "./packages/basic-effects/src/tsconfig.build.json",
-      "./packages/basic-effects/src/tsconfig.json",
-      "./packages/railway-effects/src/tsconfig.build.json",
-      "./packages/railway-effects/src/tsconfig.json",
-      "./packages/mithril/src/tsconfig.json",
-      "./packages/react/src/tsconfig.json",
-      "./packages/common/src/tsconfig.json",
+      "./tsconfig.json",
       "./examples/counters-mithril/src/tsconfig.build.json",
       "./examples/counters-mithril/src/tsconfig.json"
     ]
@@ -46,6 +38,7 @@
       }
     ],
     "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/prefer-includes": "off",
     "@typescript-eslint/promise-function-async": "off",
     "@typescript-eslint/no-explicit-any": "error",
     "@typescript-eslint/no-non-null-assertion": "error",

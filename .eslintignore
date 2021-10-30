@@ -7,3 +7,4 @@ coverage
 *.js
 *.css.d.ts
 blueprint-templates
+examples/todos-react

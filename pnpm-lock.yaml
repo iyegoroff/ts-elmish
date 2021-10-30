@@ -48,6 +48,9 @@ importers:
       type-coverage: 2.18.3_typescript@4.4.4
       typescript: 4.4.4
 
+  configs:
+    specifiers: {}
+
   examples/counters-mithril:
     specifiers:
       '@ts-elmish/basic-effects': workspace:*
@@ -158,31 +161,42 @@ importers:
 
   packages/basic-effects:
     specifiers:
+      '@ts-elmish/configs': workspace:*
       '@ts-elmish/core': workspace:*
       '@ts-elmish/idle-action': workspace:*
     dependencies:
       '@ts-elmish/idle-action': link:../idle-action
     devDependencies:
+      '@ts-elmish/configs': link:../../configs
       '@ts-elmish/core': link:../core
 
   packages/common:
     specifiers:
+      '@ts-elmish/configs': workspace:*
       '@ts-elmish/core': workspace:*
     devDependencies:
+      '@ts-elmish/configs': link:../../configs
       '@ts-elmish/core': link:../core
 
   packages/core:
     specifiers:
+      '@ts-elmish/configs': workspace:*
       '@ts-elmish/idle-action': workspace:*
     dependencies:
       '@ts-elmish/idle-action': link:../idle-action
+    devDependencies:
+      '@ts-elmish/configs': link:../../configs
 
   packages/idle-action:
-    specifiers: {}
+    specifiers:
+      '@ts-elmish/configs': workspace:*
+    devDependencies:
+      '@ts-elmish/configs': link:../../configs
 
   packages/mithril:
     specifiers:
       '@ts-elmish/common': workspace:*
+      '@ts-elmish/configs': workspace:*
       '@ts-elmish/core': workspace:*
       '@types/mithril': ^2.0.8
       '@types/shallowequal': ^1.1.1
@@ -191,6 +205,7 @@ importers:
       '@ts-elmish/common': link:../common
       shallowequal: 1.1.0
     devDependencies:
+      '@ts-elmish/configs': link:../../configs
       '@ts-elmish/core': link:../core
       '@types/mithril': 2.0.8
       '@types/shallowequal': 1.1.1
@@ -198,6 +213,7 @@ importers:
   packages/railway-effects:
     specifiers:
       '@ts-elmish/basic-effects': workspace:*
+      '@ts-elmish/configs': workspace:*
       '@ts-elmish/core': workspace:*
       '@ts-elmish/idle-action': workspace:*
       ts-railway: ^3.0.3
@@ -205,17 +221,20 @@ importers:
       '@ts-elmish/basic-effects': link:../basic-effects
       '@ts-elmish/idle-action': link:../idle-action
     devDependencies:
+      '@ts-elmish/configs': link:../../configs
       '@ts-elmish/core': link:../core
       ts-railway: 3.0.3
 
   packages/react:
     specifiers:
       '@ts-elmish/common': workspace:*
+      '@ts-elmish/configs': workspace:*
       '@ts-elmish/core': workspace:*
       '@types/react': ^17.0.33
     dependencies:
       '@ts-elmish/common': link:../common
     devDependencies:
+      '@ts-elmish/configs': link:../../configs
       '@ts-elmish/core': link:../core
       '@types/react': 17.0.33
 

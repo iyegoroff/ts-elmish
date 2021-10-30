@@ -1,8 +1,8 @@
 import m from 'mithril'
-import { createElmishComponent } from '@ts-elmish/mithril'
+import { createElmishRootComponent } from '@ts-elmish/mithril'
 import { Main, MainState, MainAttrs } from './components/main'
 
-const App = createElmishComponent({
+const App = createElmishRootComponent({
   skipRestartOnAttrChange: ['title'],
   init: (_: MainAttrs) => [MainState.init(), []],
   update: (state, action) => [MainState.update(state, action), []],

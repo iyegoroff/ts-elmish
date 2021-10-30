@@ -17,7 +17,7 @@ export type { ElmishProps as ElmishAttrs } from '@ts-elmish/common'
  *                                when specified attrs change
  * @returns Root elmish mithril component
  */
-export const createElmishComponent = <
+export const createElmishRootComponent = <
   State extends Record<string, unknown>,
   Action,
   Attrs extends Record<string, unknown> = Record<string, never>

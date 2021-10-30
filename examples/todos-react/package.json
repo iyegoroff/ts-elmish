@@ -46,6 +46,7 @@
     "use-pipe-ts": "^1.0.0"
   },
   "scripts": {
+    "lint": "eslint .",
     "serve": "webpack serve --open --hot",
     "check": "tsc -p ./src/tsconfig.json --noEmit true && tsc -p ./src/tsconfig.build.json --noEmit true"
   }
