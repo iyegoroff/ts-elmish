@@ -1,8 +1,8 @@
 /* eslint-disable prefer-const */
 import m, { Component, ClosureComponent } from 'mithril'
 import shallowequal from 'shallowequal'
-import { runProgram, ElmishEffect as Effect } from '@ts-elmish/core'
-import { RawProps, KeysIntersect } from '@ts-elmish/common'
+import { runProgram } from '@ts-elmish/core'
+import { RawProps, KeysIntersect, Effect, RunProgram } from '@ts-elmish/common'
 
 export type { ElmishProps as ElmishAttrs } from '@ts-elmish/common'
 
@@ -25,15 +25,18 @@ export const createElmishRootComponent = <
   init,
   update,
   view,
-  skipRestartOnAttrChange
+  skipRestartOnAttrChange,
+  transformProgram = (run) => run
 }: KeysIntersect<State, Attrs> extends true
   ? never
   : {
-      init: (attrs: Attrs) => readonly [State, Effect<Action>]
-      update: (state: State, action: Action) => readonly [State, Effect<Action>]
-      view: Component<RawProps<State, Action, Attrs>>
-      skipRestartOnAttrChange?: ReadonlyArray<keyof Attrs & string>
+      readonly init: (attrs: Attrs) => readonly [State, Effect<Action>]
+      readonly update: (state: State, action: Action) => readonly [State, Effect<Action>]
+      readonly view: Component<RawProps<State, Action, Attrs>>
+      readonly skipRestartOnAttrChange?: ReadonlyArray<keyof Attrs & string>
+      readonly transformProgram?: (run: RunProgram<State, Action>) => RunProgram<State, Action>
     }): ClosureComponent<Attrs> => {
+  const runTransformedProgram = transformProgram(runProgram)
   const compare: shallowequal.Customizer<unknown> | undefined =
     skipRestartOnAttrChange === undefined
       ? undefined
@@ -45,7 +48,7 @@ export const createElmishRootComponent = <
     let state: State | undefined
 
     const run = (attrs: Attrs) =>
-      runProgram({
+      runTransformedProgram({
         init: () => init(attrs),
         update,
         view: (nextState) => {

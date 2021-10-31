@@ -28,6 +28,7 @@
     "@ts-elmish/core": "workspace:*",
     "@ts-elmish/railway-effects": "workspace:*",
     "@ts-elmish/react": "workspace:*",
+    "@ts-elmish/debugger": "workspace:*",
     "@welldone-software/why-did-you-render": "^6.2.1",
     "deep-stub-object": "^1.0.0",
     "merge-anything": "^4.0.1",

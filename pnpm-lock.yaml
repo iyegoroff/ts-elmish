@@ -55,6 +55,7 @@ importers:
     specifiers:
       '@ts-elmish/basic-effects': workspace:*
       '@ts-elmish/core': workspace:*
+      '@ts-elmish/debugger': workspace:*
       '@ts-elmish/mithril': workspace:*
       '@types/mithril': ^2.0.8
       mithril: ^2.0.4
@@ -66,6 +67,7 @@ importers:
     dependencies:
       '@ts-elmish/basic-effects': link:../../packages/basic-effects
       '@ts-elmish/core': link:../../packages/core
+      '@ts-elmish/debugger': link:../../packages/debugger
       '@ts-elmish/mithril': link:../../packages/mithril
       mithril: 2.0.4
       ts-micro-dict: 8.0.0
@@ -83,6 +85,7 @@ importers:
       '@babel/preset-typescript': ^7.15.0
       '@pmmmwh/react-refresh-webpack-plugin': ^0.5.1
       '@ts-elmish/core': workspace:*
+      '@ts-elmish/debugger': workspace:*
       '@ts-elmish/railway-effects': workspace:*
       '@ts-elmish/react': workspace:*
       '@types/react': ^17.0.33
@@ -119,6 +122,7 @@ importers:
       webpack-dev-server: ^4.4.0
     dependencies:
       '@ts-elmish/core': link:../../packages/core
+      '@ts-elmish/debugger': link:../../packages/debugger
       '@ts-elmish/railway-effects': link:../../packages/railway-effects
       '@ts-elmish/react': link:../../packages/react
       '@welldone-software/why-did-you-render': 6.2.1_react@17.0.2
@@ -161,37 +165,40 @@ importers:
 
   packages/basic-effects:
     specifiers:
+      '@ts-elmish/common': workspace:*
       '@ts-elmish/configs': workspace:*
-      '@ts-elmish/core': workspace:*
-      '@ts-elmish/idle-action': workspace:*
     dependencies:
-      '@ts-elmish/idle-action': link:../idle-action
+      '@ts-elmish/common': link:../common
     devDependencies:
       '@ts-elmish/configs': link:../../configs
-      '@ts-elmish/core': link:../core
 
   packages/common:
     specifiers:
       '@ts-elmish/configs': workspace:*
-      '@ts-elmish/core': workspace:*
     devDependencies:
       '@ts-elmish/configs': link:../../configs
-      '@ts-elmish/core': link:../core
 
   packages/core:
     specifiers:
+      '@ts-elmish/common': workspace:*
       '@ts-elmish/configs': workspace:*
-      '@ts-elmish/idle-action': workspace:*
     dependencies:
-      '@ts-elmish/idle-action': link:../idle-action
+      '@ts-elmish/common': link:../common
     devDependencies:
       '@ts-elmish/configs': link:../../configs
 
-  packages/idle-action:
+  packages/debugger:
     specifiers:
+      '@ts-elmish/common': workspace:*
       '@ts-elmish/configs': workspace:*
+      '@types/remotedev': file:../../typings/@types/remotedev
+      remotedev: ^0.2.9
+    dependencies:
+      '@ts-elmish/common': link:../common
+      remotedev: 0.2.9
     devDependencies:
       '@ts-elmish/configs': link:../../configs
+      '@types/remotedev': link:../../typings/@types/remotedev
 
   packages/mithril:
     specifiers:
@@ -213,16 +220,14 @@ importers:
   packages/railway-effects:
     specifiers:
       '@ts-elmish/basic-effects': workspace:*
+      '@ts-elmish/common': workspace:*
       '@ts-elmish/configs': workspace:*
-      '@ts-elmish/core': workspace:*
-      '@ts-elmish/idle-action': workspace:*
       ts-railway: ^3.0.3
     dependencies:
       '@ts-elmish/basic-effects': link:../basic-effects
-      '@ts-elmish/idle-action': link:../idle-action
+      '@ts-elmish/common': link:../common
     devDependencies:
       '@ts-elmish/configs': link:../../configs
-      '@ts-elmish/core': link:../core
       ts-railway: 3.0.3
 
   packages/react:
@@ -2597,6 +2602,10 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
+  /async-limiter/1.0.1:
+    resolution: {integrity: sha512-csOlWGAcRFJaI6m+F2WKdnMKr4HhdhFVBk0H/QbJFMCr+uO2kwohwXQPxw/9OCxp05r5ghVBFSyioixx3gfkNQ==}
+    dev: false
+
   /async/2.6.3:
     resolution: {integrity: sha512-zflvls11DCy+dQWzTW2dzuilv8Z5X/pjfmZOWba6TNIVDm+2UDaJmXSOXlasHKfNBs8oo3M0aT50fDEWfKZjXg==}
     dependencies:
@@ -2741,6 +2750,10 @@ packages:
   /balanced-match/1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
     dev: true
+
+  /base-64/0.1.0:
+    resolution: {integrity: sha1-eAqZyE59YAJgNhURxId2E78k9rs=}
+    dev: false
 
   /batch/0.6.1:
     resolution: {integrity: sha1-3DQxT05nkxgJP8dgJyUl+UvyXBY=}
@@ -2999,6 +3012,11 @@ packages:
       shallow-clone: 3.0.1
     dev: true
 
+  /clone/2.1.1:
+    resolution: {integrity: sha1-0hfR6WERjjrJpLi7oyhVU79kfNs=}
+    engines: {node: '>=0.8'}
+    dev: false
+
   /co/4.6.0:
     resolution: {integrity: sha1-bqa989hTrlTMuOR7+gvz+QMfsYQ=}
     engines: {iojs: '>= 1.0.0', node: '>= 0.12.0'}
@@ -3075,6 +3093,10 @@ packages:
   /commondir/1.0.1:
     resolution: {integrity: sha1-3dgA2gxmEnOTzKWVDqloo6rxJTs=}
     dev: true
+
+  /component-emitter/1.2.1:
+    resolution: {integrity: sha1-E3kY1teCg/ffemt8WmPhQOaUJeY=}
+    dev: false
 
   /compressible/2.0.18:
     resolution: {integrity: sha512-AF3r7P5dWxL8MxyITRMlORQNaOA2IkAFaTr4k7BUumjPtRpGDTZpl0Pb1XCO6JeDCBdp126Cgs9sMxqSjgYyRg==}
@@ -5511,6 +5533,10 @@ packages:
       esprima: 4.0.1
     dev: true
 
+  /jsan/3.1.13:
+    resolution: {integrity: sha512-9kGpCsGHifmw6oJet+y8HaCl14y7qgAsxVdV3pCHDySNR3BfDC30zgkssd7x5LRVAT22dnpbe9JdzzmXZnq9/g==}
+    dev: false
+
   /jsdom/16.7.0:
     resolution: {integrity: sha512-u9Smc2G1USStM+s/x1ru5Sxrl6mPYCbByG1U/hUmqaVsm4tbNyS7CicOSRyuGQYZhTu0h84qkZZQ/I+dzizSVw==}
     engines: {node: '>=10'}
@@ -5649,6 +5675,10 @@ packages:
   /lines-and-columns/1.1.6:
     resolution: {integrity: sha1-HADHQ7QzzQpOgHWPe2SldEDZ/wA=}
     dev: true
+
+  /linked-list/0.1.0:
+    resolution: {integrity: sha1-eYsP+X0bkqT9CEgPVa6k6dSdN78=}
+    dev: false
 
   /load-json-file/4.0.0:
     resolution: {integrity: sha1-L19Fq5HjMhYjT9U62rZo607AmTs=}
@@ -6580,7 +6610,6 @@ packages:
     resolution: {integrity: sha1-sgmEkgO7Jd+CDadW50cAWHhSFiA=}
     engines: {node: '>=0.4.x'}
     deprecated: The querystring API is considered Legacy. new code should use the URLSearchParams API instead.
-    dev: true
 
   /queue-microtask/1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
@@ -6792,6 +6821,15 @@ packages:
     engines: {node: '>= 0.10'}
     dev: true
 
+  /remotedev/0.2.9:
+    resolution: {integrity: sha512-W8dHOv9BcFnetFEd08yNb5O9Hd+zkTFFnf9FRjNCkb4u+JgQ/U152Aw4q83AmY3m34d6KZwhK5ip/Qc331+4vA==}
+    dependencies:
+      jsan: 3.1.13
+      querystring: 0.2.0
+      rn-host-detect: 1.2.0
+      socketcluster-client: 13.0.1
+    dev: false
+
   /renderkid/3.0.0:
     resolution: {integrity: sha512-q/7VIQA8lmM1hF+jn+sFSPWGlMkSAeNYcPLmDQx2zzuiDfaLrOmumR8iaUKlenFgh0XRPIUeSPlH3A+AW3Z5pg==}
     dependencies:
@@ -6873,6 +6911,10 @@ packages:
       glob: 7.2.0
     dev: true
 
+  /rn-host-detect/1.2.0:
+    resolution: {integrity: sha512-btNg5kzHcjZZ7t7mvvV/4wNJ9e3MPgrWivkRgWURzXL0JJ0pwWlU4zrbmdlz3HHzHOxhBhHB4D+/dbMFfu4/4A==}
+    dev: false
+
   /run-parallel/1.2.0:
     resolution: {integrity: sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==}
     dependencies:
@@ -6900,6 +6942,20 @@ packages:
     dependencies:
       xmlchars: 2.2.0
     dev: true
+
+  /sc-channel/1.2.0:
+    resolution: {integrity: sha512-M3gdq8PlKg0zWJSisWqAsMmTVxYRTpVRqw4CWAdKBgAfVKumFcTjoCV0hYu7lgUXccCtCD8Wk9VkkE+IXCxmZA==}
+    dependencies:
+      component-emitter: 1.2.1
+    dev: false
+
+  /sc-errors/1.4.1:
+    resolution: {integrity: sha512-dBn92iIonpChTxYLgKkIT/PCApvmYT6EPIbRvbQKTgY6tbEbIy8XVUv4pGyKwEK4nCmvX4TKXcN0iXC6tNW6rQ==}
+    dev: false
+
+  /sc-formatter/3.0.2:
+    resolution: {integrity: sha512-9PbqYBpCq+OoEeRQ3QfFIGE6qwjjBcd2j7UjgDlhnZbtSnuGgHdcRklPKYGuYFH82V/dwd+AIpu8XvA1zqTd+A==}
+    dev: false
 
   /scheduler/0.20.2:
     resolution: {integrity: sha512-2eWfGgAqqWFGqtdMmcL5zCMK1U8KlXv8SQFGglL3CEtd0aDVDWgeF/YoCmvln55m5zSk3J/20hTaSBeSObsQDQ==}
@@ -7116,6 +7172,21 @@ packages:
       astral-regex: 2.0.0
       is-fullwidth-code-point: 3.0.0
     dev: true
+
+  /socketcluster-client/13.0.1:
+    resolution: {integrity: sha512-hxiE2xz6mgaBlhXbtBa4POgWVEvIcjCoHzf5LTUVhI9IL8V2ltV3Ze8pQsi9egqTjSz4RHPfyrJ7BiETe5Kthw==}
+    dependencies:
+      base-64: 0.1.0
+      clone: 2.1.1
+      component-emitter: 1.2.1
+      linked-list: 0.1.0
+      querystring: 0.2.0
+      sc-channel: 1.2.0
+      sc-errors: 1.4.1
+      sc-formatter: 3.0.2
+      uuid: 3.2.1
+      ws: 5.1.1
+    dev: false
 
   /sockjs/0.3.21:
     resolution: {integrity: sha512-DhbPFGpxjc6Z3I+uX07Id5ZO2XwYsWOrYjaSeieES78cq+JaJvVe5q/m1uvjIQhXinhIeCFRH6JgXe+mvVMyXw==}
@@ -7844,6 +7915,12 @@ packages:
     engines: {node: '>= 0.4.0'}
     dev: true
 
+  /uuid/3.2.1:
+    resolution: {integrity: sha512-jZnMwlb9Iku/O3smGWvZhauCf6cvvpKi4BKRiliS3cxnI+Gz9j5MEpTz2UFuXiKPJocb7gnsLHwiS05ige5BEA==}
+    deprecated: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
+    hasBin: true
+    dev: false
+
   /uuid/3.4.0:
     resolution: {integrity: sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==}
     deprecated: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
@@ -8261,6 +8338,12 @@ packages:
       signal-exit: 3.0.5
       typedarray-to-buffer: 3.1.5
     dev: true
+
+  /ws/5.1.1:
+    resolution: {integrity: sha512-bOusvpCb09TOBLbpMKszd45WKC2KPtxiyiHanv+H2DE3Az+1db5a/L7sVJZVDPUC1Br8f0SKRr1KjLpD1U/IAw==}
+    dependencies:
+      async-limiter: 1.0.1
+    dev: false
 
   /ws/7.5.5:
     resolution: {integrity: sha512-BAkMFcAzl8as1G/hArkxOxq3G7pjUqQ3gzYbLL0/5zNkph70e+lCoxBGnm6AW1+/aiNeV4fnKqZ8m4GZewmH2w==}

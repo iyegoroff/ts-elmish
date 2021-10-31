@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { runProgram, Dispatch, ElmishEffect as Effect } from '@ts-elmish/core'
-import { RawProps, KeysIntersect } from '@ts-elmish/common'
+import { runProgram } from '@ts-elmish/core'
+import { RawProps, KeysIntersect, Dispatch, Effect, RunProgram } from '@ts-elmish/common'
 
 export type { ElmishProps } from '@ts-elmish/common'
 
@@ -24,7 +24,8 @@ export const createElmishRootComponent = <
   init,
   update,
   view,
-  skipRestartOnPropChange = []
+  skipRestartOnPropChange = [],
+  transformProgram = (run) => run
 }: KeysIntersect<State, Props> extends true
   ? never
   : {
@@ -32,14 +33,17 @@ export const createElmishRootComponent = <
       readonly update: (state: State, action: Action) => readonly [State, Effect<Action>]
       readonly view: React.ComponentType<RawProps<State, Action, Props>>
       readonly skipRestartOnPropChange?: ReadonlyArray<keyof Props>
-    }): React.FunctionComponent<Props> =>
-  function ElmishComponent(props) {
+      readonly transformProgram?: (run: RunProgram<State, Action>) => RunProgram<State, Action>
+    }): React.FunctionComponent<Props> => {
+  const runTransformedProgram = transformProgram(runProgram)
+
+  return function ElmishComponent(props) {
     const [state, setState] = useState<State>()
     const dispatchRef = useRef<Dispatch<Action>>()
 
     useEffect(
       () => {
-        const { initialState, dispatch, stop } = runProgram({
+        const { initialState, dispatch, stop } = runTransformedProgram({
           init: () => init(props),
           update,
           view: setState
@@ -64,3 +68,4 @@ export const createElmishRootComponent = <
       : // eslint-disable-next-line no-null/no-null
         null
   }
+}

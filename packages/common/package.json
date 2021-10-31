@@ -44,11 +44,7 @@
   },
   "author": "iyegoroff <iegoroff@gmail.com>",
   "license": "MIT",
-  "peerDependencies": {
-    "@ts-elmish/core": "workspace:*"
-  },
   "devDependencies": {
-    "@ts-elmish/core": "workspace:*",
     "@ts-elmish/configs": "workspace:*"
   }
 }

@@ -1,4 +1,4 @@
-import { ElmishIdleAction } from '@ts-elmish/idle-action'
+import { IdleAction } from '@ts-elmish/common'
 import { Record, String } from 'runtypes'
 import { Effect } from './index'
 import { checkAsyncEffect, checkAsyncEffectReject, checkEffect, checkEffectReject } from './checks'
@@ -77,15 +77,15 @@ describe('effects', () => {
 
     checkEffect(fromAction, 'action')
     checkEffect(fromFunctionFailure, 'message')
-    checkEffect(fromFunctionNoFailure, ElmishIdleAction)
+    checkEffect(fromFunctionNoFailure, IdleAction)
     checkEffect(fromFunctionSuccess, '1')
     checkEffect(fromFunctionSuccessNoError, '1')
-    checkEffect(fromFunctionSuccessNoDone, ElmishIdleAction)
+    checkEffect(fromFunctionSuccessNoDone, IdleAction)
     checkEffectReject(fromFunctionThrow, new Error('message'))
     await checkAsyncEffect(fromPromiseFailure, 'message')
-    await checkAsyncEffect(fromPromiseNoFailure, ElmishIdleAction)
+    await checkAsyncEffect(fromPromiseNoFailure, IdleAction)
     await checkAsyncEffect(fromPromiseSuccess, '1')
-    await checkAsyncEffect(fromPromiseSuccessNoThen, ElmishIdleAction)
+    await checkAsyncEffect(fromPromiseSuccessNoThen, IdleAction)
     await checkAsyncEffect(fromPromiseSuccessNoError, '1')
     await checkAsyncEffectReject(fromPromiseThrow, new Error('message'))
   })
@@ -96,9 +96,9 @@ describe('effects', () => {
 
     const mappedIdle = Effect.map(
       (x) => ['action', x] as const,
-      [(dispatch) => dispatch(ElmishIdleAction)]
+      [(dispatch) => dispatch(IdleAction)]
     )
-    checkEffect(mappedIdle, ElmishIdleAction)
+    checkEffect(mappedIdle, IdleAction)
   })
 
   test('batch', () => {

@@ -45,15 +45,13 @@
   "author": "iyegoroff <iegoroff@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@ts-elmish/basic-effects": "workspace:*",
-    "@ts-elmish/idle-action": "workspace:*"
+    "@ts-elmish/common": "workspace:*",
+    "@ts-elmish/basic-effects": "workspace:*"
   },
   "peerDependencies": {
-    "@ts-elmish/core": "workspace:*",
     "ts-railway": "^3.0.3"
   },
   "devDependencies": {
-    "@ts-elmish/core": "workspace:*",
     "@ts-elmish/configs": "workspace:*",
     "ts-railway": "^3.0.3"
   }

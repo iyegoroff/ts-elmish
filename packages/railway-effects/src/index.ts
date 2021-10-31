@@ -1,9 +1,8 @@
-import { ElmishEffect } from '@ts-elmish/core'
-import { ElmishIdleAction } from '@ts-elmish/idle-action'
+import { IdleAction, Effect as Eff } from '@ts-elmish/common'
 import { Effect as BasicEffect, ActionArgs } from '@ts-elmish/basic-effects'
 import { Result, SomeResult, SuccessOf, FailureOf } from 'ts-railway'
 
-export type Effect<Action> = ElmishEffect<Action>
+export type Effect<Action> = Eff<Action>
 
 type ResultArgs<Action, Success, Failure, ResultLike extends SomeResult<Success, Failure>> = {
   readonly result: () => ResultLike
@@ -41,7 +40,7 @@ function from<Action, Success, Failure>(
     | ActionArgs<Action>
     | ResultArgs<Action, Success, Failure, SomeResult<Success, Failure>>
     | ResultArgsNoFailure<Action, Success, SomeResult<Success, never>>
-): Effect<Action | ElmishIdleAction> {
+): Effect<Action | IdleAction> {
   if ('action' in args) {
     return BasicEffect.from(args)
   } else {
@@ -68,7 +67,7 @@ const effectFromResult = <Action, Success, Failure>(
     ? success(result.success)
     : result.tag === 'failure' && failure !== undefined
     ? failure(result.failure)
-    : ElmishIdleAction
+    : IdleAction
 
 export const Effect = {
   ...BasicEffect,

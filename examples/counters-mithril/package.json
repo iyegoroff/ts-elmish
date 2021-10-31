@@ -6,6 +6,7 @@
     "@ts-elmish/basic-effects": "workspace:*",
     "@ts-elmish/core": "workspace:*",
     "@ts-elmish/mithril": "workspace:*",
+    "@ts-elmish/debugger": "workspace:*",
     "mithril": "^2.0.4",
     "ts-micro-dict": "^8.0.0"
   },

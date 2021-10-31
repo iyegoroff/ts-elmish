@@ -1,7 +1,6 @@
-import { ElmishEffect } from '@ts-elmish/core'
-import { ElmishIdleAction } from '@ts-elmish/idle-action'
+import { Effect as Eff, IdleAction } from '@ts-elmish/common'
 
-export type Effect<Action> = ElmishEffect<Action>
+export type Effect<Action> = Eff<Action>
 
 const empty: Effect<never> = []
 
@@ -16,10 +15,10 @@ function map<Action0, Action1>(
 
 function map<Action0, Action1>(
   func: (a: Action0) => Action1,
-  effect: Effect<Action0 | ElmishIdleAction>
-): Effect<Action1 | ElmishIdleAction> {
+  effect: Effect<Action0 | IdleAction>
+): Effect<Action1 | IdleAction> {
   return effect.map(
-    (g) => (dispatch) => g((a) => dispatch(a === ElmishIdleAction ? ElmishIdleAction : func(a)))
+    (g) => (dispatch) => g((a) => dispatch(a === IdleAction ? IdleAction : func(a)))
   )
 }
 
@@ -52,7 +51,7 @@ function from<Action, Success = unknown>(args: PromiseArgs<Action, Success>): Ef
 
 function from<Action, Success = unknown>(
   args: ActionArgs<Action> | FunctionArgs<Action, Success> | PromiseArgs<Action, Success>
-): Effect<Action | ElmishIdleAction> {
+): Effect<Action | IdleAction> {
   if ('action' in args) {
     return [(dispatch) => dispatch(args.action)]
   } else if ('func' in args) {
@@ -63,13 +62,13 @@ function from<Action, Success = unknown>(
         if (typeof error === 'function') {
           try {
             const value = func()
-            return dispatch(typeof done === 'function' ? done(value) : ElmishIdleAction)
+            return dispatch(typeof done === 'function' ? done(value) : IdleAction)
           } catch (err: unknown) {
             return dispatch(error(err))
           }
         } else {
           const value = func()
-          return dispatch(typeof done === 'function' ? done(value) : ElmishIdleAction)
+          return dispatch(typeof done === 'function' ? done(value) : IdleAction)
         }
       }
     ]
@@ -81,13 +80,13 @@ function from<Action, Success = unknown>(
         if (typeof error === 'function') {
           try {
             const value = await promise()
-            return dispatch(typeof then === 'function' ? then(value) : ElmishIdleAction)
+            return dispatch(typeof then === 'function' ? then(value) : IdleAction)
           } catch (err: unknown) {
             return dispatch(error(err))
           }
         } else {
           const value = await promise()
-          return dispatch(typeof then === 'function' ? then(value) : ElmishIdleAction)
+          return dispatch(typeof then === 'function' ? then(value) : IdleAction)
         }
       }
     ]

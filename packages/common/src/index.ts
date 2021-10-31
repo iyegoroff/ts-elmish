@@ -1,10 +1,32 @@
-import { Dispatch } from '@ts-elmish/core'
-
 type KeysOfUnion<T> = T extends T ? keyof T : never
 type DistributiveOmit<T, K extends keyof never> = T extends unknown ? Omit<T, K> : never
 
 type Unknown = Record<string, unknown>
 type Never = Record<string, never>
+
+export const IdleAction = Symbol('elmish-idle-action')
+export type IdleAction = typeof IdleAction
+
+export type Dispatch<Action> = (action: Action) => undefined
+
+export type Effect<Action> = Array<(dispatch: Dispatch<Action>) => void>
+
+export type ProgramConfig<State, Action> = {
+  readonly init: () => readonly [State, Effect<Action>]
+  readonly update: (state: State, action: Action) => readonly [State, Effect<Action>]
+  readonly view: (state: State, hasEffects: boolean) => void
+}
+
+export type Program<State, Action> = {
+  readonly initialState: State
+  readonly dispatch: Dispatch<Action>
+  readonly stop: () => void
+  readonly setState: (state: State) => void
+}
+
+export type RunProgram<State, Action> = (
+  config: ProgramConfig<State, Action>
+) => Program<State, Action>
 
 export type KeysIntersect<X, Y> = Unknown extends X
   ? Unknown extends Y

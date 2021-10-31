@@ -1,8 +1,8 @@
 {
-  "name": "@ts-elmish/idle-action",
+  "name": "@ts-elmish/debugger",
   "version": "3.1.1",
   "private": false,
-  "description": "Elmish internals",
+  "description": "Time-traveling debugger support for ts-elmish",
   "main": "src/index.ts",
   "publishConfig": {
     "main": "./dist/cjs/index.js",
@@ -44,7 +44,12 @@
   },
   "author": "iyegoroff <iegoroff@gmail.com>",
   "license": "MIT",
+  "dependencies": {
+    "@ts-elmish/common": "workspace:*",
+    "remotedev": "^0.2.9"
+  },
   "devDependencies": {
-    "@ts-elmish/configs": "workspace:*"
+    "@ts-elmish/configs": "workspace:*",
+    "@types/remotedev": "file:../../typings/@types/remotedev"
   }
 }

@@ -1,6 +1,6 @@
 import { Record, String } from 'runtypes'
 import { Result } from 'ts-railway'
-import { ElmishIdleAction } from '@ts-elmish/idle-action'
+import { IdleAction } from '@ts-elmish/common'
 import { Effect } from './index'
 import { checkAsyncEffect, checkEffect } from '@ts-elmish/basic-effects/src/checks'
 
@@ -87,11 +87,11 @@ describe('effects', () => {
       failure: (error) => error.nan
     })
 
-    checkEffect(fromResultNoSuccess, ElmishIdleAction)
+    checkEffect(fromResultNoSuccess, IdleAction)
     checkEffect(fromResultNoFailure, { op: '<' })
     checkEffect(fromResult, '<')
 
-    await checkAsyncEffect(fromAsyncResultNoSuccess, ElmishIdleAction)
+    await checkAsyncEffect(fromAsyncResultNoSuccess, IdleAction)
     await checkAsyncEffect(fromAsyncResultNoFailure, { op: '<' })
     await checkAsyncEffect(fromAsyncResult, '<')
   })
@@ -135,12 +135,12 @@ describe('effects', () => {
     checkEffect(fromAction, 'action')
 
     checkEffect(fromResultFailure, 'message')
-    checkEffect(fromResultNoFailure, ElmishIdleAction)
+    checkEffect(fromResultNoFailure, IdleAction)
     checkEffect(fromResultSuccess, '1')
 
     await checkAsyncEffect(fromAsyncResultFailure, 'message')
     await checkAsyncEffect(fromAsyncResultFailureNoError, 'message')
-    await checkAsyncEffect(fromAsyncResultNoFailure, ElmishIdleAction)
+    await checkAsyncEffect(fromAsyncResultNoFailure, IdleAction)
     await checkAsyncEffect(fromAsyncResultSuccess, '1')
   })
 })

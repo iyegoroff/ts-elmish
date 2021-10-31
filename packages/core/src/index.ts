@@ -1,17 +1,10 @@
-import { ElmishIdleAction } from '@ts-elmish/idle-action'
-
-export type Dispatch<Action> = (action: Action) => undefined
-export type ElmishEffect<Action> = Array<(dispatch: Dispatch<Action>) => void>
+import { ProgramConfig, Dispatch, IdleAction, Program } from '@ts-elmish/common'
 
 export const runProgram = <State, Action>({
   init,
   update,
   view
-}: {
-  readonly init: () => readonly [State, ElmishEffect<Action>]
-  readonly update: (state: State, action: Action) => readonly [State, ElmishEffect<Action>]
-  readonly view: (state: State, hasEffects: boolean) => void
-}) => {
+}: ProgramConfig<State, Action>): Program<State, Action | IdleAction> => {
   let [state, effects] = init()
   let isRunning = true
 
@@ -30,8 +23,14 @@ export const runProgram = <State, Action>({
     view(state, effect !== undefined)
   }
 
-  const dispatch: Dispatch<Action | ElmishIdleAction> = (action) => {
-    if (action !== ElmishIdleAction && isRunning) {
+  const setState = (nextState: State) => {
+    state = nextState
+
+    run()
+  }
+
+  const dispatch: Dispatch<Action | IdleAction> = (action) => {
+    if (action !== IdleAction && isRunning) {
       const [nextState, nextEffect] = update(state, action)
       state = nextState
       effects.push(...nextEffect)
@@ -44,5 +43,5 @@ export const runProgram = <State, Action>({
 
   run()
 
-  return { initialState: state, dispatch, stop } as const
+  return { initialState: state, dispatch, stop, setState }
 }

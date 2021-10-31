@@ -13,6 +13,7 @@
     "noUnusedParameters": true,
     "allowUnreachableCode": false,
     "removeComments": true,
+    "noUncheckedIndexedAccess": true,
     "types": ["jest"]
   }
 }
