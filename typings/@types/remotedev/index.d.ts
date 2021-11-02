@@ -26,6 +26,7 @@ type Connection<State, Action> = {
 }
 
 type ConnectionOptions<Action> = {
+  readonly name?: string
   readonly remote?: boolean
   readonly port?: number
   readonly hostname?: string
