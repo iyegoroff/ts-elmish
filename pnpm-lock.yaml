@@ -191,14 +191,12 @@ importers:
     specifiers:
       '@ts-elmish/common': workspace:*
       '@ts-elmish/configs': workspace:*
-      '@types/remotedev': file:../../typings/@types/remotedev
-      remotedev: ^0.2.9
+      remotedev: iyegoroff/remotedev#prebuilt
     dependencies:
       '@ts-elmish/common': link:../common
-      remotedev: 0.2.9
+      remotedev: github.com/iyegoroff/remotedev/d6bb954985bd1cd017f7dae36c41958e3d6fa96b
     devDependencies:
       '@ts-elmish/configs': link:../../configs
-      '@types/remotedev': link:../../typings/@types/remotedev
 
   packages/mithril:
     specifiers:
@@ -6821,15 +6819,6 @@ packages:
     engines: {node: '>= 0.10'}
     dev: true
 
-  /remotedev/0.2.9:
-    resolution: {integrity: sha512-W8dHOv9BcFnetFEd08yNb5O9Hd+zkTFFnf9FRjNCkb4u+JgQ/U152Aw4q83AmY3m34d6KZwhK5ip/Qc331+4vA==}
-    dependencies:
-      jsan: 3.1.13
-      querystring: 0.2.0
-      rn-host-detect: 1.2.0
-      socketcluster-client: 13.0.1
-    dev: false
-
   /renderkid/3.0.0:
     resolution: {integrity: sha512-q/7VIQA8lmM1hF+jn+sFSPWGlMkSAeNYcPLmDQx2zzuiDfaLrOmumR8iaUKlenFgh0XRPIUeSPlH3A+AW3Z5pg==}
     dependencies:
@@ -8419,3 +8408,14 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
     dev: true
+
+  github.com/iyegoroff/remotedev/d6bb954985bd1cd017f7dae36c41958e3d6fa96b:
+    resolution: {tarball: https://codeload.github.com/iyegoroff/remotedev/tar.gz/d6bb954985bd1cd017f7dae36c41958e3d6fa96b}
+    name: remotedev
+    version: 0.2.9
+    dependencies:
+      jsan: 3.1.13
+      querystring: 0.2.0
+      rn-host-detect: 1.2.0
+      socketcluster-client: 13.0.1
+    dev: false

@@ -46,10 +46,9 @@
   "license": "MIT",
   "dependencies": {
     "@ts-elmish/common": "workspace:*",
-    "remotedev": "^0.2.9"
+    "remotedev": "iyegoroff/remotedev#prebuilt"
   },
   "devDependencies": {
-    "@ts-elmish/configs": "workspace:*",
-    "@types/remotedev": "file:../../typings/@types/remotedev"
+    "@ts-elmish/configs": "workspace:*"
   }
 }

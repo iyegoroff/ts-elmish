@@ -1,7 +1,0 @@
-{
-    "name": "@types/remotedev",
-    "version": "0.0.1",
-    "main": "",
-    "types": "index.d.ts",
-    "typeScriptVersion": "3.6"
-}

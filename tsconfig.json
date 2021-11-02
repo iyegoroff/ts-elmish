@@ -14,7 +14,6 @@
     "allowUnreachableCode": false,
     "removeComments": true,
     "noUncheckedIndexedAccess": true,
-    "types": ["jest"],
-    "typeRoots": ["./typings/@types", "./node_modules/@types"]
+    "types": ["jest"]
   }
 }
