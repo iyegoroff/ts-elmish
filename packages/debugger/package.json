@@ -1,6 +1,6 @@
 {
   "name": "@ts-elmish/debugger",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "private": false,
   "description": "Time-traveling debugger support for ts-elmish",
   "main": "src/index.ts",
