@@ -41,7 +41,7 @@ export const createElmishRootComponent = <
   const compare: shallowequal.Customizer<unknown> | undefined =
     skipRestartOnAttrChange === undefined
       ? undefined
-      : (_, __, key) =>
+      : (_: unknown, __: unknown, key) =>
           key === undefined || skipRestartOnAttrChange.indexOf(`${key}`) < 0 ? undefined : true
 
   return function ElmishComponent(vnode) {
