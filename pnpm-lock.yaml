@@ -205,6 +205,8 @@ importers:
       '@ts-elmish/core': workspace:*
       '@types/mithril': ^2.0.8
       '@types/shallowequal': ^1.1.1
+      mithril: ^2.0.4
+      mithril-query: github:iyegoroff/mithril-query#fix-types
       shallowequal: ^1.1.0
     dependencies:
       '@ts-elmish/common': link:../common
@@ -214,6 +216,8 @@ importers:
       '@ts-elmish/core': link:../core
       '@types/mithril': 2.0.8
       '@types/shallowequal': 1.1.1
+      mithril: 2.0.4
+      mithril-query: github.com/iyegoroff/mithril-query/a142b03375253e75ccba605495793911c018d7a2
 
   packages/railway-effects:
     specifiers:
@@ -3074,6 +3078,10 @@ packages:
     resolution: {integrity: sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==}
     dev: true
 
+  /commander/3.0.2:
+    resolution: {integrity: sha512-Gar0ASD4BDyKC4hl4DwHqDrmvjoxWKZigVnAbn5H1owvm4CxCPdb0HQDehwNYMJpla5+M2tPmPARzhtYuwpHow==}
+    dev: true
+
   /commander/7.2.0:
     resolution: {integrity: sha512-QrWXB+ZQSVPmIWIhtEO9H+gwHaMGYiF5ChvoJ+K9ZGHG/sVsa6yiesAD1GC/x46sET00Xlwo1u49RVVVzvcSkw==}
     engines: {node: '>= 10'}
@@ -3485,6 +3493,10 @@ packages:
     engines: {node: '>= 4'}
     dependencies:
       domelementtype: 2.2.0
+    dev: true
+
+  /domino/2.1.6:
+    resolution: {integrity: sha512-3VdM/SXBZX2omc9JF9nOPCtDaYQ67BGp5CoLpIQlO2KCAPETs8TcDHacF26jXadGbvUteZzRTeos2fhID5+ucQ==}
     dev: true
 
   /domutils/2.8.0:
@@ -5919,7 +5931,6 @@ packages:
   /mithril/2.0.4:
     resolution: {integrity: sha512-mgw+DMZlhMS4PpprF6dl7ZoeZq5GGcAuWnrg5e12MvaGauc4jzWsDZtVGRCktsiQczOEUr2K5teKbE5k44RlOg==}
     hasBin: true
-    dev: false
 
   /mitt/3.0.0:
     resolution: {integrity: sha512-7dX2/10ITVyqh4aOSVI9gdape+t9l2/8QxHrFmUXu4EEUpdlxl6RudZUPZoc+zuY2hk1j7XxVroIVIan/pD/SQ==}
@@ -6508,6 +6519,12 @@ packages:
       fast-diff: 1.2.0
     dev: true
 
+  /prettier/1.19.1:
+    resolution: {integrity: sha512-s7PoyDv/II1ObgQunCbB9PdLmUcBZcnWOcxDh7O0N/UwDEsHyqkW+Qh28jW+mVuCdx7gLB0BotYI1Y6uI9iyew==}
+    engines: {node: '>=4'}
+    hasBin: true
+    dev: true
+
   /prettier/2.4.1:
     resolution: {integrity: sha512-9fbDAXSBcc6Bs1mZrDYb3XKzDLm4EXXL9sC1LqKP5rZkT6KRr/rf9amVUcODVXgguK/isJz0d0hP72WeaKWsvA==}
     engines: {node: '>=10.13.0'}
@@ -6539,6 +6556,15 @@ packages:
       ansi-regex: 5.0.1
       ansi-styles: 5.2.0
       react-is: 17.0.2
+    dev: true
+
+  /pretty-html-log/1.1.1:
+    resolution: {integrity: sha512-7Ai/cBk764SmU9vmJL/B7wzcWu7MIQflJ0Yx1cL/kPHZXkyn7AY1Tqtfgrjo9P750G7nsSDfk12FQ+mQKqQUvg==}
+    hasBin: true
+    dependencies:
+      chalk: 2.4.2
+      commander: 3.0.2
+      prettier: 1.19.1
     dev: true
 
   /process-nextick-args/2.0.1:
@@ -8404,9 +8430,23 @@ packages:
       yargs-parser: 20.2.9
     dev: true
 
+  /yields-keycode/1.1.0:
+    resolution: {integrity: sha1-A4qYWGbLtpEOQzrF4ouDmd/8Nd8=}
+    dev: true
+
   /yocto-queue/0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
+    dev: true
+
+  github.com/iyegoroff/mithril-query/a142b03375253e75ccba605495793911c018d7a2:
+    resolution: {tarball: https://codeload.github.com/iyegoroff/mithril-query/tar.gz/a142b03375253e75ccba605495793911c018d7a2}
+    name: mithril-query
+    version: 4.0.1
+    dependencies:
+      domino: 2.1.6
+      pretty-html-log: 1.1.1
+      yields-keycode: 1.1.0
     dev: true
 
   github.com/iyegoroff/remotedev/d6bb954985bd1cd017f7dae36c41958e3d6fa96b:

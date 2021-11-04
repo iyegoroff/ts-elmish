@@ -9,7 +9,7 @@ export type IdleAction = typeof IdleAction
 
 export type Dispatch<Action> = (action: Action) => undefined
 
-export type Effect<Action> = Array<(dispatch: Dispatch<Action>) => void>
+export type Effect<Action> = ReadonlyArray<(dispatch: Dispatch<Action>) => void>
 
 export type ProgramConfig<State, Action> = {
   readonly init: () => readonly [State, Effect<Action>]

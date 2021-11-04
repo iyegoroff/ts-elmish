@@ -13,6 +13,7 @@ export type { ElmishProps as ElmishAttrs } from '@ts-elmish/common'
  * @param init Function that takes attrs and returns initial state & effect
  * @param update Function that takes state & action and returns next state & effect
  * @param view Mithril component
+ * @param transformProgram Function to modify inputs and output of elmish runtime initialization
  * @param skipRestartOnAttrChange Array of attr names that prevents elmish runtime from restarting
  *                                when specified attrs change
  * @returns Root elmish mithril component
@@ -40,12 +41,12 @@ export const createElmishRootComponent = <
   const compare: shallowequal.Customizer<unknown> | undefined =
     skipRestartOnAttrChange === undefined
       ? undefined
-      : (_: unknown, __: unknown, key) =>
-          skipRestartOnAttrChange.indexOf(`${key ?? ''}`) < 0 ? true : undefined
+      : (_, __, key) =>
+          key === undefined || skipRestartOnAttrChange.indexOf(`${key}`) < 0 ? undefined : true
 
   return function ElmishComponent(vnode) {
     let prevAttrs = vnode.attrs
-    let state: State | undefined
+    let state: State
 
     const run = (attrs: Attrs) =>
       runTransformedProgram({
@@ -72,13 +73,11 @@ export const createElmishRootComponent = <
           prevAttrs = attrs
         }
 
-        return state !== undefined
-          ? m(view, {
-              ...attrs,
-              ...state,
-              dispatch: program.dispatch
-            })
-          : undefined
+        return m(view, {
+          ...attrs,
+          ...state,
+          dispatch: program.dispatch
+        })
       }
     }
   }

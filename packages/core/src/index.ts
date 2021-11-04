@@ -5,7 +5,7 @@ export const runProgram = <State, Action>({
   update,
   view
 }: ProgramConfig<State, Action>): Program<State, Action | IdleAction> => {
-  let [state, effects] = init()
+  let [state, [...effects]] = init()
   let isRunning = true
 
   const stop = () => {

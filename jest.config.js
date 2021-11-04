@@ -1,9 +1,10 @@
 const projects = [
-  'packages/core',
-  'packages/basic-effects',
-  'packages/railway-effects',
-  'examples/counters-mithril',
-  'examples/todos-react'
+  // 'packages/core',
+  // 'packages/basic-effects',
+  // 'packages/railway-effects',
+  'packages/mithril'
+  // 'examples/counters-mithril',
+  // 'examples/todos-react'
 ]
 
 const config = {

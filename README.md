@@ -4,7 +4,9 @@
 [![CircleCI](https://circleci.com/gh/iyegoroff/ts-elmish.svg?style=svg)](https://circleci.com/gh/iyegoroff/ts-elmish)
 [![codecov](https://codecov.io/gh/iyegoroff/ts-elmish/branch/master/graph/badge.svg?t=1520230083925)](https://codecov.io/gh/iyegoroff/ts-elmish)
 [![Type Coverage](https://img.shields.io/badge/dynamic/json.svg?label=type-coverage&prefix=%E2%89%A5&suffix=%&query=$.typeCoverage.atLeast&uri=https%3A%2F%2Fraw.githubusercontent.com%2Fiyegoroff%2Fts-elmish%2Fmaster%2Fpackage.json)](https://github.com/plantain-00/type-coverage)
-[![devDependencies Status](https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?type=dev)](https://david-dm.org/iyegoroff/ts-elmish?type=dev)
+
+<!-- [![devDependencies Status](https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?type=dev)](https://david-dm.org/iyegoroff/ts-elmish?type=dev) -->
+
 [![npm](https://img.shields.io/npm/l/@ts-elmish/core.svg?t=1495378566925)](https://www.npmjs.com/package/@ts-elmish/core)
 
 Elmish architecture in Typescript
@@ -16,36 +18,51 @@ Elmish architecture in Typescript
 - <b>minimalistic</b>, no dedicated ecosystem approach
 - <b>unobtrusive</b>, doesn't capture app composition root
 - <b>modular</b>, supports different view layers and effect handling strategies
-- <b>testable</b>, encourages markup/logic/effect separation
+- <b>testable</b>, encourages view/logic/effect separation
 
-## Maintenance
+## Packages
 
 <table>
    <tbody>
       <tr>
-         <td>core</td>
-         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/core" title="dependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Fcore"/></a></td>
-         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/core&type=dev" title="devDependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Fcore&type=dev"/></a></td>
+         <td>@ts-elmish/core</td>
+         <td><img alt="dependencies" src="https://img.shields.io/librariesio/release/npm/@ts-elmish/core"></td>
+         <td>elmish runtime</td>
+         <!-- <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/core" title="dependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Fcore"/></a></td>
+         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/core&type=dev" title="devDependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Fcore&type=dev"/></a></td> -->
       </tr>
       <tr>
-         <td>basic-effects</td>
-         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/basic-effects" title="dependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Fbasic-effects"/></a></td>
-         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/basic-effects&type=dev" title="devDependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Fbasic-effects&type=dev"/></a></td>
+         <td>@ts-elmish/basic-effects</td>
+         <td><img alt="dependencies" src="https://img.shields.io/librariesio/release/npm/@ts-elmish/basic-effects"></td>
+         <td>effects from functions</td>
+         <!-- <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/basic-effects" title="dependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Fbasic-effects"/></a></td>
+         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/basic-effects&type=dev" title="devDependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Fbasic-effects&type=dev"/></a></td> -->
       </tr>
       <tr>
-         <td>railway-effects</td>
-         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/railway-effects" title="dependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Frailway-effects"/></a></td>
-         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/railway-effects&type=dev" title="devDependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Frailway-effects&type=dev"/></a></td>
+         <td>@ts-elmish/railway-effects</td>
+         <td><img alt="dependencies" src="https://img.shields.io/librariesio/release/npm/@ts-elmish/railway-effects"></td>
+         <td>ROP-powered effects</td>
+         <!-- <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/railway-effects" title="dependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Frailway-effects"/></a></td>
+         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/railway-effects&type=dev" title="devDependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Frailway-effects&type=dev"/></a></td> -->
       </tr>
       <tr>
-         <td>react</td>
-         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/react" title="dependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Freact"/></a></td>
-         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/react&type=dev" title="devDependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Freact&type=dev"/></a></td>
+         <td>@ts-elmish/react</td>
+         <td><img alt="dependencies" src="https://img.shields.io/librariesio/release/npm/@ts-elmish/react"></td>
+         <td>react view layer</td>
+         <!-- <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/react" title="dependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Freact"/></a></td>
+         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/react&type=dev" title="devDependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Freact&type=dev"/></a></td> -->
       </tr>
       <tr>
-         <td>mithril</td>
-         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/mithril" title="dependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Fmithril"/></a></td>
-         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/mithril&type=dev" title="devDependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Fmithril&type=dev"/></a></td>
+         <td>@ts-elmish/mithril</td>
+         <td><img alt="dependencies" src="https://img.shields.io/librariesio/release/npm/@ts-elmish/mithril"></td>
+         <td>mithril view layer</td>
+         <!-- <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/mithril" title="dependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Fmithril"/></a></td>
+         <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/mithril&type=dev" title="devDependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Fmithril&type=dev"/></a></td> -->
+      </tr>
+      <tr>
+         <td>@ts-elmish/debugger</td>
+         <td><img alt="dependencies" src="https://img.shields.io/librariesio/release/npm/@ts-elmish/debugger"></td>
+         <td>redux-devtools integration</td>
       </tr>
    </tbody>
 </table>
@@ -92,21 +109,21 @@ Useful generic purpose modules:
 
 ```typescript
 import m, { Component } from 'mithril'
-import { ElmishAttrs, createElmishComponent } from '@ts-elmish/mithril'
+import { ElmishAttrs, createElmishRootComponent } from '@ts-elmish/mithril'
 import { Effect } from '@ts-elmish/basic-effects'
 
 type State = {
   readonly count: number
 }
 
-type Action = readonly ['increment'] | readonly ['decrement']
+type Action = 'increment' | 'decrement'
 
 const init = (): State => {
   return { count: 0 }
 }
 
 const update = ({ count }: State, action: Action): State => {
-  switch (action[0]) {
+  switch (action) {
     case 'increment':
       return { count: count + 1 }
 
@@ -119,12 +136,12 @@ const Counter: Component<ElmishAttrs<State, Action>> = {
   view: ({ attrs: { count, dispatch } }) =>
     m('div', [
       m('div', count),
-      m('button', { onclick: () => dispatch(['increment']) }, '+'),
-      m('button', { onclick: () => dispatch(['decrement']) }, '-')
+      m('button', { onclick: () => dispatch('increment') }, '+'),
+      m('button', { onclick: () => dispatch('decrement') }, '-')
     ])
 }
 
-const App = createElmishComponent({
+const App = createElmishRootComponent({
   init: () => [init(), Effect.none<Action>()],
   update: (state, action) => [update(state, action), Effect.none()],
   view: Counter

@@ -45,18 +45,20 @@
   },
   "author": "iyegoroff <iegoroff@gmail.com>",
   "license": "MIT",
-  "peerDependencies": {
-    "@ts-elmish/core": "workspace:*",
-    "mithril": ">=2"
-  },
   "dependencies": {
     "@ts-elmish/common": "workspace:*",
     "shallowequal": "^1.1.0"
   },
-  "devDependencies": {
+  "peerDependencies": {
     "@ts-elmish/core": "workspace:*",
+    "mithril": ">=2"
+  },
+  "devDependencies": {
     "@ts-elmish/configs": "workspace:*",
+    "@ts-elmish/core": "workspace:*",
     "@types/mithril": "^2.0.8",
-    "@types/shallowequal": "^1.1.1"
+    "@types/shallowequal": "^1.1.1",
+    "mithril": "^2.0.4",
+    "mithril-query": "github:iyegoroff/mithril-query#fix-types"
   }
 }
