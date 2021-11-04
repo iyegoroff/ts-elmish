@@ -217,7 +217,7 @@ importers:
       '@types/mithril': 2.0.8
       '@types/shallowequal': 1.1.1
       mithril: 2.0.4
-      mithril-query: github.com/iyegoroff/mithril-query/a142b03375253e75ccba605495793911c018d7a2
+      mithril-query: github.com/iyegoroff/mithril-query/7f61b58bfedcc58d3d8cb70958c32c96de293f79
 
   packages/railway-effects:
     specifiers:
@@ -8439,8 +8439,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  github.com/iyegoroff/mithril-query/a142b03375253e75ccba605495793911c018d7a2:
-    resolution: {tarball: https://codeload.github.com/iyegoroff/mithril-query/tar.gz/a142b03375253e75ccba605495793911c018d7a2}
+  github.com/iyegoroff/mithril-query/7f61b58bfedcc58d3d8cb70958c32c96de293f79:
+    resolution: {tarball: https://codeload.github.com/iyegoroff/mithril-query/tar.gz/7f61b58bfedcc58d3d8cb70958c32c96de293f79}
     name: mithril-query
     version: 4.0.1
     dependencies:
