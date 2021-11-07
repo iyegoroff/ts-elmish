@@ -25,43 +25,49 @@ Elmish architecture in Typescript
    <tbody>
       <tr>
          <td>@ts-elmish/core</td>
-         <td><img alt="dependencies" src="https://img.shields.io/librariesio/release/npm/@ts-elmish/core"></td>
          <td>elmish runtime</td>
+         <td><img alt="dependencies" src="https://img.shields.io/librariesio/release/npm/@ts-elmish/core"></td>
+         <td><a href="https://bundlephobia.com/package/@ts-elmish/core" title="min+gzip"><img src="https://badgen.net/bundlephobia/minzip/@ts-elmish/core?label=gzip"/></a></td>
          <!-- <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/core" title="dependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Fcore"/></a></td>
          <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/core&type=dev" title="devDependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Fcore&type=dev"/></a></td> -->
       </tr>
       <tr>
          <td>@ts-elmish/basic-effects</td>
-         <td><img alt="dependencies" src="https://img.shields.io/librariesio/release/npm/@ts-elmish/basic-effects"></td>
          <td>effects from functions</td>
+         <td><img alt="dependencies" src="https://img.shields.io/librariesio/release/npm/@ts-elmish/basic-effects"></td>
+         <td><a href="https://bundlephobia.com/package/@ts-elmish/basic-effects" title="min+gzip"><img src="https://badgen.net/bundlephobia/minzip/@ts-elmish/basic-effects?label=gzip"/></a></td>
          <!-- <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/basic-effects" title="dependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Fbasic-effects"/></a></td>
          <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/basic-effects&type=dev" title="devDependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Fbasic-effects&type=dev"/></a></td> -->
       </tr>
       <tr>
          <td>@ts-elmish/railway-effects</td>
-         <td><img alt="dependencies" src="https://img.shields.io/librariesio/release/npm/@ts-elmish/railway-effects"></td>
          <td>ROP-powered effects</td>
+         <td><img alt="dependencies" src="https://img.shields.io/librariesio/release/npm/@ts-elmish/railway-effects"></td>
+         <td><a href="https://bundlephobia.com/package/@ts-elmish/railway-effects" title="min+gzip"><img src="https://badgen.net/bundlephobia/minzip/@ts-elmish/railway-effects?label=gzip"/></a></td>
          <!-- <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/railway-effects" title="dependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Frailway-effects"/></a></td>
          <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/railway-effects&type=dev" title="devDependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Frailway-effects&type=dev"/></a></td> -->
       </tr>
       <tr>
          <td>@ts-elmish/react</td>
-         <td><img alt="dependencies" src="https://img.shields.io/librariesio/release/npm/@ts-elmish/react"></td>
          <td>react view layer</td>
+         <td><img alt="dependencies" src="https://img.shields.io/librariesio/release/npm/@ts-elmish/react"></td>
+         <td><a href="https://bundlephobia.com/package/@ts-elmish/react" title="min+gzip"><img src="https://badgen.net/bundlephobia/minzip/@ts-elmish/react?label=gzip"/></a></td>
          <!-- <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/react" title="dependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Freact"/></a></td>
          <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/react&type=dev" title="devDependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Freact&type=dev"/></a></td> -->
       </tr>
       <tr>
          <td>@ts-elmish/mithril</td>
-         <td><img alt="dependencies" src="https://img.shields.io/librariesio/release/npm/@ts-elmish/mithril"></td>
          <td>mithril view layer</td>
+         <td><img alt="dependencies" src="https://img.shields.io/librariesio/release/npm/@ts-elmish/mithril"></td>
+         <td><a href="https://bundlephobia.com/package/@ts-elmish/mithril" title="min+gzip"><img src="https://badgen.net/bundlephobia/minzip/@ts-elmish/mithril?label=gzip"/></a></td>
          <!-- <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/mithril" title="dependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Fmithril"/></a></td>
          <td><a href="https://david-dm.org/iyegoroff/ts-elmish?path=packages/mithril&type=dev" title="devDependencies status"><img src="https://status.david-dm.org/gh/iyegoroff/ts-elmish.svg?path=packages%2Fmithril&type=dev"/></a></td> -->
       </tr>
       <tr>
          <td>@ts-elmish/debugger</td>
-         <td><img alt="dependencies" src="https://img.shields.io/librariesio/release/npm/@ts-elmish/debugger"></td>
          <td>redux-devtools integration</td>
+         <td><img alt="dependencies" src="https://img.shields.io/librariesio/release/npm/@ts-elmish/debugger"></td>
+         <td><a href="https://bundlephobia.com/package/@ts-elmish/debugger" title="min+gzip"><img src="https://badgen.net/bundlephobia/minzip/@ts-elmish/debugger?label=gzip"/></a></td>
       </tr>
    </tbody>
 </table>
