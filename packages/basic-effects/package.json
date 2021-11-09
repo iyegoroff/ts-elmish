@@ -3,6 +3,7 @@
   "version": "4.0.5",
   "private": false,
   "description": "Basic effects for ts-elmish",
+  "sideEffects": false,
   "main": "src/index.ts",
   "publishConfig": {
     "main": "./dist/cjs/index.js",
