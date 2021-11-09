@@ -82,3 +82,16 @@ export const createElmishRootComponent = <
     }
   }
 }
+
+/**
+ * A helper to disable autoredraw system inside DOM event handlers.
+ *
+ * @param handler Event handler function
+ * @returns Patched event handler
+ */
+export const skipRedraw =
+  <Event extends { redraw: boolean }>(handler: (event: Event) => undefined) =>
+  (event: Event) => {
+    event.redraw = false
+    return handler(event)
+  }

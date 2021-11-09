@@ -1,6 +1,6 @@
 import m, { Component } from 'mithril'
 import { Dict } from 'ts-micro-dict'
-import { ElmishAttrs } from '@ts-elmish/mithril'
+import { ElmishAttrs, skipRedraw } from '@ts-elmish/mithril'
 import { MainState, MainAction } from '../main-state'
 import { Counter } from '../../counter'
 
@@ -21,12 +21,15 @@ export const Main: Component<ElmishAttrs<MainState, MainAction, MainAttrs>> = {
             }),
             m(
               'button',
-              { style: 'margin-bottom: 1em;', onclick: () => dispatch(['remove-counter', id]) },
+              {
+                style: 'margin-bottom: 1em;',
+                onclick: skipRedraw(() => dispatch(['remove-counter', id]))
+              },
               'remove'
             )
           ]),
         counters
       ),
-      m('button', { key: 'add', onclick: () => dispatch(['add-counter']) }, 'add')
+      m('button', { key: 'add', onclick: skipRedraw(() => dispatch(['add-counter'])) }, 'add')
     ])
 }
