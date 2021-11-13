@@ -1,5 +1,5 @@
 import { Boolean, Dictionary, Record, Static, String } from 'runtypes'
-import { AsyncResult, Result, UnwrapResult } from 'ts-railway'
+import { AsyncResult, Result, Matcher } from 'ts-railway'
 import { pipe, pipeWith } from 'pipe-ts'
 import { Dict } from 'ts-micro-dict'
 import { LocalData } from '../../services/local-data/types'
@@ -60,8 +60,8 @@ export const updateTodo =
 
 export const listenTodoDictChanges =
   (listen: LocalData['listenChanges']) =>
-  <U>(onChange: UnwrapResult<ReturnType<typeof assertTodoDict>, U>) =>
-    listen(todoDictKey, pipe(assertTodoDict, Result.unwrap(onChange)))
+  <U>(onChange: Matcher<ReturnType<typeof assertTodoDict>, U>) =>
+    listen(todoDictKey, pipe(assertTodoDict, Result.match(onChange)))
 
 export const filteredTodos = (todos: TodoDict, todoFilter: TodoFilter) =>
   Dict.filter((todo) => todoFilter === 'all' || (todoFilter === 'active') !== todo.completed, todos)

@@ -1,6 +1,6 @@
 import { Literal, Union } from 'runtypes'
 import { pipe } from 'pipe-ts'
-import { Result, UnwrapResult } from 'ts-railway'
+import { Result, Matcher } from 'ts-railway'
 import { HashLocation } from '../../services/hash-location/types'
 import { TodoFilter } from './types'
 
@@ -19,5 +19,5 @@ export const updateTodoFilter = (change: HashLocation['change']) => (todoFilter:
 
 export const listenTodoFilterChanges =
   (listen: HashLocation['listenChanges']) =>
-  <U>(onChange: UnwrapResult<ReturnType<typeof todoFilterToDomain>, U>) =>
-    listen(pipe(todoFilterToDomain, Result.unwrap(onChange)))
+  <U>(onChange: Matcher<ReturnType<typeof todoFilterToDomain>, U>) =>
+    listen(pipe(todoFilterToDomain, Result.match(onChange)))

@@ -46,28 +46,18 @@ function from<Action, Success, Failure>(
   } else {
     const { success, result } = args
     const failure = 'failure' in args ? args.failure : undefined
+    const matcher = { success, failure, default: IdleAction } as const
 
     return [
       (dispatch) => {
         const val = result()
         return 'then' in val
-          ? val.then((async) => dispatch(effectFromResult(async, success, failure)))
-          : dispatch(effectFromResult(val, success, failure))
+          ? val.then((async) => dispatch(Result.match(matcher, async)))
+          : dispatch(Result.match(matcher, val))
       }
     ]
   }
 }
-
-const effectFromResult = <Action, Success, Failure>(
-  result: Result<Success, Failure>,
-  success: ((value: Success) => Action) | undefined,
-  failure: ((error: Failure) => Action) | undefined
-) =>
-  result.tag === 'success' && success !== undefined
-    ? success(result.success)
-    : result.tag === 'failure' && failure !== undefined
-    ? failure(result.failure)
-    : IdleAction
 
 export const Effect = {
   ...BasicEffect,

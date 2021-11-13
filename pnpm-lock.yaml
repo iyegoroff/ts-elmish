@@ -113,7 +113,7 @@ importers:
       sweetalert2: ^11.1.9
       ts-is-defined: ^2.0.0
       ts-micro-dict: ^8.0.0
-      ts-railway: ^3.0.6
+      ts-railway: ^4.0.4
       ts-toolbelt: 8.0.7
       use-null-ref: ^0.0.2
       use-pipe-ts: ^1.0.0
@@ -138,7 +138,7 @@ importers:
       sweetalert2: 11.1.9
       ts-is-defined: 2.0.0
       ts-micro-dict: 8.0.0
-      ts-railway: 3.0.6
+      ts-railway: 4.0.4
       ts-toolbelt: 8.0.7
       use-null-ref: 0.0.2_react@17.0.2
       use-pipe-ts: 1.0.0_pipe-ts@0.0.9+react@17.0.2
@@ -226,13 +226,13 @@ importers:
       '@ts-elmish/basic-effects': workspace:*
       '@ts-elmish/common': workspace:*
       '@ts-elmish/configs': workspace:*
-      ts-railway: ^3.0.6
+      ts-railway: ^4.0.4
     dependencies:
       '@ts-elmish/basic-effects': link:../basic-effects
       '@ts-elmish/common': link:../common
     devDependencies:
       '@ts-elmish/configs': link:../../configs
-      ts-railway: 3.0.6
+      ts-railway: 4.0.4
 
   packages/react:
     specifiers:
@@ -7746,8 +7746,8 @@ packages:
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dev: false
 
-  /ts-railway/3.0.6:
-    resolution: {integrity: sha512-3Y8g43gTQRmd7f++6CZuHcZis9eqRR9YS2k4MWh3kwXIXkQDBNEBfnWeR9Hg54ifIUaJAzFxfUilXw/BoQfJcQ==}
+  /ts-railway/4.0.4:
+    resolution: {integrity: sha512-muELDjvRMqsVyMgdCSfT3j1ImmV3uwuA1gjDNvcmSBYqU3EUXiRtejjNqqbqN66NSmgzbvoLh/ZrL571x9EbgA==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
   /ts-tiny-invariant/1.0.3:

@@ -50,10 +50,10 @@
     "@ts-elmish/basic-effects": "workspace:*"
   },
   "peerDependencies": {
-    "ts-railway": "^3.0.6"
+    "ts-railway": "^4.0.4"
   },
   "devDependencies": {
     "@ts-elmish/configs": "workspace:*",
-    "ts-railway": "^3.0.6"
+    "ts-railway": "^4.0.4"
   }
 }
