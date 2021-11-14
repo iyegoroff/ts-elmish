@@ -16,14 +16,12 @@ type Action =
   | readonly ['toggle-all-todos-completed']
   | readonly ['todo-dict-changed', TodoDict]
 
-// #region Action
 const Action = {
   setText: (arg0: string): Action => ['set-text', arg0],
   addTodo: (): Action => ['add-todo'],
   toggleAllTodosCompleted: (): Action => ['toggle-all-todos-completed'],
   todoDictChanged: (arg0: TodoDict): Action => ['todo-dict-changed', arg0]
 } as const
-// #endregion
 
 type Command = readonly [State, Effect<Action>]
 
@@ -33,69 +31,57 @@ const init = (todos: TodoDict): Command => {
   return [{ text: '', allTodosCompleted: allCompleted(todos) }, Effect.none()]
 }
 
-const setTextUpdate = (state: State, [, text]: readonly ['set-text', string]): Command => {
-  return [{ ...state, text }, Effect.none()]
-}
-
-const addTodoUpdate = (
-  { text, ...state }: State,
-  _action: readonly ['add-todo'],
-  { Todos: { addTodo } }: Effects
-): Command => {
-  return [
-    { ...state, text: '' },
-    text === '' ? Effect.none() : Effect.from({ result: () => addTodo(text) })
-  ]
-}
-
-const toggleAllTodosCompletedUpdate = (
-  state: State,
-  _action: readonly ['toggle-all-todos-completed'],
-  { Todos: { loadTodoDict, updateTodoDict } }: Effects
-): Command => {
-  const allTodosCompleted = !state.allTodosCompleted
-
-  return [
-    { ...state, allTodosCompleted },
-    Effect.from({
-      result: pipe(
-        loadTodoDict,
-        AsyncResult.map(Dict.map((todo: Todo) => ({ ...todo, completed: allTodosCompleted }))),
-        AsyncResult.flatMap(updateTodoDict)
-      )
-    })
-  ]
-}
-
-const todoDictChangedUpdate = (
-  state: State,
-  [, todos]: readonly ['todo-dict-changed', TodoDict]
-): Command => {
-  const allTodosCompleted = allCompleted(todos)
-
-  return [
-    allTodosCompleted !== state.allTodosCompleted ? { ...state, allTodosCompleted } : state,
-    Effect.none()
-  ]
-}
-
-// #region update
 const update = (state: State, action: Action, effects: Effects): Command => {
   switch (action[0]) {
-    case 'set-text':
-      return setTextUpdate(state, action)
+    case 'set-text': {
+      const [, text] = action
 
-    case 'add-todo':
-      return addTodoUpdate(state, action, effects)
+      return [{ ...state, text }, Effect.none()]
+    }
 
-    case 'toggle-all-todos-completed':
-      return toggleAllTodosCompletedUpdate(state, action, effects)
+    case 'add-todo': {
+      const {
+        Todos: { addTodo }
+      } = effects
+      const { text } = state
 
-    case 'todo-dict-changed':
-      return todoDictChangedUpdate(state, action)
+      return [
+        { ...state, text: '' },
+        text === '' ? Effect.none() : Effect.from({ result: () => addTodo(text) })
+      ]
+    }
+
+    case 'toggle-all-todos-completed': {
+      const {
+        Todos: { loadTodoDict, updateTodoDict }
+      } = effects
+
+      const allTodosCompleted = !state.allTodosCompleted
+
+      return [
+        { ...state, allTodosCompleted },
+        Effect.from({
+          result: pipe(
+            loadTodoDict,
+            AsyncResult.map(Dict.map((todo: Todo) => ({ ...todo, completed: allTodosCompleted }))),
+            AsyncResult.flatMap(updateTodoDict)
+          )
+        })
+      ]
+    }
+
+    case 'todo-dict-changed': {
+      const [, todos] = action
+
+      const allTodosCompleted = allCompleted(todos)
+
+      return [
+        allTodosCompleted !== state.allTodosCompleted ? { ...state, allTodosCompleted } : state,
+        Effect.none()
+      ]
+    }
   }
 }
-// #endregion
 
 export type TodoInputState = State
 export type TodoInputAction = Action

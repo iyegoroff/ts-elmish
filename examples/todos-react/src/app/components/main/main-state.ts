@@ -22,7 +22,6 @@ type Action =
   | readonly ['footer-action', FooterAction]
   | readonly ['todo-list-action', TodoListAction]
 
-// #region Action
 const Action = {
   loadData: (): Action => ['load-data'],
   dataLoaded: (arg0: readonly [TodoDict, TodoFilter]): Action => ['data-loaded', arg0],
@@ -34,7 +33,6 @@ const Action = {
   footerAction: (arg0: FooterAction): Action => ['footer-action', arg0],
   todoListAction: (arg0: TodoListAction): Action => ['todo-list-action', arg0]
 } as const
-// #endregion
 
 type Command = readonly [State, Effect<Action>]
 
@@ -42,126 +40,99 @@ const init = (): Command => {
   return [{ loading: true }, Effect.from({ action: ['load-data'] })]
 }
 
-const loadDataUpdate = (
-  state: State,
-  _action: readonly ['load-data'],
-  { Todos: { loadTodoDict, loadTodoFilter } }: Effects
-): Command => {
-  return [
-    state,
-    Effect.from({
-      result: () => AsyncResult.combine(loadTodoDict(), loadTodoFilter()),
-      success: Action.dataLoaded,
-      failure: Action.handleTodoFilterLoadError
-    })
-  ]
-}
-
-const dataLoadedUpdate = (
-  state: State,
-  [, [todos, todoFilter]]: readonly ['data-loaded', readonly [TodoDict, TodoFilter]]
-): Command => {
-  if (!('loading' in state)) {
-    return [state, Effect.none()]
-  }
-
-  const [todoInput, todoInputEffect] = TodoInputState.init(todos)
-  const [footer, footerEffect] = FooterState.init(todos, todoFilter)
-  const [todoList, todoListEffect] = TodoListState.init(todos, todoFilter)
-
-  return [
-    { todoInput, footer, todoList },
-    Effect.batch(
-      Effect.map(Action.todoInputAction, todoInputEffect),
-      Effect.map(Action.footerAction, footerEffect),
-      Effect.map(Action.todoListAction, todoListEffect)
-    )
-  ]
-}
-
-const todoInputUpdate = (
-  state: State,
-  [, action]: readonly ['todo-input-action', TodoInputAction],
-  effects: Effects
-): Command => {
-  if ('loading' in state) {
-    return [state, Effect.none()]
-  }
-
-  const [todoInput, todoInputEffect] = TodoInputState.update(state.todoInput, action, effects)
-
-  return [{ ...state, todoInput }, Effect.map(Action.todoInputAction, todoInputEffect)]
-}
-
-const todoListUpdate = (
-  state: State,
-  [, action]: readonly ['todo-list-action', TodoListAction],
-  effects: Effects
-): Command => {
-  if ('loading' in state) {
-    return [state, Effect.none()]
-  }
-
-  const [todoList, todoListEffect] = TodoListState.update(state.todoList, action, effects)
-
-  return [{ ...state, todoList }, Effect.map(Action.todoListAction, todoListEffect)]
-}
-
-const footerUpdate = (
-  state: State,
-  [, action]: readonly ['footer-action', FooterAction],
-  effects: Effects
-): Command => {
-  if ('loading' in state) {
-    return [state, Effect.none()]
-  }
-
-  const [footer, footerEffect] = FooterState.update(state.footer, action, effects)
-
-  return [{ ...state, footer }, Effect.map(Action.footerAction, footerEffect)]
-}
-
-const handleTodoFilterLoadErrorUpdate = (
-  state: State,
-  [, message]: readonly ['handle-todo-filter-load-error', TodoFilterLoadError],
-  { Alert: { showError }, Todos: { updateTodoFilter } }: Effects
-): Command => {
-  return [
-    state,
-    Effect.from({
-      result: () =>
-        AsyncResult.flatMap(
-          () => updateTodoFilter('all'),
-          showError(`${message}<br/>Switching to default`)
-        ),
-      success: Action.loadData
-    })
-  ]
-}
-
-// #region update
 const update = (state: State, action: Action, effects: Effects): Command => {
   switch (action[0]) {
-    case 'load-data':
-      return loadDataUpdate(state, action, effects)
+    case 'load-data': {
+      const {
+        Todos: { loadTodoFilter, loadTodoDict }
+      } = effects
 
-    case 'data-loaded':
-      return dataLoadedUpdate(state, action)
+      return [
+        state,
+        Effect.from({
+          result: () => AsyncResult.combine(loadTodoDict(), loadTodoFilter()),
+          success: Action.dataLoaded,
+          failure: Action.handleTodoFilterLoadError
+        })
+      ]
+    }
 
-    case 'handle-todo-filter-load-error':
-      return handleTodoFilterLoadErrorUpdate(state, action, effects)
+    case 'data-loaded': {
+      if (!('loading' in state)) {
+        return [state, Effect.none()]
+      }
 
-    case 'todo-input-action':
-      return todoInputUpdate(state, action, effects)
+      const [, [todos, todoFilter]] = action
 
-    case 'footer-action':
-      return footerUpdate(state, action, effects)
+      const [todoInput, todoInputEffect] = TodoInputState.init(todos)
+      const [footer, footerEffect] = FooterState.init(todos, todoFilter)
+      const [todoList, todoListEffect] = TodoListState.init(todos, todoFilter)
 
-    case 'todo-list-action':
-      return todoListUpdate(state, action, effects)
+      return [
+        { todoInput, footer, todoList },
+        Effect.batch(
+          Effect.map(Action.todoInputAction, todoInputEffect),
+          Effect.map(Action.footerAction, footerEffect),
+          Effect.map(Action.todoListAction, todoListEffect)
+        )
+      ]
+    }
+
+    case 'handle-todo-filter-load-error': {
+      const {
+        Alert: { showError },
+        Todos: { updateTodoFilter }
+      } = effects
+      const [, message] = action
+
+      return [
+        state,
+        Effect.from({
+          result: () =>
+            AsyncResult.flatMap(
+              () => updateTodoFilter('all'),
+              showError(`${message}<br/>Switching to default`)
+            ),
+          success: Action.loadData
+        })
+      ]
+    }
+
+    case 'todo-input-action': {
+      if ('loading' in state) {
+        return [state, Effect.none()]
+      }
+
+      const [todoInput, todoInputEffect] = TodoInputState.update(
+        state.todoInput,
+        action[1],
+        effects
+      )
+
+      return [{ ...state, todoInput }, Effect.map(Action.todoInputAction, todoInputEffect)]
+    }
+
+    case 'footer-action': {
+      if ('loading' in state) {
+        return [state, Effect.none()]
+      }
+
+      const [footer, footerEffect] = FooterState.update(state.footer, action[1], effects)
+
+      return [{ ...state, footer }, Effect.map(Action.footerAction, footerEffect)]
+    }
+
+    case 'todo-list-action': {
+      if ('loading' in state) {
+        return [state, Effect.none()]
+      }
+
+      const [todoList, todoListEffect] = TodoListState.update(state.todoList, action[1], effects)
+
+      return [{ ...state, todoList }, Effect.map(Action.todoListAction, todoListEffect)]
+    }
   }
 }
-// #endregion
 
 export type MainState = State
 export type MainAction = Action
