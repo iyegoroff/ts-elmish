@@ -12,9 +12,20 @@ type ResultArgs<Action, Success, Failure, ResultLike extends SomeResult<Success,
     : (error: FailureOf<ResultLike>) => Action
 }
 
+type ResultArgsAlt<Action, Success, Failure, ResultLike extends SomeResult<Success, Failure>> = {
+  readonly result: () => ResultLike
+  readonly success?: (value: Success) => Action
+  readonly failure: Failure extends never ? never : (error: Failure) => Action
+}
+
 type ResultArgsNoFailure<Action, Success, ResultLike extends SomeResult<Success, never>> = {
   readonly result: () => ResultLike
   readonly success?: (value: SuccessOf<ResultLike>) => Action
+}
+
+type ResultArgsNoFailureAlt<Action, Success, ResultLike extends SomeResult<Success, never>> = {
+  readonly result: () => ResultLike
+  readonly success?: (value: Success) => Action
 }
 
 /** Create effect from action */
@@ -28,6 +39,14 @@ function from<
   ResultLike extends SomeResult<Success, Failure> = SomeResult<Success, Failure>
 >(args: ResultArgs<Action, Success, Failure, ResultLike>): Effect<Action>
 
+/** Create effect from a function that returns SomeResult<Success, Failure> */
+function from<
+  Action,
+  Success,
+  Failure,
+  ResultLike extends SomeResult<Success, Failure> = SomeResult<Success, Failure>
+>(args: ResultArgsAlt<Action, Success, Failure, ResultLike>): Effect<Action>
+
 /** Create effect from a function that returns SomeResult<Success, never> */
 function from<
   Action,
@@ -35,11 +54,20 @@ function from<
   ResultLike extends SomeResult<Success, never> = SomeResult<Success, never>
 >(args: ResultArgsNoFailure<Action, Success, ResultLike>): Effect<Action>
 
+/** Create effect from a function that returns SomeResult<Success, never> */
+function from<
+  Action,
+  Success,
+  ResultLike extends SomeResult<Success, never> = SomeResult<Success, never>
+>(args: ResultArgsNoFailureAlt<Action, Success, ResultLike>): Effect<Action>
+
 function from<Action, Success, Failure>(
   args:
     | ActionArgs<Action>
     | ResultArgs<Action, Success, Failure, SomeResult<Success, Failure>>
+    | ResultArgsAlt<Action, Success, Failure, SomeResult<Success, Failure>>
     | ResultArgsNoFailure<Action, Success, SomeResult<Success, never>>
+    | ResultArgsNoFailureAlt<Action, Success, SomeResult<Success, never>>
 ): Effect<Action | IdleAction> {
   if ('action' in args) {
     return BasicEffect.from(args)
