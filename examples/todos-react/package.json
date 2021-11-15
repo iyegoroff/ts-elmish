@@ -21,7 +21,6 @@
     "react-refresh": "^0.10.0",
     "react-refresh-typescript": "^2.0.2",
     "webpack": "^5.61.0",
-    "webpack-bundle-analyzer": "^4.5.0",
     "webpack-cli": "^4.9.1",
     "webpack-dev-server": "^4.4.0"
   },
@@ -42,7 +41,7 @@
     "sweetalert2": "^11.1.9",
     "ts-is-defined": "^2.0.0",
     "ts-micro-dict": "^8.0.0",
-    "ts-railway": "^4.0.5",
+    "ts-railway": "^5.0.1",
     "ts-toolbelt": "8.0.7",
     "use-null-ref": "^0.0.2",
     "use-pipe-ts": "^1.0.0"

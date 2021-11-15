@@ -6,7 +6,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const ReactRefreshTypeScript = require('react-refresh-typescript').default
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 module.exports = (env) => ({
   mode: env.production ? 'production' : 'development',
@@ -53,7 +52,6 @@ module.exports = (env) => ({
     }),
     new MiniCssExtractPlugin(),
     new VanillaExtractPlugin(),
-    new BundleAnalyzerPlugin(),
     new ForkTsCheckerWebpackPlugin({
       typescript: {
         diagnosticOptions: {

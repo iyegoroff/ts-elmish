@@ -50,7 +50,7 @@ const update = (state: State, action: Action, effects: Effects): Command => {
       return [
         state,
         Effect.from({
-          result: () => AsyncResult.combine(loadTodoDict(), loadTodoFilter()),
+          result: AsyncResult.combine(loadTodoDict, loadTodoFilter),
           success: Action.dataLoaded,
           failure: Action.handleTodoFilterLoadError
         })
