@@ -105,7 +105,7 @@ describe('domain > todos > todo-list', () => {
   })
 
   test('listenTodoDictChanges', () => {
-    expect(listenTodoDictChanges(() => () => 1)({ success: () => 1 })).toBeDefined()
+    expect(listenTodoDictChanges(() => () => 1)({ success: () => undefined })).toBeDefined()
   })
 
   test('filteredTodos', () => {

@@ -6,7 +6,7 @@ export const change = (hash: string) =>
   // eslint-disable-next-line functional/immutable-data
   (window.location.hash = hash.startsWith('#/') ? hash : `#/${hash}`)
 
-export const listenChanges = (onChange: (hash: string) => unknown) => {
+export const listenChanges = (onChange: (hash: string) => undefined) => {
   const listener = () => {
     // eslint-disable-next-line functional/no-expression-statement
     onChange(fixedLocation(window.location))

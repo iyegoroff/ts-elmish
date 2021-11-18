@@ -21,12 +21,8 @@ export const update =
   <T>(key: string, value: NonNullable<T>) =>
     setItem(key, JSON.stringify(value)).then(() => emitter.emit('change', { key, value }))
 
-export const listenChanges = (key: string, onChange: (value: unknown) => unknown) => {
-  const listener = (change: Change) => {
-    if (change.key === key) {
-      return onChange(change.value)
-    }
-  }
+export const listenChanges = (key: string, onChange: (value: unknown) => undefined) => {
+  const listener = (change: Change) => (change.key === key ? onChange(change.value) : undefined)
 
   // eslint-disable-next-line functional/no-expression-statement
   emitter.on('change', listener)

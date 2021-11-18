@@ -54,14 +54,15 @@ describe('services > local-data', () => {
   })
 
   test('listenChanges', async () => {
-    const onChange = jest.fn((value: unknown) => value)
-    const onChangeWrong = jest.fn((value: unknown) => value)
+    const onChange = jest.fn((value: unknown) => {
+      expect(value).toEqual(10)
+      return undefined
+    })
+    const onChangeWrong = jest.fn((_: unknown) => undefined)
     const unsubscribe = listenChanges(key, onChange)
     const unsubscribeWrong = listenChanges('wrong', onChangeWrong)
 
     expect(await update(resolver(undefined))(key, 10)).toEqual<Update>(undefined)
-
-    expect(onChange).toReturnWith(10)
 
     expect(unsubscribe()).toBeUndefined()
     expect(unsubscribeWrong()).toBeUndefined()

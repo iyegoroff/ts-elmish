@@ -19,7 +19,7 @@ describe('domain > todos > todo-filter', () => {
 
   test('listenTodoFilterChanges', () => {
     expect(
-      listenTodoFilterChanges(() => () => 1)({ success: () => 1, failure: () => 1 })
+      listenTodoFilterChanges(() => () => 1)({ success: () => undefined, failure: () => undefined })
     ).toBeDefined()
   })
 })

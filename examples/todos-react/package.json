@@ -41,7 +41,7 @@
     "sweetalert2": "^11.1.9",
     "ts-is-defined": "^2.0.0",
     "ts-micro-dict": "^8.0.0",
-    "ts-railway": "^5.0.1",
+    "ts-railway": "^5.1.3",
     "ts-toolbelt": "8.0.7",
     "use-null-ref": "^0.0.2",
     "use-pipe-ts": "^1.0.0"

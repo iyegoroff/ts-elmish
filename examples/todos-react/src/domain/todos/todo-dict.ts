@@ -60,7 +60,7 @@ export const updateTodo =
 
 export const listenTodoDictChanges =
   (listen: LocalData['listenChanges']) =>
-  <U>(onChange: Matcher<ReturnType<typeof assertTodoDict>, U>) =>
+  (onChange: Matcher<ReturnType<typeof assertTodoDict>, undefined>) =>
     listen(todoDictKey, pipe(assertTodoDict, Result.match(onChange)))
 
 export const filteredTodos = (todos: TodoDict, todoFilter: TodoFilter) =>

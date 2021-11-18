@@ -19,5 +19,5 @@ export const updateTodoFilter = (change: HashLocation['change']) => (todoFilter:
 
 export const listenTodoFilterChanges =
   (listen: HashLocation['listenChanges']) =>
-  <U>(onChange: Matcher<ReturnType<typeof todoFilterToDomain>, U>) =>
+  (onChange: Matcher<ReturnType<typeof todoFilterToDomain>, undefined>) =>
     listen(pipe(todoFilterToDomain, Result.match(onChange)))
