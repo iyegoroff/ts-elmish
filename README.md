@@ -1,7 +1,8 @@
 # ts-elmish
 
 [![npm version](https://badge.fury.io/js/%40ts-elmish%2Fcore.svg?t=1495378566925)](https://badge.fury.io/js/%40ts-elmish%2Fcore)
-[![CircleCI](https://circleci.com/gh/iyegoroff/ts-elmish.svg?style=svg)](https://circleci.com/gh/iyegoroff/ts-elmish)
+[![build](https://github.com/iyegoroff/ts-elmish/workflows/build/badge.svg)](https://github.com/iyegoroff/ts-elmish/actions/workflows/build.yml)
+[![publish](https://github.com/iyegoroff/ts-elmish/workflows/publish/badge.svg)](https://github.com/iyegoroff/ts-elmish/actions/workflows/publish.yml)
 [![codecov](https://codecov.io/gh/iyegoroff/ts-elmish/branch/master/graph/badge.svg?t=1520230083925)](https://codecov.io/gh/iyegoroff/ts-elmish)
 [![Type Coverage](https://img.shields.io/badge/dynamic/json.svg?label=type-coverage&prefix=%E2%89%A5&suffix=%&query=$.typeCoverage.atLeast&uri=https%3A%2F%2Fraw.githubusercontent.com%2Fiyegoroff%2Fts-elmish%2Fmaster%2Fpackage.json)](https://github.com/plantain-00/type-coverage)
 [![npm](https://img.shields.io/npm/l/@ts-elmish/core.svg?t=1495378566925)](https://www.npmjs.com/package/@ts-elmish/core)
