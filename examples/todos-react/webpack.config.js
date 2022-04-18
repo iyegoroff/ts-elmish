@@ -30,6 +30,7 @@ module.exports = (env) => ({
                 ['@babel/preset-env', { targets: { node: 14 }, modules: false }]
               ],
               plugins: [
+                'babel-plugin-spectypes',
                 '@vanilla-extract/babel-plugin',
                 env.development && 'react-refresh/babel'
               ].filter(Boolean)
@@ -60,11 +61,11 @@ module.exports = (env) => ({
         },
         mode: 'write-references',
         configFile: './src/tsconfig.build.json'
-      },
-      eslint: {
-        enabled: true,
-        files: './src/**/*.{ts,tsx}'
       }
+      // eslint: {
+      //   enabled: true,
+      //   files: './src/**/*.{ts,tsx}'
+      // }
     })
   ].filter(Boolean),
   resolve: {

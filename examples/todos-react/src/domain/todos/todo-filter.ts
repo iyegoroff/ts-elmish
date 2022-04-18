@@ -1,15 +1,17 @@
-import { Literal, Union } from 'runtypes'
-import { pipe } from 'pipe-ts'
+import { pipe, pipeWith } from 'pipe-ts'
 import { Result, Matcher } from 'ts-railway'
 import { HashLocation } from '../../services/hash-location/types'
 import { TodoFilter } from './types'
+import { literal, union } from 'spectypes'
 
-const todoFilterShape = Union(Literal(''), Literal('all'), Literal('active'), Literal('completed'))
+const todoFilterShape = union(literal(''), literal('all'), literal('active'), literal('completed'))
 
 const todoFilterToDomain = (maybeTodoFilter: unknown) =>
-  todoFilterShape.guard(maybeTodoFilter)
-    ? Result.success(maybeTodoFilter === '' ? 'all' : maybeTodoFilter)
-    : Result.failure(`Invalid todo filter - ${String(maybeTodoFilter)}` as const)
+  pipeWith(
+    todoFilterShape(maybeTodoFilter),
+    Result.map((filter) => filter || 'all'),
+    Result.mapError(() => `Invalid todo filter` as const)
+  )
 
 export const loadTodoFilter = (current: HashLocation['current']) => () =>
   todoFilterToDomain(current())

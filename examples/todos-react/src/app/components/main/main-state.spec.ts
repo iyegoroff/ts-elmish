@@ -133,7 +133,7 @@ describe('components > main', () => {
   })
 
   test('handle-todo-filter-load-error - failure', async () => {
-    const todoFilterLoadError = 'Invalid todo filter - fail' as const
+    const todoFilterLoadError = 'Invalid todo filter' as const
 
     const effects = stubEffects({
       Todos: {

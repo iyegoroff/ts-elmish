@@ -13,10 +13,10 @@ const config = {
     '^\\./(views)$': '<rootDir>/stub.js'
   },
   testPathIgnorePatterns: ['blueprint-templates'],
-  testRegex: '\\.spec\\.ts$',
-  transform: {
-    '^.+\\.(js|tsx?)$': 'ts-jest'
-  }
+  testRegex: '\\.spec\\.ts$'
+  // transform: {
+  //   '^.+\\.(js|tsx?)$': 'babel-jest'
+  // }
 }
 
 module.exports = {

@@ -77,7 +77,7 @@ describe('components > footer', () => {
   })
 
   test('handle-todo-filter-alert', async () => {
-    const todoFilterLoadError = `Invalid todo filter - what?` as const
+    const todoFilterLoadError = `Invalid todo filter` as const
 
     const effects = stubEffects({
       Todos: {

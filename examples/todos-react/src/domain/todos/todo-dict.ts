@@ -1,30 +1,33 @@
-import { Boolean, Dictionary, Record, Static, String } from 'runtypes'
 import { AsyncResult, Result, Matcher } from 'ts-railway'
 import { pipe, pipeWith } from 'pipe-ts'
 import { Dict } from 'ts-micro-dict'
 import { LocalData } from '../../services/local-data/types'
 import { Todo, TodoDict, TodoFilter } from './types'
+import { boolean, object, record, string } from 'spectypes'
 
 const todoDictKey = 'todo-list' as const
 
 const defaultTodoDict: TodoDict = {}
 
-const todoDictShape = Dictionary(Record({ text: String, completed: Boolean }).asReadonly(), String)
+const todoDictShape = record(object({ text: string, completed: boolean }))
 
 const assertTodoDict = (maybeTodoDict: unknown) =>
-  todoDictShape.guard(maybeTodoDict)
-    ? Result.success(maybeTodoDict)
-    : (() => {
+  Result.match(
+    {
+      success: (x) => Result.success(x),
+      failure: () => {
         // eslint-disable-next-line functional/no-throw-statement
         throw new Error('invalid todo dict format')
-      })()
+      }
+    },
+    todoDictShape(maybeTodoDict)
+  )
 
 export const loadTodoDict = (load: LocalData['load']) => () =>
   load(todoDictKey, defaultTodoDict).then(assertTodoDict)
 
-export const updateTodoDict =
-  (update: LocalData['update']) => (todoDict: Static<typeof todoDictShape>) =>
-    update(todoDictKey, todoDict).then(Result.success)
+export const updateTodoDict = (update: LocalData['update']) => (todoDict: TodoDict) =>
+  update(todoDictKey, todoDict).then(Result.success)
 
 const nextTodoKey = (load: LocalData['load']) =>
   pipe(

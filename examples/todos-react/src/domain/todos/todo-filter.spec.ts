@@ -9,7 +9,7 @@ describe('domain > todos > todo-filter', () => {
     expect(loadTodoFilter(() => 'active')()).toEqual<LoadTodoFilter>(Result.success('active'))
     expect(loadTodoFilter(() => '')()).toEqual<LoadTodoFilter>(Result.success('all'))
     expect(loadTodoFilter(() => 'what?')()).toEqual<LoadTodoFilter>(
-      Result.failure('Invalid todo filter - what?')
+      Result.failure('Invalid todo filter')
     )
   })
 

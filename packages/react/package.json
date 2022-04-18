@@ -56,6 +56,6 @@
   "devDependencies": {
     "@ts-elmish/core": "workspace:*",
     "@ts-elmish/configs": "workspace:*",
-    "@types/react": "^17.0.33"
+    "@types/react": "^18.0.5"
   }
 }

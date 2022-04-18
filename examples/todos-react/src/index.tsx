@@ -1,17 +1,22 @@
+/* eslint-disable import/no-internal-modules, functional/no-expression-statement, functional/immutable-data, functional/no-conditional-statement */
 import './wdir'
 import * as React from 'react'
-import { render } from 'react-dom'
+import { createRoot } from 'react-dom/client'
+import { isDefined } from 'ts-is-defined'
 import { App } from './app'
 
 const errorHandler: OnErrorEventHandlerNonNull = (event) => {
   console.log(event)
 }
 
-// eslint-disable-next-line functional/no-expression-statement, functional/immutable-data
 window.onerror = errorHandler
 
-// eslint-disable-next-line functional/no-expression-statement, functional/immutable-data
 window.onunhandledrejection = errorHandler
 
-// eslint-disable-next-line functional/no-expression-statement
-render(<App />, document.getElementById('app'))
+const container = document.getElementById('app')
+
+if (isDefined(container)) {
+  createRoot(container).render(<App />)
+} else {
+  console.log("can't find DOM element with 'app' id")
+}
