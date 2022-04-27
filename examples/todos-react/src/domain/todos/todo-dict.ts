@@ -1,9 +1,9 @@
 import { AsyncResult, Result, Matcher } from 'ts-railway'
 import { pipe, pipeWith } from 'pipe-ts'
 import { Dict } from 'ts-micro-dict'
+import { boolean, object, record, string } from 'spectypes'
 import { LocalData } from '../../services/local-data/types'
 import { Todo, TodoDict, TodoFilter } from './types'
-import { boolean, object, record, string } from 'spectypes'
 
 const todoDictKey = 'todo-list' as const
 
