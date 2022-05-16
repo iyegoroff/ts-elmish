@@ -62,16 +62,12 @@ module.exports = (env) => ({
         mode: 'write-references',
         configFile: './src/tsconfig.build.json'
       }
-      // eslint: {
-      //   enabled: true,
-      //   files: './src/**/*.{ts,tsx}'
-      // }
     })
   ].filter(Boolean),
   resolve: {
-    extensions: ['.js', '.ts', '.tsx', '.web.ts', '.web.tsx', '.json'],
-    alias: {
-      react: path.resolve(__dirname, 'node_modules/react')
-    }
+    extensions: ['.js', '.ts', '.tsx', '.web.ts', '.web.tsx', '.json']
+    // alias: {
+    //   react: path.resolve(__dirname, 'node_modules/react')
+    // }
   }
 })

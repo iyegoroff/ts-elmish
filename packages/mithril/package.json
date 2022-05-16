@@ -46,16 +46,16 @@
   "author": "iyegoroff <iegoroff@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@ts-elmish/common": "file:../common",
+    "@ts-elmish/common": "file:packages/common",
     "shallowequal": "^1.1.0"
   },
   "peerDependencies": {
-    "@ts-elmish/core": "file:../core",
+    "@ts-elmish/core": "file:packages/core",
     "mithril": ">=2"
   },
   "devDependencies": {
-    "@ts-elmish/configs": "file:../../configs",
-    "@ts-elmish/core": "file:../core",
+    "@ts-elmish/configs": "file:configs",
+    "@ts-elmish/core": "file:packages/core",
     "@types/mithril": "^2.0.8",
     "@types/shallowequal": "^1.1.1",
     "jsdom": "^19.0.0",

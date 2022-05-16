@@ -19,10 +19,10 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['.ts', '.js'],
-    alias: {
-      mithril: path.resolve(__dirname, 'node_modules/mithril')
-    }
+    extensions: ['.ts', '.js']
+    // alias: {
+    //   mithril: path.resolve(__dirname, 'node_modules/mithril')
+    // }
   },
   output: {
     filename: 'bundle.js',

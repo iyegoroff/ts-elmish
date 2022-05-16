@@ -45,14 +45,14 @@
   "author": "iyegoroff <iegoroff@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@ts-elmish/basic-effects": "file:../basic-effects",
-    "@ts-elmish/common": "file:../common"
+    "@ts-elmish/basic-effects": "file:packages/basic-effects",
+    "@ts-elmish/common": "file:packages/common"
   },
   "peerDependencies": {
     "ts-railway": "^6.0.4"
   },
   "devDependencies": {
-    "@ts-elmish/configs": "file:../../configs",
+    "@ts-elmish/configs": "file:configs",
     "ts-railway": "^6.0.4"
   }
 }

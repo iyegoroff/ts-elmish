@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "preset-version": "pnpm lint -r -- --fix && pnpm build -r && pnpm check -r && pnpm t && pnpm type-coverage",
+    "preversion": "pnpm lint -r -- --fix && pnpm build -r && pnpm check -r && pnpm t && pnpm type-coverage",
     "set-version": "git add -u && git commit -am lint || : && pnpm -r update-version",
     "postset-version": "tag=v\"$(dot-json packages/core/package.json version)\" && git commit -am \"$tag [skip build]\" && git tag $tag && git push && git push --tags",
     "lint": "eslint .",
@@ -37,5 +37,10 @@
     "ts-jest": "^27.1.4",
     "type-coverage": "^2.21.1",
     "typescript": "^4.6.4"
-  }
+  },
+  "workspaces": [
+    "./packages/*",
+    "./examples/*",
+    "./configs"
+  ]
 }

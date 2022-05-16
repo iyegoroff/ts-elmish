@@ -26,10 +26,10 @@
     "webpack-dev-server": "^4.8.1"
   },
   "dependencies": {
-    "@ts-elmish/core": "file:../../packages/core",
-    "@ts-elmish/debugger": "file:../../packages/debugger",
-    "@ts-elmish/railway-effects": "file:../../packages/railway-effects",
-    "@ts-elmish/react": "file:../../packages/react",
+    "@ts-elmish/core": "file:packages/core",
+    "@ts-elmish/debugger": "file:packages/debugger",
+    "@ts-elmish/railway-effects": "file:packages/railway-effects",
+    "@ts-elmish/react": "file:packages/react",
     "@welldone-software/why-did-you-render": "^7.0.1",
     "deep-stub-object": "^2.0.3",
     "merge-anything": "^5.0.2",

@@ -45,9 +45,9 @@
   "author": "iyegoroff <iegoroff@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@ts-elmish/common": "file:../common"
+    "@ts-elmish/common": "file:packages/common"
   },
   "devDependencies": {
-    "@ts-elmish/configs": "file:../../configs"
+    "@ts-elmish/configs": "file:configs"
   }
 }
