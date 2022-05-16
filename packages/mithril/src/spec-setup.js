@@ -1,5 +1,7 @@
-global.window = Object.assign(
-  require('mithril/test-utils/domMock.js')(),
-  require('mithril/test-utils/pushStateMock')()
-)
-global.requestAnimationFrame = (callback) => global.setTimeout(callback, 1000 / 60)
+import jsdom from 'jsdom'
+
+let dom = new jsdom.JSDOM('', { pretendToBeVisual: true })
+
+globalThis.window = dom.window
+globalThis.document = dom.window.document
+globalThis.requestAnimationFrame = dom.window.requestAnimationFrame

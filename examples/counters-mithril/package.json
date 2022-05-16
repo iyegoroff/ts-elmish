@@ -5,10 +5,10 @@
   "dependencies": {
     "@ts-elmish/basic-effects": "workspace:*",
     "@ts-elmish/core": "workspace:*",
-    "@ts-elmish/mithril": "workspace:*",
     "@ts-elmish/debugger": "workspace:*",
+    "@ts-elmish/mithril": "workspace:*",
     "mithril": "^2.0.4",
-    "ts-micro-dict": "^8.0.0"
+    "ts-micro-dict": "^9.0.2"
   },
   "devDependencies": {
     "@types/mithril": "^2.0.8",
