@@ -1,6 +1,6 @@
 {
   "name": "@ts-elmish/react",
-  "version": "4.0.12",
+  "version": "5.0.0",
   "private": false,
   "description": "React renderer for ts-elmish",
   "sideEffects": false,

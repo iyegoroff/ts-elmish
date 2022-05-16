@@ -1,6 +1,6 @@
 {
   "name": "@ts-elmish/common",
-  "version": "4.0.12",
+  "version": "5.0.0",
   "private": false,
   "description": "Elmish internals",
   "sideEffects": false,
