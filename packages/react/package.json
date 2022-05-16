@@ -46,15 +46,15 @@
   "author": "iyegoroff <iegoroff@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@ts-elmish/common": "workspace:*"
+    "@ts-elmish/common": "file:../common"
   },
   "peerDependencies": {
-    "@ts-elmish/core": "workspace:*",
+    "@ts-elmish/core": "file:../core",
     "react": ">=16"
   },
   "devDependencies": {
-    "@ts-elmish/core": "workspace:*",
-    "@ts-elmish/configs": "workspace:*",
+    "@ts-elmish/core": "file:../core",
+    "@ts-elmish/configs": "file:../../configs",
     "@types/react": "^18.0.5"
   }
 }

@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "@ts-elmish/basic-effects": "workspace:*",
-    "@ts-elmish/core": "workspace:*",
-    "@ts-elmish/debugger": "workspace:*",
-    "@ts-elmish/mithril": "workspace:*",
+    "@ts-elmish/basic-effects": "file:../../packages/basic-effects",
+    "@ts-elmish/core": "file:../../packages/core",
+    "@ts-elmish/debugger": "file:../../packages/debugger",
+    "@ts-elmish/mithril": "file:../../packages/mithril",
     "mithril": "^2.0.4",
     "ts-micro-dict": "^9.0.2"
   },
