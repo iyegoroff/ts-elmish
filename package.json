@@ -1,5 +1,5 @@
 {
-  "version": "5.0.20",
+  "version": "5.0.21",
   "scripts": {
     "postinstall": "npm run fix-links",
     "preversion": "echo $npm_new_version",
