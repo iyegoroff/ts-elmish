@@ -1,11 +1,11 @@
 {
   "scripts": {
-    "preversion": "pnpm lint -r -- --fix && pnpm build -r && pnpm check -r && pnpm t && pnpm type-coverage",
-    "set-version": "git add -u && git commit -am lint || : && pnpm -r update-version",
-    "postset-version": "tag=v\"$(dot-json packages/core/package.json version)\" && git commit -am \"$tag [skip build]\" && git tag $tag && git push && git push --tags",
-    "lint": "eslint .",
+    "postinstall": "node ./fix-links",
+    "preversion": "npm run lint && npm run build && npm run check && npm t && npm run type-coverage",
+    "lint": "eslint . && npm run lint -ws --if-present",
+    "build": "npm run build -ws --if-present",
+    "check": "npm run check -ws --if-present",
     "test": "jest",
-    "coverage": "codecov",
     "type-coverage": "type-coverage --strict --detail --ignore-files **/dist/* --ignore-files **/blueprint-templates/**/* --ignore-catch"
   },
   "typeCoverage": {
@@ -31,6 +31,7 @@
     "eslint-plugin-prettier": "^3.4.1",
     "eslint-plugin-promise": "^5.2.0",
     "eslint-plugin-react": "^7.29.4",
+    "glob": "^8.0.3",
     "jest": "^27.5.1",
     "prettier": "^2.6.2",
     "runtypes": "^6.5.1",

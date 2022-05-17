@@ -1,6 +1,5 @@
 {
   "name": "@ts-elmish/configs",
-  "bin": "build.sh",
   "version": "0.0.0",
   "private": true,
   "description": "Elmish internals"
