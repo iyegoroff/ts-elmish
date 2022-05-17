@@ -1,6 +1,7 @@
 {
+  "version": "5.0.3",
   "scripts": {
-    "postinstall": "node ./fix-links",
+    "postinstall": "npm run fix-links",
     "preversion": "npm run lint && npm run build && npm run check && npm t && npm run type-coverage",
     "set-version": "npm run update-version -ws --if-present",
     "postset-version": "tag=v\"$(dot-json packages/core/package.json version)\" && git commit -am \"$tag [skip build]\" && git tag $tag",
@@ -8,6 +9,7 @@
     "build": "npm run build -ws --if-present",
     "check": "npm run check -ws --if-present",
     "test": "jest",
+    "fix-links": "node ./fix-links",
     "type-coverage": "type-coverage --strict --detail --ignore-files **/dist/* --ignore-files **/blueprint-templates/**/* --ignore-catch"
   },
   "typeCoverage": {
