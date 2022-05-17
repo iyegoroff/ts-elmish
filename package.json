@@ -1,5 +1,5 @@
 {
-  "version": "5.0.21",
+  "version": "5.0.22",
   "scripts": {
     "postinstall": "npm run fix-links",
     "preversion": "npm version $npm_new_version -ws && npm run fix-links && npm run lint && npm run build && npm run check && npm t && npm run type-coverage",
