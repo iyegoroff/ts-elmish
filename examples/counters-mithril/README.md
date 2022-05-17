@@ -3,10 +3,6 @@
 This is basic example - it shows <i>effectless</i> parent-child composition.
 
 Running the example:
-
-- Install [`pnpm`](https://pnpm.io/) package manager if you don't have it:
-  ```
-  npm i pnpm -g
   ```
 - Clone the whole repo:
   ```
@@ -14,9 +10,9 @@ Running the example:
   ```
 - Install dependencies and build packages:
   ```
-  cd ts-elmish && pnpm i && pnpm build -r
+  cd ts-elmish && npm i && npm run build
   ```
 - Start this example:
   ```
-  cd examples/counters-mithril && pnpm serve
+  npm run serve -w examples/counters-mithril
   ```
