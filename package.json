@@ -2,7 +2,7 @@
   "version": "5.0.20",
   "scripts": {
     "postinstall": "npm run fix-links",
-    "preversion": "set",
+    "preversion": "echo $npm_new_version",
     "spreversion": "npm run lint && npm run build && npm run check && npm t && npm run type-coverage",
     "version": "tag=v\"$(dot-json package.json version)\" && npm version $tag -ws",
     "set-version": "npm run update-version -ws --if-present",

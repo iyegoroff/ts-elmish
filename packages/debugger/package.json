@@ -1,6 +1,6 @@
 {
   "name": "@ts-elmish/debugger",
-  "version": "5.0.19",
+  "version": "5.0.20",
   "private": false,
   "description": "Time-traveling debugger support for ts-elmish",
   "sideEffects": false,
