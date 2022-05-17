@@ -1,5 +1,5 @@
 {
-  "version": "5.0.14",
+  "version": "5.0.15",
   "scripts": {
     "postinstall": "npm run fix-links",
     "preversion": "tag=v\"$(dot-json package.json version)\" && echo $tag",
