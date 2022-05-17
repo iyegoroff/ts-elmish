@@ -2,7 +2,7 @@
   "version": "5.0.18",
   "scripts": {
     "postinstall": "npm run fix-links",
-    "preversion": "node ./scripts/preversion.js",
+    "preversion": "node ./scripts/preversion.js --",
     "spreversion": "npm run lint && npm run build && npm run check && npm t && npm run type-coverage",
     "version": "tag=v\"$(dot-json package.json version)\" && npm version $tag -ws",
     "set-version": "npm run update-version -ws --if-present",
