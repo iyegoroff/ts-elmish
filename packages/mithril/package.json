@@ -20,7 +20,6 @@
     "type": "module"
   },
   "scripts": {
-    "update-version": "npm version",
     "build:dts": "tsc -p node_modules/@ts-elmish/configs/tsconfig.dts.json",
     "build:esm": "tsc -p node_modules/@ts-elmish/configs/tsconfig.esm.json",
     "build:cjs": "tsc -p node_modules/@ts-elmish/configs/tsconfig.cjs.json && mv dist/cjs/index.js dist/cjs/index.cjs",
