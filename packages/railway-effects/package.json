@@ -1,6 +1,6 @@
 {
   "name": "@ts-elmish/railway-effects",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "private": false,
   "description": "ts-railway powered effects for ts-elmish",
   "sideEffects": false,

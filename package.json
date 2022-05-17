@@ -2,6 +2,8 @@
   "scripts": {
     "postinstall": "node ./fix-links",
     "preversion": "npm run lint && npm run build && npm run check && npm t && npm run type-coverage",
+    "set-version": "npm run update-version -ws --if-present",
+    "postset-version": "tag=v\"$(dot-json packages/core/package.json version)\" && git commit -am \"$tag [skip build]\" && git tag $tag",
     "lint": "eslint . && npm run lint -ws --if-present",
     "build": "npm run build -ws --if-present",
     "check": "npm run check -ws --if-present",
