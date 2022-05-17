@@ -2,7 +2,7 @@
   "version": "5.0.4",
   "scripts": {
     "postinstall": "npm run fix-links",
-    "preversion": "npm version -ws",
+    "preversion": "npm version",
     "set-version": "npm run update-version -ws --if-present",
     "postset-version": "tag=v\"$(dot-json packages/core/package.json version)\" && git commit -am \"$tag [skip build]\" && git tag $tag",
     "lint": "eslint . && npm run lint -ws --if-present",
