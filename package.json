@@ -1,5 +1,5 @@
 {
-  "version": "5.0.10",
+  "version": "5.0.11",
   "scripts": {
     "postinstall": "npm run fix-links",
     "version": "func() { echo yo\"$1\"; }; func",
