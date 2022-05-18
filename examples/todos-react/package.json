@@ -1,6 +1,6 @@
 {
   "name": "todos-react",
-  "version": "5.0.28",
+  "version": "5.0.29",
   "private": true,
   "devDependencies": {
     "@babel/core": "^7.17.9",

@@ -1,6 +1,6 @@
 {
   "name": "@ts-elmish/configs",
-  "version": "5.0.28",
+  "version": "5.0.29",
   "private": true,
   "description": "Elmish internals"
 }
