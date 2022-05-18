@@ -5,7 +5,7 @@
   "files": [],
   "scripts": {
     "postinstall": "npm run fix-links",
-    "prepack": "",
+    "prep": "glob-json 'packages/*/package.json' merge '' publishConfig",
     "postpack": "git checkout -- .",
     "preversion": "npm version $npm_new_version -ws && git commit -am up && npm run fix-links && npm run lint && npm run build && npm run check && npm t && npm run type-coverage",
     "postset-version": "git push && git push --tags",
