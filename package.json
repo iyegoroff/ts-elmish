@@ -5,8 +5,6 @@
   "files": [],
   "scripts": {
     "postinstall": "npm run fix-links",
-    "prepack": "glob-json 'packages/*/package.json' merge '' publishConfig && glob-json 'packages/*/package.json' del publishConfig && glob-json 'packages/*/package.json' set '+(devDependencies|dependencies|peerDependencies)/@ts-elmish/*' $npm_package_version",
-    "postpack": "git checkout -- .",
     "preversion": "npm version $npm_new_version -ws && git commit -am up && npm run fix-links && npm run lint && npm run build && npm run check && npm t && npm run type-coverage",
     "postversion": "git push && git push --tags",
     "lint": "eslint . && npm run lint -ws --if-present",
@@ -14,6 +12,7 @@
     "check": "npm run check -ws --if-present",
     "test": "jest",
     "fix-links": "node ./scripts/fix-links",
+    "patch-configs": "glob-json 'packages/*/package.json' merge '' publishConfig && glob-json 'packages/*/package.json' del publishConfig && glob-json 'packages/*/package.json' set '+(devDependencies|dependencies|peerDependencies)/@ts-elmish/*' $npm_package_version",
     "type-coverage": "type-coverage --strict --detail --ignore-files **/dist/* --ignore-files **/blueprint-templates/**/* --ignore-catch"
   },
   "typeCoverage": {
