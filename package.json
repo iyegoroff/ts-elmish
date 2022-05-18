@@ -39,7 +39,7 @@
     "eslint-plugin-promise": "^5.2.0",
     "eslint-plugin-react": "^7.29.4",
     "glob": "^8.0.3",
-    "glob-json": "^0.0.1",
+    "glob-json": "^0.0.2",
     "jest": "^27.5.1",
     "prettier": "^2.6.2",
     "runtypes": "^6.5.1",
