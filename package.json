@@ -8,7 +8,7 @@
     "prepack": "glob-json 'packages/*/package.json' merge '' publishConfig && glob-json 'packages/*/package.json' del publishConfig && glob-json 'packages/*/package.json' set '+(devDependencies|dependencies|peerDependencies)/@ts-elmish/*' $npm_package_version",
     "postpack": "git checkout -- .",
     "preversion": "npm version $npm_new_version -ws && git commit -am up && npm run fix-links && npm run lint && npm run build && npm run check && npm t && npm run type-coverage",
-    "postset-version": "git push && git push --tags",
+    "postversion": "git push && git push --tags",
     "lint": "eslint . && npm run lint -ws --if-present",
     "build": "npm run build -ws --if-present",
     "check": "npm run check -ws --if-present",
