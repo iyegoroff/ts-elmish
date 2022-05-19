@@ -16,5 +16,5 @@ jobs:
       - uses: actions/download-artifact@v3
       - run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
       - run: npm ci
-      - run: npm run patch-configs
+      - run: npm run patch-manifests
       - run: npm publish -w packages

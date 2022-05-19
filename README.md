@@ -84,7 +84,7 @@ Elmish architecture in Typescript
 At first you have to choose an effect handling strategy - currently there are two options:
 
 - [`basic-effects`](/packages/basic-effects) - effects are created from sync or async functions just like in original `Elmish`, all errors have `unknown` type. Success and failure handlers are both optional, if failure handler is provided an error will be caught with `try/catch` statement.
-- [`railway-effects`](/packages/railway-effects) - this approach embraces [result type](https://en.wikipedia.org/wiki/Result_type) and [railway oriented programming](https://fsharpforfunandprofit.com/posts/recipe-part2/), effects are created from functions that return values of `Result` or `AsyncResult` types provided by [ts-railway](https://github.com/iyegoroff/ts-railway) package, all errors are properly typed. Success handler is optional, but failure hanlder is either required or prohibited (when result error type is `never`). Despite this approach is quite handy for enforcing domain error handling, it has its [downsides](https://fsharpforfunandprofit.com/posts/against-railway-oriented-programming/) too.
+- [`railway-effects`](/packages/railway-effects) - this approach embraces [result type](https://en.wikipedia.org/wiki/Result_type) and [railway oriented programming](https://fsharpforfunandprofit.com/posts/recipe-part2/), effects are created from functions that return values of `Result` or `AsyncResult` types provided by [ts-railway](https://github.com/iyegoroff/ts-railway) package, all errors are properly typed. Success handler is optional, but failure hanlder is either required or prohibited (when result error type is `never`). Despite this approach is quite handy for enforcing domain error handling, it has some [catches](https://fsharpforfunandprofit.com/posts/against-railway-oriented-programming/) too.
 
 Then just add `ts-elmish` packages to your project:
 
@@ -172,4 +172,4 @@ Due to small size it is worth just to look at the code. Also there is a [basic](
 
 - [Elmish docs](https://elmish.github.io/elmish/) and [The Elmish Book](https://zaid-ajaj.github.io/the-elmish-book/#/) - useful sources for learning <i>elmish ideology</i>. Almost everything applies to `ts-elmish` too, the main difference is that [subscriptions](https://elmish.github.io/elmish/subscriptions.html) are out of scope for `ts-elmish` - just use view layer capabilities for listening to events (e.g. `useEffect` hook in `react`).
 - [Railway oriented programming](https://fsharpforfunandprofit.com/posts/recipe-part2/) - introduction to ROP.
-- [Against Railway-Oriented Programming](https://fsharpforfunandprofit.com/posts/against-railway-oriented-programming/) - ROP downsides.
+- [Against Railway-Oriented Programming](https://fsharpforfunandprofit.com/posts/against-railway-oriented-programming/) - reasons to avoid ROP.
