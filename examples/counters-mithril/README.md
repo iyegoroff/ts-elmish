@@ -3,7 +3,7 @@
 This is basic example - it shows <i>effectless</i> parent-child composition.
 
 Running the example:
-  ```
+
 - Clone the whole repo:
   ```
   git clone git@github.com:iyegoroff/ts-elmish.git
