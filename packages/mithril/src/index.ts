@@ -10,12 +10,8 @@ export type { ElmishProps as ElmishAttrs } from '@ts-elmish/common'
  * Creates elmish-driven mithril component.
  * When component attrs are updated the elmish runtime is restated.
  *
- * @param init Function that takes attrs and returns initial state & effect
- * @param update Function that takes state & action and returns next state & effect
- * @param view Mithril component
- * @param transformProgram Function to modify inputs and output of elmish runtime initialization
- * @param skipRestartOnAttrChange Array of attr names that prevents elmish runtime from restarting
- *                                when specified attrs change
+ * @param options init, update, view, skipRestartOnAttrChange, transformProgram
+ *
  * @returns Root elmish mithril component
  */
 export const createElmishRootComponent = <
@@ -31,10 +27,15 @@ export const createElmishRootComponent = <
 }: KeysIntersect<State, Attrs> extends true
   ? never
   : {
+      /** Function that takes attrs and returns initial state & effect */
       readonly init: (attrs: Attrs) => readonly [State, Effect<Action>]
+      /** Function that takes state & action and returns next state & effect */
       readonly update: (state: State, action: Action) => readonly [State, Effect<Action>]
+      /** Mithril component */
       readonly view: Component<RawProps<State, Action, Attrs>>
+      /** Array of attr names that prevents elmish runtime from restarting when specified attrs change */
       readonly skipRestartOnAttrChange?: ReadonlyArray<keyof Attrs & string>
+      /** Function to modify inputs and output of elmish runtime initialization */
       readonly transformProgram?: (run: RunProgram<State, Action>) => RunProgram<State, Action>
     }): ClosureComponent<Attrs> => {
   const runTransformedProgram = transformProgram(runProgram)

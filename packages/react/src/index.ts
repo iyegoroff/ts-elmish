@@ -9,12 +9,8 @@ export type { ElmishProps } from '@ts-elmish/common'
  * When component props are updated the elmish runtime is restated
  * unless prop name is present in `skipRestartOnPropChange` array.
  *
- * @param init Function that takes props and returns initial state & effect
- * @param update Function that takes state & action and returns next state & effect
- * @param view React component
- * @param transformProgram Function to modify inputs and output of elmish runtime initialization
- * @param skipRestartOnPropChange Array of prop names that prevents elmish runtime from restarting
- *                                when specified props change
+ * @param options init, update, view, skipRestartOnPropChange, transformProgram
+ *
  * @returns Root elmish react component
  */
 export const createElmishRootComponent = <
@@ -30,10 +26,15 @@ export const createElmishRootComponent = <
 }: KeysIntersect<State, Props> extends true
   ? never
   : {
+      /** Function that takes props and returns initial state & effect */
       readonly init: (props: Props) => readonly [State, Effect<Action>]
+      /** Function that takes state & action and returns next state & effect */
       readonly update: (state: State, action: Action) => readonly [State, Effect<Action>]
+      /** React component */
       readonly view: React.ComponentType<RawProps<State, Action, Props>>
+      /** Array of prop names that prevents elmish runtime from restarting when specified props change */
       readonly skipRestartOnPropChange?: ReadonlyArray<keyof Props>
+      /** Function to modify inputs and output of elmish runtime initialization */
       readonly transformProgram?: (run: RunProgram<State, Action>) => RunProgram<State, Action>
     }): React.FunctionComponent<Props> => {
   const runTransformedProgram = transformProgram(runProgram)
