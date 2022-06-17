@@ -27,7 +27,7 @@ const Action = {
 type Command = readonly [State, Effect<Action>]
 
 const activeTodosAmount = pipe(
-  Dict.filter<Todo>(({ completed }) => !completed),
+  Dict.filter(({ completed }: Todo) => !completed),
   Dict.length
 )
 

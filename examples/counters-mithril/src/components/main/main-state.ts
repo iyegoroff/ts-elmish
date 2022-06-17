@@ -5,7 +5,7 @@ type Id = string
 
 type State = {
   readonly nextCounterId: number
-  readonly counters: Dict<CounterState>
+  readonly counters: Dict<string, CounterState>
 }
 
 type Action =

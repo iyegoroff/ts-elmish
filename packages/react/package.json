@@ -52,6 +52,6 @@
   "devDependencies": {
     "@ts-elmish/core": "file:packages/core",
     "@ts-elmish/configs": "file:configs",
-    "@types/react": "^18.0.5"
+    "@types/react": "^18.0.13"
   }
 }

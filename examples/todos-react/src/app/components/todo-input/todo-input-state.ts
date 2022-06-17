@@ -25,7 +25,7 @@ const Action = {
 
 type Command = readonly [State, Effect<Action>]
 
-const allCompleted = Dict.every<Todo>(({ completed }) => completed)
+const allCompleted = Dict.every(({ completed }: Todo) => completed)
 
 const init = (todos: TodoDict): Command => {
   return [{ text: '', allTodosCompleted: allCompleted(todos) }, Effect.none()]

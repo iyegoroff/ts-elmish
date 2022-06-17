@@ -46,10 +46,10 @@
     "@ts-elmish/common": "file:packages/common"
   },
   "peerDependencies": {
-    "ts-railway": "^6.0.4"
+    "ts-railway": "^6.1.1"
   },
   "devDependencies": {
     "@ts-elmish/configs": "file:configs",
-    "ts-railway": "^6.0.4"
+    "ts-railway": "^6.1.1"
   }
 }
