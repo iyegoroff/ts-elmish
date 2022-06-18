@@ -1,6 +1,6 @@
 {
   "name": "counters-mithril",
-  "version": "5.1.2",
+  "version": "5.1.3",
   "private": true,
   "dependencies": {
     "@ts-elmish/basic-effects": "file:packages/basic-effects",

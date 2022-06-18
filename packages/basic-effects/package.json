@@ -1,6 +1,6 @@
 {
   "name": "@ts-elmish/basic-effects",
-  "version": "5.1.2",
+  "version": "5.1.3",
   "private": false,
   "description": "Basic effects for ts-elmish",
   "sideEffects": false,
