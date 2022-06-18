@@ -52,11 +52,6 @@
   },
   "devDependencies": {
     "@ts-elmish/configs": "file:configs",
-    "@ts-elmish/core": "file:packages/core",
-    "@types/mithril": "^2.0.11",
-    "@types/shallowequal": "^1.1.1",
-    "jsdom": "^19.0.0",
-    "mithril": "^2.2.2",
-    "mithril-query": "github:mithriljs/mithril-query"
+    "@ts-elmish/core": "file:packages/core"
   }
 }

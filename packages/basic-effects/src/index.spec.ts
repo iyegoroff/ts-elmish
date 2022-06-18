@@ -1,9 +1,19 @@
 import { IdleAction } from '@ts-elmish/common'
-import { Record, String } from 'runtypes'
+import { object, string } from 'spectypes'
+import { pipe } from 'pipe-ts'
+import { Result } from 'ts-railway'
 import { Effect } from './index'
 import { checkAsyncEffect, checkAsyncEffectReject, checkEffect, checkEffectReject } from './checks'
 
-const ErrorSchema = Record({ message: String })
+const errorSchema = object({ message: string })
+
+const errorHandler = pipe(
+  errorSchema,
+  Result.match({
+    success: ({ message }) => message,
+    failure: ({ value }) => value
+  })
+)
 
 describe('effects', () => {
   test('none', () => {
@@ -17,7 +27,7 @@ describe('effects', () => {
       func: () => {
         throw new Error('message')
       },
-      error: (error) => (ErrorSchema.guard(error) ? error.message : error)
+      error: errorHandler
     })
 
     const fromFunctionNoFailure = Effect.from({
@@ -48,7 +58,7 @@ describe('effects', () => {
 
     const fromPromiseFailure = Effect.from({
       promise: () => Promise.reject(new Error('message')),
-      error: (error) => (ErrorSchema.guard(error) ? error.message : error)
+      error: errorHandler
     })
 
     const fromPromiseNoFailure = Effect.from({
@@ -59,7 +69,7 @@ describe('effects', () => {
     const fromPromiseSuccess = Effect.from({
       promise: () => Promise.resolve(1),
       then: (value: number) => `${value}`,
-      error: (error) => (ErrorSchema.guard(error) ? error.message : error)
+      error: errorHandler
     })
 
     const fromPromiseSuccessNoError = Effect.from({

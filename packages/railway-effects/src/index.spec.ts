@@ -1,10 +1,19 @@
-import { Record, String } from 'runtypes'
 import { Result } from 'ts-railway'
 import { IdleAction } from '@ts-elmish/common'
 import { Effect } from './index'
 import { checkAsyncEffect, checkEffect } from '@ts-elmish/basic-effects/src/checks'
+import { object, string } from 'spectypes'
+import { pipe } from 'pipe-ts'
 
-const ErrorSchema = Record({ message: String })
+const errorSchema = object({ message: string })
+
+const errorHandler = pipe(
+  errorSchema,
+  Result.match({
+    success: ({ message }) => message,
+    failure: ({ value }) => value
+  })
+)
 
 describe('effects', () => {
   test('types', async () => {
@@ -101,7 +110,7 @@ describe('effects', () => {
 
     const fromResultFailure = Effect.from({
       result: () => Result.failure(new Error('message')),
-      failure: (error) => (ErrorSchema.guard(error) ? error.message : error)
+      failure: errorHandler
     })
 
     const fromResultNoFailure = Effect.from({
@@ -115,12 +124,12 @@ describe('effects', () => {
 
     const fromAsyncResultFailure = Effect.from({
       result: () => Promise.resolve(Result.failure(new Error('message'))),
-      failure: (error) => (ErrorSchema.guard(error) ? error.message : error)
+      failure: errorHandler
     })
 
     const fromAsyncResultFailureNoError = Effect.from({
       result: () => Promise.resolve(Result.failure(new Error('message'))),
-      failure: (error) => (ErrorSchema.guard(error) ? error.message : error)
+      failure: errorHandler
     })
 
     const fromAsyncResultNoFailure = Effect.from({

@@ -8,7 +8,7 @@
     "@ts-elmish/debugger": "file:packages/debugger",
     "@ts-elmish/mithril": "file:packages/mithril",
     "mithril": "^2.2.2",
-    "ts-micro-dict": "^10.0.4"
+    "ts-micro-dict": "^10.0.6"
   },
   "devDependencies": {
     "@types/mithril": "^2.0.11",
